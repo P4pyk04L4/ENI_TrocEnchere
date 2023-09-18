@@ -1,2 +1,2 @@
-Salut !
-Holle world !
+Salut le monde !
+Hello world !
