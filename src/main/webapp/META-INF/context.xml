@@ -5,9 +5,9 @@
         driverClassName="com.mysql.cj.jdbc.Driver"
         type="javax.sql.DataSource"
         
-        url="jdbc:mysql://be52psif29iysipfk1jl-mysql.services.clever-cloud.com/be52psif29iysipfk1jl"
-        username="utjbn4acyjnmof7r"
-        password="z6EJV4DWiXw9nTtpYAFF"
+        url="jdbc:mysql://bjx3rvrwhdrtsh8g5edx-mysql.services.clever-cloud.com/bjx3rvrwhdrtsh8g5edx"
+        username="ufsdruo9bixz6bci"
+        password="5b9j7AxsjwPrjpWEGmkQ"
         
         maxTotal="100"
         maxIdle="30"
