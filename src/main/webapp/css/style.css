@@ -1,0 +1,60 @@
+/* Réinitialisation des marges et des rembourrages par défaut */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+}
+
+/* MENU */
+.navbar {
+    background-color: navy;
+    width: 100%;
+    height: 80px;
+}
+
+.navbar-nav .nav-link{
+    color : white;
+}
+
+#navbarNav {
+	background-color : navy;
+	padding: 15px;
+	z-index:1;
+	border-radius: 15px
+}
+
+.card {
+	transition: transform 0.3s ease-in-out;
+}
+
+.card:hover{
+	color: navy;
+	transform: scale(1.05);
+}
+
+/* .dropdown-menu { */
+/*    right: 0 !important; */
+/*    left: auto !important; */
+/* } */
+
+/* CORPS */
+h1 {
+    color: navy;
+}
+
+/* FOOTER */
+footer {
+    height: 50px;
+    width: 100%;
+/*     position: fixed; */
+/*     bottom: 0; */
+    background-color: navy;
+    color: white;
+}
+
+footer p {
+	padding-top :10px;
+}
