@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource
+        name="jdbc/pool_cnx_encheres"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        type="javax.sql.DataSource"
+        
+        url="jdbc:mysql://be52psif29iysipfk1jl-mysql.services.clever-cloud.com/be52psif29iysipfk1jl"
+        username="utjbn4acyjnmof7r"
+        password="z6EJV4DWiXw9nTtpYAFF"
+        
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+    />
+</Context>
