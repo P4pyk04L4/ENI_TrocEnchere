@@ -4,7 +4,15 @@ package fr.eni.enchere.bo;
 public class Retrait {
 	
 	private String rue, ville;
-	private int codePostal;	
+	private int codePostal;
+	private Integer noRetrait;
+	
+	public Retrait( Integer noRetrait, String rue, String ville, int codePostal ) {
+		this.setNoRetrait(noRetrait);
+		this.setRue(rue);
+		this.setVille(ville);
+		this.setCodePostal(codePostal);
+	}
 	
 	public Retrait(String rue, String ville, int codePostal) {
 		this.setRue(rue);
@@ -12,6 +20,14 @@ public class Retrait {
 		this.setCodePostal(codePostal);
 	}
 	
+	public Integer getNoRetrait() {
+		return noRetrait;
+	}
+
+	public void setNoRetrait(Integer noRetrait) {
+		this.noRetrait = noRetrait;
+	}
+
 	public String getRue() {
 		return rue;
 	}
