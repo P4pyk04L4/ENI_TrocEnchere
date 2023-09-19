@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <%@ include file="../outils/entete.jspf"%>
 
@@ -14,11 +16,17 @@
 			<div class="col-md-8 bg-light">
 				<h2>Objets en vente</h2>
 
+				<c:forEach var="utilisateur" items="${ utilisateurs }">
+					<li><c:out value="${ utilisateur.prenom }" /> <c:out
+							value="${ utilisateur.nom }" /></li>
+				</c:forEach>
+
 				<!-- CARTES DE BASE  -->
 				<div class="row">
 					<!-- Première carte -->
 					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="1">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="1">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -30,7 +38,8 @@
 
 					<!-- Deuxième carte -->
 					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="2">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="2">
 							<div class="card ">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -42,7 +51,8 @@
 
 					<!-- Troisième carte -->
 					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="3">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="3">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -54,7 +64,8 @@
 
 					<!-- Quatrième carte -->
 					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="4">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="4">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -65,8 +76,9 @@
 					</div>
 
 					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3" >
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="5">
+					<div class="col-lg-4 col-md-6 mb-3">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="5">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -75,10 +87,11 @@
 							</div>
 						</a>
 					</div>
-					
+
 					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3" >
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="6">
+					<div class="col-lg-4 col-md-6 mb-3">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="6">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -87,10 +100,11 @@
 							</div>
 						</a>
 					</div>
-					
+
 					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3" >
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="7">
+					<div class="col-lg-4 col-md-6 mb-3">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="7">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -99,10 +113,11 @@
 							</div>
 						</a>
 					</div>
-					
+
 					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3" >
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="8">
+					<div class="col-lg-4 col-md-6 mb-3">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="8">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -111,10 +126,11 @@
 							</div>
 						</a>
 					</div>
-					
+
 					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3" >
-						<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#myModal" data-card-id="9">
+					<div class="col-lg-4 col-md-6 mb-3">
+						<a href="#" class="text-decoration-none" data-toggle="modal"
+							data-target="#myModal" data-card-id="9">
 							<div class="card">
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
@@ -160,26 +176,26 @@
 	</div>
 
 
-<!-- MODAL DE CARTE -->
+	<!-- MODAL DE CARTE -->
 
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Détails de la carte</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <!-- Contenu dynamique sera inséré ici -->
-      </div>
-    </div>
-  </div>
-</div>
-
-
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Détails de la carte</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<!-- Contenu dynamique sera inséré ici -->
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-<!-- FOOTER -->
+
+
+	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
 	<script>

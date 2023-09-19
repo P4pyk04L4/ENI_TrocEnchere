@@ -36,8 +36,8 @@ public class ServletDeTest extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/tests/bonjour.jsp");
+		request.setAttribute("utilisateurs", utilisateurDao.afficherTous());
 		HttpSession session = request.getSession();
-        session.setAttribute("profilConnecte", false);
 		rd.forward(request, response);
 	}
 

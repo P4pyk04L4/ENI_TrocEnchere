@@ -48,7 +48,7 @@
 					<div class="dropdown-menu dropdown-menu-end"
 						aria-labelledby="profilDropdown">
 						<a class="dropdown-item" href="#">Paramètres</a> <a
-							class="dropdown-item" href="#">Se déconnecter</a>
+							class="dropdown-item" href="<%=request.getContextPath()%>/deconnexion">Se déconnecter</a>
 					</div></li>
 				<%
 				} else {
