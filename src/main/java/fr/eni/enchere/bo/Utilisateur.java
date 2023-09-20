@@ -24,6 +24,7 @@ public class Utilisateur implements Serializable {
 	private int credit = 0;
 	private String motDePasse;
 	private Boolean administrateur = false;
+	private Boolean activate = false;
 
 	// GETTER ET SETTER
 
@@ -146,6 +147,16 @@ public class Utilisateur implements Serializable {
 	public void setAdministrateur(Boolean administrateur) {
 		this.administrateur = administrateur;
 	}
+	
+	public Boolean getActivate() {
+		return activate;
+	}
+
+	public void setActivate(Boolean activate) {
+		this.activate = activate;
+	}
+	
+	public Utilisateur() {}
 
 	/**
 	 * @param pseudo
@@ -171,7 +182,6 @@ public class Utilisateur implements Serializable {
 		this.codePostal = codePostal;
 		this.motDePasse = motDePasse;
 	}
-	
 
 	/**
 	 * @param identifiant
@@ -186,9 +196,10 @@ public class Utilisateur implements Serializable {
 	 * @param credit
 	 * @param motDePasse
 	 * @param administrateur
+	 * @param activate
 	 */
 	public Utilisateur(int identifiant, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String ville, int codePostal, int credit, String motDePasse, Boolean administrateur) {
+			String rue, String ville, int codePostal, int credit, String motDePasse, Boolean administrateur, Boolean activate) {
 		this.identifiant = identifiant;
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -201,16 +212,15 @@ public class Utilisateur implements Serializable {
 		this.credit = credit;
 		this.motDePasse = motDePasse;
 		this.administrateur = administrateur;
-	}
-
-	public Utilisateur() {
+		this.activate = activate;
 	}
 
 	@Override
 	public String toString() {
 		return "Utilisateur [identifiant=" + identifiant + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom
 				+ ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", ville=" + ville
-				+ ", codePostal=" + codePostal + ", motDePasse=" + motDePasse + ", administrateur=" + administrateur
+				+ ", codePostal=" + codePostal + ", motDePasse=" + motDePasse 
+				+ ", administrateur=" + administrateur + ", activate=" + activate
 				+ "]";
 	}
 
