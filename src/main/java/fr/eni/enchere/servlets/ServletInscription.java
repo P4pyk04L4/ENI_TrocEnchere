@@ -40,7 +40,7 @@ public class ServletInscription extends HttpServlet {
         utilisateur.setVille(request.getParameter("ville"));
         utilisateur.setMotDePasse(request.getParameter("mot de passe"));
         
-//        utilisateurDao.insert(utilisateur);
+        utilisateurDao.insert(utilisateur);
         HttpSession session = request.getSession();
         session.setAttribute("profilConnecte", true);
         
