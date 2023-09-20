@@ -1,6 +1,8 @@
 package fr.eni.enchere.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +27,8 @@ public class ServletConnexion extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/connexion.jsp");
+		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,10 +41,12 @@ public class ServletConnexion extends HttpServlet {
 	        HttpSession session = request.getSession(true);
 	        session.setAttribute("user", utilisateur);
 	        session.setAttribute("profilConnecte", true);
-	        
-	        response.sendRedirect(request.getContextPath() + "/ServletDeTest");
+	    	response.sendRedirect(request.getContextPath() + "/ServletDeTest");
+
 	    } else {
-	        response.sendRedirect("/page_d_erreur.jsp");
+	    	request.setAttribute("connexionEchouee", true);
+	    	System.out.println("connexionEchouee défini");
+	    	response.sendRedirect(request.getContextPath() + "/connexion");
 	    }
 	}
 
