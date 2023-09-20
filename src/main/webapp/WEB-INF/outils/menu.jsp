@@ -37,7 +37,8 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="profilDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg"
+					aria-expanded="false">
+							<svg xmlns="http://www.w3.org/2000/svg"
 							width="30" height="30" fill="currentColor"
 							class="bi bi-person-circle" viewBox="0 0 16 16">
   							<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -47,7 +48,8 @@
 				</a>
 					<div class="dropdown-menu dropdown-menu-end"
 						aria-labelledby="profilDropdown">
-						<a class="dropdown-item" href="#">Paramètres</a> <a
+							<h6 class="dropdown-header"><c:out value="${ user.pseudo }" /></h6>
+							<a class="dropdown-item" href="#">Paramètres</a> <a
 							class="dropdown-item" href="<%=request.getContextPath()%>/deconnexion">Se déconnecter</a>
 					</div></li>
 				<%
@@ -78,15 +80,10 @@
 				<div class="modal-body">
 					<!-- Formulaire de Connexion -->
 					<form method="post"
-						action="<%=request.getContextPath()%>/ServletDeTest">
+						action="<%=request.getContextPath()%>//connexion">
 						<div class="form-group">
-							<label for="nom">Nom</label> <input type="text"
-								class="form-control" id="nom" name="nom" placeholder="Nom">
-						</div>
-						<div class="form-group">
-							<label for="prenom">Prénom</label> <input type="text"
-								class="form-control" id="prenom" name="prenom"
-								placeholder="Prénom">
+							<label for="nom">Pseudo</label> <input type="text"
+								class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo">
 						</div>
 						<div class="form-group">
 							<label for="mot de passe">Mot de Passe</label> <input

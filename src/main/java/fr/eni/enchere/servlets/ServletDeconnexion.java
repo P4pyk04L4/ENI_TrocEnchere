@@ -20,8 +20,10 @@ public class ServletDeconnexion extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		if (session !=null) {
+			session.setAttribute("profilConnecte", false);
 			session.invalidate();
 		}
+		response.sendRedirect(request.getContextPath() + "/ServletDeTest");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
