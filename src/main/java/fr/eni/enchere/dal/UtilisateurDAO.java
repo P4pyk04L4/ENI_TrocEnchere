@@ -17,6 +17,6 @@ public interface UtilisateurDAO {
 	
 	public List<Utilisateur> afficherTous();
 	
-	public Utilisateur connectionUser( String pseudo, String motDePasse );
+	public Utilisateur connectionUser(String pseudo, String motDePasse);
 	
 }

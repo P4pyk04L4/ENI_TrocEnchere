@@ -31,8 +31,13 @@ public class UtilisateurManager {
 	
 	UtilisateurDAO dao = DAOFactory.getUtilisateurDAO();
 	
+	public void insertOneUser(Utilisateur utilisateur) {
+		
+		dao.insert(utilisateur);
+		
+	}
 
-	public List<Utilisateur> getAllUser() {
+	public List<Utilisateur> getAllUsers() {
 		
 		return dao.afficherTous();
 		
