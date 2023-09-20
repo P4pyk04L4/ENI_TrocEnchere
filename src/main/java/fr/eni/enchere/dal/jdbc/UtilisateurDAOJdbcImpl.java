@@ -20,7 +20,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, administrateur)"
 			+ "VALUES(?,?,?,?,?,?,?,?,?,?);";
-	private static final String SELECT_ALL = "SELECT nom, prenom from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
+	private static final String SELECT_ALL = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
+	private static final String SELECT_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
 
 	@Override
 	public void insert(Utilisateur utilisateur) {
@@ -57,12 +58,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
 
-				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setNom(nom);
-				utilisateur.setPrenom(prenom);
+				Utilisateur utilisateur = new Utilisateur(rs.getInt("noUtilisateur"),rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
+						rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("ville"),
+						rs.getInt("codePostal"),rs.getInt("credit"), rs.getString("motDePasse") , rs.getBoolean("administrateur"));
 
 				utilisateurs.add(utilisateur);
 
@@ -74,14 +73,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	
-	
+	@Override
 	public Utilisateur connectionUser( String pseudo, String motDePasse ) {
-		
 		Utilisateur user = null;
-		String sql = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
 		
 		try ( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(sql) ) {
+				PreparedStatement stmt = cnx.prepareStatement(SELECT_USER) ) {
 			stmt.setString(1, pseudo);
 			stmt.setString(2, motDePasse);
 			ResultSet rs = stmt.executeQuery();
@@ -90,7 +87,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 						rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("ville"),
 						rs.getInt("codePostal"), rs.getString("motDePasse") );
 			} else {
-				throw new RuntimeException( "Pseudo ou mot de passe incorrect" );
+				user = null;
+//				throw new RuntimeException( "Pseudo ou mot de passe incorrect" );
 			}
 			
 		} catch ( Exception e ) {

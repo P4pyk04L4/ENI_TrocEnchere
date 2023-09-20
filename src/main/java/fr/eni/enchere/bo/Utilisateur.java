@@ -171,6 +171,37 @@ public class Utilisateur implements Serializable {
 		this.codePostal = codePostal;
 		this.motDePasse = motDePasse;
 	}
+	
+
+	/**
+	 * @param identifiant
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param ville
+	 * @param codePostal
+	 * @param credit
+	 * @param motDePasse
+	 * @param administrateur
+	 */
+	public Utilisateur(int identifiant, String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String ville, int codePostal, int credit, String motDePasse, Boolean administrateur) {
+		this.identifiant = identifiant;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.ville = ville;
+		this.codePostal = codePostal;
+		this.credit = credit;
+		this.motDePasse = motDePasse;
+		this.administrateur = administrateur;
+	}
 
 	public Utilisateur() {
 	}
