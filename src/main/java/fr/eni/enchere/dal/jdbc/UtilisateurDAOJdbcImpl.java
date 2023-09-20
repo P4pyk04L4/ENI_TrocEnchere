@@ -70,7 +70,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return utilisateurs;
 	}
 	
 	
