@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 import fr.eni.enchere.dal.jdbc.UtilisateurDAOJdbcImpl;
 
@@ -20,7 +21,7 @@ import fr.eni.enchere.dal.jdbc.UtilisateurDAOJdbcImpl;
 @WebServlet("/ServletDeTest")
 public class ServletDeTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurDAO utilisateurDao;
+	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
        
     public ServletDeTest() {
         super();
@@ -29,8 +30,6 @@ public class ServletDeTest extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        utilisateurDao = new UtilisateurDAOJdbcImpl(); // ou utilisez la classe d'implémentation que vous avez créée
-
     }
 
 

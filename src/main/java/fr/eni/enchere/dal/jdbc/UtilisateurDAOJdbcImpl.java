@@ -78,7 +78,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public Utilisateur connectionUser( String pseudo, String motDePasse ) {
 		
 		Utilisateur user = null;
-		String sql = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur; WHERE pseudo=? AND motDePasse=?";
+		String sql = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
 		
 		try ( Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement stmt = cnx.prepareStatement(sql) ) {
