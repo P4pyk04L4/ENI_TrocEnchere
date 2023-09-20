@@ -83,9 +83,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			stmt.setString(2, motDePasse);
 			ResultSet rs = stmt.executeQuery();
 			if ( rs.next() ) {
-				user = new Utilisateur( rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
+				user = new Utilisateur(rs.getInt("noUtilisateur"),rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
 						rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("ville"),
-						rs.getInt("codePostal"), rs.getString("motDePasse") );
+						rs.getInt("codePostal"),rs.getInt("credit"), rs.getString("motDePasse") , rs.getBoolean("administrateur"));
 			} else {
 				user = null;
 //				throw new RuntimeException( "Pseudo ou mot de passe incorrect" );

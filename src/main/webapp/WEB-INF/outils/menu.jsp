@@ -19,7 +19,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<!-- Menu des pages principales à gauche -->
 			<ul class="navbar-nav col-10">
-				<li class="nav-item active"><a class="nav-link" href="#">Accueil</a></li>
+				<li class="nav-item active"><a class="nav-link" href="<%=request.getContextPath()%>">Accueil</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Services</a></li>
 			</ul>
@@ -50,7 +50,7 @@
 						<h6 class="dropdown-header">
 							<c:out value="${ user.pseudo }" />
 						</h6>
-						<a class="dropdown-item" href="#">Paramètres</a> <a
+						<a class="dropdown-item" href="<%=request.getContextPath()%>/ServletProfilUtilisateur">Paramètres</a> <a
 							class="dropdown-item"
 							href="<%=request.getContextPath()%>/deconnexion">Se
 							déconnecter</a>
