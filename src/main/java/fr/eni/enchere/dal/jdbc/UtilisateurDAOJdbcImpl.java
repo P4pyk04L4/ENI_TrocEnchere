@@ -21,7 +21,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, administrateur)"
 			+ "VALUES(?,?,?,?,?,?,?,?,?,?);";
 	private static final String SELECT_ALL = "SELECT nom, prenom from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
-	
 
 	@Override
 	public void insert(Utilisateur utilisateur) {

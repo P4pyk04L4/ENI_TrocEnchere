@@ -26,7 +26,7 @@ public class ServletInscription extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp");
 		HttpSession session = request.getSession();
-        session.setAttribute("profilConnecte", false);
+		session.setAttribute("profilConnecte", false);
 		rd.forward(request, response);
 	}
 
@@ -42,7 +42,9 @@ public class ServletInscription extends HttpServlet {
         utilisateur.setVille(request.getParameter("ville"));
         utilisateur.setMotDePasse(request.getParameter("mot de passe"));
         
-        utilisateurDao.insert(utilisateur);
+//        utilisateurDao.insert(utilisateur);
+        HttpSession session = request.getSession();
+        session.setAttribute("profilConnecte", true);
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
 	}
