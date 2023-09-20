@@ -12,6 +12,11 @@ import fr.eni.enchere.bo.Utilisateur;
  *
  */
 public interface UtilisateurDAO {
+	
 	public void insert(Utilisateur utilisateur);
+	
 	public List<Utilisateur> afficherTous();
+	
+	public Utilisateur connectionUser( String pseudo, String motDePasse );
+	
 }
