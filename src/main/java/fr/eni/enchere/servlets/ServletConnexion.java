@@ -21,34 +21,38 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
-       
-    public ServletConnexion() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ServletConnexion() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/connexion.jsp");
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String pseudo = request.getParameter("pseudo");
-	    String motDePasse = request.getParameter("mot de passe");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String pseudo = request.getParameter("pseudo");
+		String motDePasse = request.getParameter("mot de passe");
 
-	    Utilisateur utilisateur = utilisateurDao.connectionUser(pseudo, motDePasse);
+		Utilisateur utilisateur = utilisateurDao.connectionUser(pseudo, motDePasse);
 
-	    if (utilisateur != null) {
-	        HttpSession session = request.getSession(true);
-	        session.setAttribute("user", utilisateur);
-	        session.setAttribute("profilConnecte", true);
-	    	response.sendRedirect(request.getContextPath() + "/ServletDeTest");
+		if (utilisateur != null) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", utilisateur);
+			session.setAttribute("profilConnecte", true);
+			response.sendRedirect(request.getContextPath() + "/ServletDeTest");
 
-	    } else {
-	    	request.setAttribute("connexionEchouee", true);
-	    	System.out.println("connexionEchouee défini");
-	    	response.sendRedirect(request.getContextPath() + "/connexion");
-	    }
+		} else {
+			request.setAttribute("connexionEchouee", true);
+			System.out.println("connexionEchouee défini");
+			this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/connexion.jsp").forward(request,
+					response);
+		}
+
+		
 	}
-
 
 }

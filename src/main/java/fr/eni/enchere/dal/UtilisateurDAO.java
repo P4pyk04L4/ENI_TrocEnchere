@@ -23,4 +23,6 @@ public interface UtilisateurDAO {
 	
 	public Utilisateur selectById(int noIdentifiant);
 	
+	public void updateMdp(Utilisateur utilisateur, int noUtilisateur);
+	
 }

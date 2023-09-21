@@ -49,5 +49,9 @@ public class UtilisateurManager {
 	public Utilisateur selectById(int noIdentifiant) {
 		return dao.selectById(noIdentifiant);
 	}
+	
+	public void updateMdp(Utilisateur utilisateur, int noUtilisateur) {
+		dao.updateMdp(utilisateur, noUtilisateur);
+	}
 
 }
