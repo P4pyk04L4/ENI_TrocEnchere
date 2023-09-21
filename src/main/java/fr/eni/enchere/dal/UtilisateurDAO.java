@@ -19,4 +19,8 @@ public interface UtilisateurDAO {
 	
 	public Utilisateur connectionUser(String pseudo, String motDePasse);
 	
+	public void update(Utilisateur utilisateur, int noUtilisateur);
+	
+	public Utilisateur selectById(int noIdentifiant);
+	
 }
