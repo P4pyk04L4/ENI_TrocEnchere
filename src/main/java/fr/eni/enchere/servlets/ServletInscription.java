@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -17,7 +18,8 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 @WebServlet("/inscription")
 public class ServletInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
+//	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
+	private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
        
     public ServletInscription() {
         super();
@@ -39,8 +41,9 @@ public class ServletInscription extends HttpServlet {
         utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
         utilisateur.setVille(request.getParameter("ville"));
         utilisateur.setMotDePasse(request.getParameter("mot de passe"));
+        utilisateurManager.insertOneUser(utilisateur);
         
-        utilisateurDao.insert(utilisateur);
+//        utilisateurDao.insert(utilisateur);
         HttpSession session = request.getSession();
         session.setAttribute("profilConnecte", true);
         

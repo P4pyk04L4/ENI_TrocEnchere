@@ -7,46 +7,47 @@ import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
-	
-	
+
 	/**
-	 * *****************  Début singleton ***************************
+	 * ***************** Début singleton ***************************
 	 */
-	
+
 	private static UtilisateurManager instance;
-	
-	private UtilisateurManager() {}	
-	
+
+	private UtilisateurManager() {
+	}
+
 	public static UtilisateurManager getInstance() {
-		if(instance==null) {
+		if (instance == null) {
 			instance = new UtilisateurManager();
 		}
 		return instance;
 	}
-	
+
 	/**
-	 * *****************  Fin singleton ***************************
-	 */	
-	
-	
+	 * ***************** Fin singleton ***************************
+	 */
+
 	UtilisateurDAO dao = DAOFactory.getUtilisateurDAO();
-	
+
 	public void insertOneUser(Utilisateur utilisateur) {
-		
 		dao.insert(utilisateur);
-		
 	}
 
 	public List<Utilisateur> getAllUsers() {
-		
 		return dao.afficherTous();
-		
+	}
+
+	public Utilisateur connectionUser(String pseudo, String motDePasse) {
+		return dao.connectionUser(pseudo, motDePasse);
+	}
+
+	public void updateOne(Utilisateur utilisateur, int noUtilisateur) {
+		dao.update(utilisateur, noUtilisateur);
 	}
 	
-	public Utilisateur connectionUser( String pseudo, String motDePasse ) {
-		
-		return dao.connectionUser(pseudo, motDePasse);
-		
+	public Utilisateur selectById(int noIdentifiant) {
+		return dao.selectById(noIdentifiant);
 	}
 
 }

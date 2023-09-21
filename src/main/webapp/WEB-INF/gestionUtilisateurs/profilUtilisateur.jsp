@@ -79,6 +79,61 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="col-md-8 bg-light m-3">
+				<h2>Modifier mon profil</h2>
+				<form method="post"
+					action="<%=request.getContextPath()%>/ServletProfilUtilisateur"
+					class="row">
+					<div class="form-group col-6">
+						<label for="pseudo">Pseudo</label> <input type="text"
+							class="form-control" id="pseudo" name="pseudo"
+							value="<c:out value="${ user.pseudo }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="nom">Nom</label> <input type="text"
+							class="form-control" id="nom" name="nom"
+							value="<c:out value="${ user.nom }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="prenom">Prénom</label> <input type="text"
+							class="form-control" id="prenom" name="prenom"
+							value="<c:out value="${ user.prenom }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="email">Email</label> <input type="email"
+							class="form-control" id="email" name="email"
+							value="<c:out value="${ user.email }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="telephone">Téléphone</label> <input type="tel"
+							class="form-control" id="telephone" name="telephone"
+							value="<c:out value="${ user.telephone }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="rue">Rue</label> <input type="text"
+							class="form-control" id="rue" name="rue"
+							value="<c:out value="${ user.rue }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="codePostal">Code postal</label> <input type="number"
+							class="form-control" id="codePostal" name="codePostal"
+							value="<c:out value="${ user.codePostal }" />">
+					</div>
+					<div class="form-group col-6">
+						<label for="ville">Ville</label> <input type="text"
+							class="form-control" id="ville" name="ville"
+							value="<c:out value="${ user.ville }" />">
+					</div>
+					<div class="my-4 text-center">
+						<div class="col-4 mx-auto">
+							<button type="submit" class="btn btn-primary mr-2">Modifier
+								le profil</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
 		</div>
 	</div>
 
@@ -89,6 +144,5 @@
 	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
-
 </body>
 </html>
