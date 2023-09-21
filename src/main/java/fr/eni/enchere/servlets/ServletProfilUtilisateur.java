@@ -49,6 +49,7 @@ public class ServletProfilUtilisateur extends HttpServlet {
         utilisateurActif = utilisateurManager.selectById(utilisateurActif.getIdentifiant());
                 
         session.setAttribute("user", utilisateurActif);
+        request.setAttribute("InformationsProfilModifiees", true);
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/profilUtilisateur.jsp").forward(request, response);
 	}

@@ -47,7 +47,6 @@ public class ServletConnexion extends HttpServlet {
 
 		} else {
 			request.setAttribute("connexionEchouee", true);
-			System.out.println("connexionEchouee défini");
 			this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/connexion.jsp").forward(request,
 					response);
 		}

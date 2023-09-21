@@ -22,6 +22,9 @@
 		<c:if test="${not empty requestScope.MdpChange}">
 			<div class="alert alert-success">Votre mot de passe a bien été changé.</div>
 		</c:if>
+		<c:if test="${not empty requestScope.InformationsProfilModifiees}">
+			<div class="alert alert-success">Les modifications de votre profil ont bien été prises en compte.</div>
+		</c:if>
 	
 		<!-- RESTE DE LA PAGE -->
 		

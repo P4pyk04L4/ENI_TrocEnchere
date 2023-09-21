@@ -1,7 +1,6 @@
 package fr.eni.enchere.servlets;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.UtilisateurManager;
-import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletEspaceAdmin
