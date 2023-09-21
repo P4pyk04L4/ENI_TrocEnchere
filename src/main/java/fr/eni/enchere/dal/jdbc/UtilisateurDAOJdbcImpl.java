@@ -24,6 +24,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
 	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
 	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?";
+	private static final String UPDATE_MDP = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
+
 
 	@Override
 	public void insert(Utilisateur utilisateur) {
@@ -141,6 +143,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e.printStackTrace();
 		}
 		return utilisateur;
+	}
+
+	@Override
+	public void updateMdp(Utilisateur utilisateur, int noUtilisateur) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_MDP);
+			pstmt.setString(1, utilisateur.getMotDePasse());
+			pstmt.setInt(2, noUtilisateur);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 }
