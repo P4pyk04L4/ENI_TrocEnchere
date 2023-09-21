@@ -18,20 +18,22 @@ import fr.eni.enchere.dal.UtilisateurDAO;
  */
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String INSERT = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, administrateur, activate)"
+	private static final String INSERT_ONE_USER = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Utilisateur (pseudo, nom, prenom, email,"
+			+ "telephone, rue, codePostal, ville, motDePasse, administrateur)"
 			+ "VALUES(?,?,?,?,?,?,?,?,?,?);";
-	private static final String SELECT_ALL = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
-	private static final String SELECT_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
+	private static final String SELECT_ALL_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
+	private static final String SELECT_ONE_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
+	private static final String MODIFY_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET activate=? WHERE noUtilisateur=?";
+	private static final String DELETE_ONE_USER = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?";
 	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
 	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?";
 	private static final String UPDATE_MDP = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
 
-
 	@Override
-	public void insert(Utilisateur utilisateur) {
+	public void insertOneUser(Utilisateur utilisateur) {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ONE_USER, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2, utilisateur.getNom());
 			pstmt.setString(3, utilisateur.getPrenom());
@@ -45,36 +47,54 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setBoolean(11, true);
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
+			
 			if (rs.next()) {
 				utilisateur.setIdentifiant(1);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
-	public List<Utilisateur> afficherTous() {
+	public List<Utilisateur> getAllUsers() {
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL);
+			
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_USER);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
-				Utilisateur utilisateur = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"),
-						rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"),
-						rs.getString("rue"), rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"),
-						rs.getString("motDePasse"), rs.getBoolean("administrateur"), rs.getBoolean("activate"));
+				Utilisateur utilisateur = new Utilisateur(
+						rs.getInt("noUtilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"),
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("ville"),
+						rs.getInt("codePostal"),
+						rs.getInt("credit"),
+						rs.getString("motDePasse"),
+						rs.getBoolean("administrateur"),
+						rs.getBoolean("activate")
+				);
 
 				utilisateurs.add(utilisateur);
 
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return utilisateurs;
+		
 	}
 
 	@Override
@@ -82,15 +102,31 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		Utilisateur user = null;
 
 		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(SELECT_USER)) {
+				PreparedStatement stmt = cnx.prepareStatement(SELECT_ONE_USER)) {
+
 			stmt.setString(1, pseudo);
 			stmt.setString(2, motDePasse);
+			
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				user = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"), rs.getString("nom"),
-						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-						rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"), rs.getString("motDePasse"),
-						rs.getBoolean("administrateur"), rs.getBoolean("activate"));
+			
+			if ( rs.next() ) {
+				
+				user = new Utilisateur(
+						rs.getInt("noUtilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"),
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("ville"),
+						rs.getInt("codePostal"),
+						rs.getInt("credit"),
+						rs.getString("motDePasse"),
+						rs.getBoolean("administrateur"),
+						rs.getBoolean("activate")
+				);
+
 			} else {
 				user = null;
 //				throw new RuntimeException( "Pseudo ou mot de passe incorrect" );
@@ -155,6 +191,43 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
+	}
+	
+	@Override
+	public void modifActivateUser(Utilisateur utilisateur) {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+				PreparedStatement stmt = cnx.prepareStatement(MODIFY_ACTIVATE_ONE_USER);
+				
+				stmt.setBoolean(1, utilisateur.getActivate());	
+				stmt.setInt(2, utilisateur.getIdentifiant());
+				
+				// Update
+				stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void deleteOneUser(Utilisateur utilisateur) {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+				PreparedStatement stmt = cnx.prepareStatement(DELETE_ONE_USER);
+				
+				stmt.setInt(1, utilisateur.getIdentifiant());
+				
+				// Update
+				stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

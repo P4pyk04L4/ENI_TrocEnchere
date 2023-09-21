@@ -1,17 +1,25 @@
 package fr.eni.enchere.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletEspaceAdmin
  */
-@WebServlet("/ServletEspaceAdmin")
+@WebServlet("/espace_admin")
 public class ServletEspaceAdmin extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -19,23 +27,66 @@ public class ServletEspaceAdmin extends HttpServlet {
      */
     public ServletEspaceAdmin() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF//espaceAdmin/accueil.jsp");
+		
+		UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+		request.setAttribute("utilisateurs", utilisateurManager.getAllUsers());
+		
+		HttpSession session = request.getSession();
+		rd.forward(request, response);
+		
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+    	UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+    	
+	    // Récupération du nom du bouton soumis
+	    String boutonNom = request.getParameter("buttonClick");
+
+	    if (boutonNom != null) {
+	    	
+	    	Utilisateur utilisateur = new Utilisateur();
+	    	String idUserStr = request.getParameter("idUser");
+
+	    	if (idUserStr != null) {
+	    	    try {
+	    	        int idUser = Integer.parseInt(idUserStr);
+	    	        utilisateur.setIdentifiant(idUser);
+	    	    } catch (NumberFormatException e) {
+	    	        // Gérer l'exception si la conversion échoue (par exemple, enregistrez l'erreur dans les journaux)
+	    	    }
+	    	}
+	    	
+	        // Récupération de la valeur du bouton soumis
+	        String boutonValeur = request.getParameter("buttonClick");
+
+	        if ("desactivateUser".equals(boutonValeur)) {
+	        	
+	        	utilisateurManager.desactivateUser(utilisateur); 	
+	        	
+	        } else if ("activateUser".equals(boutonValeur)) {
+	        	
+	        	utilisateurManager.activateUser(utilisateur);
+	        	
+	        } else if ("deleteUser".equals(boutonValeur)) {
+	        	
+	        	utilisateurManager.deleteUser(utilisateur);	
+	        	
+	        }
+	    }
+	    
+		request.setAttribute("utilisateurs", utilisateurManager.getAllUsers());
+		HttpSession session = request.getSession();
+	    this.getServletContext().getRequestDispatcher("/WEB-INF//espaceAdmin/accueil.jsp").forward(request, response);
+		
 	}
 
 }
