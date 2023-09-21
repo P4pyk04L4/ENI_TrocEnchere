@@ -33,19 +33,42 @@ public class UtilisateurManager {
 	
 	public void insertOneUser(Utilisateur utilisateur) {
 		
-		dao.insert(utilisateur);
+		dao.insertOneUser(utilisateur);
 		
 	}
 
 	public List<Utilisateur> getAllUsers() {
 		
-		return dao.afficherTous();
+		return dao.getAllUsers();
 		
 	}
 	
 	public Utilisateur connectionUser( String pseudo, String motDePasse ) {
 		
 		return dao.connectionUser(pseudo, motDePasse);
+		
+	}
+	
+	public void desactivateUser(Utilisateur utilisateur) {
+		
+		utilisateur.setActivate(false);
+		
+		dao.modifActivateUser(utilisateur);
+		
+	}
+
+	
+	public void activateUser(Utilisateur utilisateur) {
+		
+		utilisateur.setActivate(true);
+		
+		dao.modifActivateUser(utilisateur);
+		
+	}
+	
+	public void deleteUser(Utilisateur utilisateur) {
+		
+		dao.deleteOneUser(utilisateur);
 		
 	}
 

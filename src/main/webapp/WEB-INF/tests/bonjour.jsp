@@ -28,7 +28,7 @@
 								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 								<div class="card-body">
 									<h3 class="card-title"><c:out value="${ utilisateur.prenom }" /></h3>
-									<p><c:out value="${ utilisateur.nom }" /></p>
+									<p></p>
 									<p><c:out value="${ utilisateur.pseudo }" /></p>
 									<p><c:out value="${ utilisateur.rue }" /></p>
 									<p><c:out value="${ utilisateur.codePostal }" /> <c:out value="${ utilisateur.ville }" /></p>

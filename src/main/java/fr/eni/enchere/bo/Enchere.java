@@ -10,19 +10,21 @@ public class Enchere {
 	private ArticleVendu articleVendu;
 	private LocalDate dateEnchere;
 	private int montantEnchere;
+	private Boolean activate = false;
 	
 	public Enchere( Integer noEnchere, Utilisateur utilisateurAcheteur, LocalDate dateEnchere, int montantEnchere,
-			ArticleVendu articleVendu ) {
+			ArticleVendu articleVendu, Boolean activate ) {
 		this.setNoEnchere(noEnchere);
 		this.setUtilisateurAcheteur(utilisateurAcheteur);
+		this.setArticleVendu(articleVendu);
 		this.setDateEnchere(dateEnchere);
 		this.setMontantEnchere(montantEnchere);
-		this.setArticleVendu(articleVendu);
+		this.setActivate(activate);
 	}
 	
 	public Enchere( Utilisateur utilisateurAcheteur, LocalDate dateEnchere, int montantEnchere,
-				ArticleVendu articleVendu ) {
-		this( null, utilisateurAcheteur, dateEnchere, montantEnchere, articleVendu );
+				ArticleVendu articleVendu, Boolean activate ) {
+		this( null, utilisateurAcheteur, dateEnchere, montantEnchere, articleVendu, activate );
 	}
 	
 	public Integer getNoEnchere() {
@@ -57,11 +59,18 @@ public class Enchere {
 	public void setArticleVendu(ArticleVendu articleVendu) {
 		this.articleVendu = articleVendu;
 	}
+	public Boolean getActivate() {
+		return activate;
+	}
+	public void setActivate(Boolean activate) {
+		this.activate = activate;
+	}
 
 	@Override
 	public String toString() {
 		return "Enchere [noEnchere=" + noEnchere + ", utilisateurAcheteur=" + utilisateurAcheteur + ", articleVendu="
-				+ articleVendu + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + "]";
+				+ articleVendu + ", dateEnchere=" + dateEnchere + ", montantEnchere=" 
+				+ montantEnchere + ", activate=" + activate + "]";
 	}	
 	
 	

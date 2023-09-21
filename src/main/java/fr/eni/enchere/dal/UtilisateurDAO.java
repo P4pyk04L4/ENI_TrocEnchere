@@ -13,10 +13,14 @@ import fr.eni.enchere.bo.Utilisateur;
  */
 public interface UtilisateurDAO {
 	
-	public void insert(Utilisateur utilisateur);
+	public void insertOneUser(Utilisateur utilisateur);
 	
-	public List<Utilisateur> afficherTous();
+	public List<Utilisateur> getAllUsers();
 	
-	public Utilisateur connectionUser(String pseudo, String motDePasse);
+	public Utilisateur connectionOneUser(String pseudo, String motDePasse);
+	
+	public void modifActivateUser(Utilisateur utilisateur);
+	
+	public void deleteOneUser(Utilisateur utilisateur);
 	
 }
