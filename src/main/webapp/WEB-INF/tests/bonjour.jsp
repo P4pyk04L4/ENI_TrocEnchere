@@ -16,32 +16,50 @@
 			<div class="col-md-8 bg-light">
 				<h2>Objets en vente</h2>
 
-				
+
 
 				<!-- CARTES DE BASE  -->
 				<div class="row">
 					<c:forEach var="utilisateur" items="${ utilisateurs }">
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="1">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title"><c:out value="${ utilisateur.prenom }" /></h3>
-									<p></p>
-									<p><c:out value="${ utilisateur.pseudo }" /></p>
-									<p><c:out value="${ utilisateur.rue }" /></p>
-									<p><c:out value="${ utilisateur.codePostal }" /> <c:out value="${ utilisateur.ville }" /></p>
-									<p><c:out value="${ utilisateur.credit }" /></p>
-									<p><c:out value="${ utilisateur.identifiant }" /></p>
+						<div class="col-lg-4 col-md-6 mb-3">
+							<a href="#" class="text-decoration-none" data-toggle="modal"
+								data-target="#myModal" data-card-id="1">
+								<div class="card">
+									<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
+									<div class="card-body">
+										<h3 class="card-title">
+											<c:out value="${ utilisateur.prenom }" />
+										</h3>
+										<p>
+											<c:out value="${ utilisateur.nom }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.pseudo }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.rue }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.codePostal }" />
+											<c:out value="${ utilisateur.ville }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.credit }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.identifiant }" />
+										</p>
+									</div>
 								</div>
-							</div>
-						</a>
-					</div>
-				</c:forEach>
+							</a>
+						</div>
+					</c:forEach>
 					<!-- Ajoutez autant de cartes que nécessaire -->
 				</div>
-			</div>
+				</div>
+
+				<!-- 				TEST -->
+				
 
 
 			<div class="col-md-3 bg-light">

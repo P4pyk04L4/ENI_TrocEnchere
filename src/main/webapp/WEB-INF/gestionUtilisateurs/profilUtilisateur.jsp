@@ -9,7 +9,22 @@
 
 	<div class="container">
 		<h1 class="my-2">Mon profil</h1>
-
+		
+		<!-- AFFICHAGES INFORMATIONS DIVERSES -->
+		
+		<c:if test="${not empty requestScope.MdpErrone}">
+			<div class="alert alert-danger">Votre mot de passe actuel ne
+				correspond pas. Veuillez réessayer.</div>
+		</c:if>
+		<c:if test="${not empty requestScope.ErreurConfirmation}">
+			<div class="alert alert-danger">Les deux nouveaux mots de passe ne correspondent pas. Veuillez réessayer.</div>
+		</c:if>
+		<c:if test="${not empty requestScope.MdpChange}">
+			<div class="alert alert-success">Votre mot de passe a bien été changé.</div>
+		</c:if>
+	
+		<!-- RESTE DE LA PAGE -->
+		
 		<div class="row d-flex justify-content-center py-3">
 			<!-- Formulaire d'inscription -->
 			<div class="col-md-8 bg-light m-3">
@@ -79,6 +94,141 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="col-md-8 bg-light m-3 p-3">
+				<h3>Modifier mon profil</h3>
+				<div class="accordion" id="accordionExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button" type="button"
+								data-bs-toggle="collapse" data-bs-target="#collapseOne"
+								aria-expanded="false" aria-controls="collapseOne">
+								Modifier mes informations</button>
+						</h2>
+						<div id="collapseOne" class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<form method="post"
+									action="<%=request.getContextPath()%>/ServletProfilUtilisateur"
+									class="row">
+									<div class="form-group col-6">
+										<label for="pseudo">Pseudo</label> <input type="text"
+											class="form-control" id="pseudo" name="pseudo"
+											value="<c:out value="${ user.pseudo }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="nom">Nom</label> <input type="text"
+											class="form-control" id="nom" name="nom"
+											value="<c:out value="${ user.nom }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="prenom">Prénom</label> <input type="text"
+											class="form-control" id="prenom" name="prenom"
+											value="<c:out value="${ user.prenom }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="email">Email</label> <input type="email"
+											class="form-control" id="email" name="email"
+											value="<c:out value="${ user.email }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="telephone">Téléphone</label> <input type="tel"
+											class="form-control" id="telephone" name="telephone"
+											value="<c:out value="${ user.telephone }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="rue">Rue</label> <input type="text"
+											class="form-control" id="rue" name="rue"
+											value="<c:out value="${ user.rue }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="codePostal">Code postal</label> <input
+											type="number" class="form-control" id="codePostal"
+											name="codePostal"
+											value="<c:out value="${ user.codePostal }" />">
+									</div>
+									<div class="form-group col-6">
+										<label for="ville">Ville</label> <input type="text"
+											class="form-control" id="ville" name="ville"
+											value="<c:out value="${ user.ville }" />">
+									</div>
+									<div class="my-4 text-center">
+										<div class="col-4 mx-auto">
+											<button type="submit" class="btn btn-primary mr-2">Modifier
+												les informations du profil</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+								aria-expanded="false" aria-controls="collapseTwo">
+								Modifier mon mot de passe</button>
+						</h2>
+						<div id="collapseTwo" class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<form method="post"
+									action="<%=request.getContextPath()%>/ServletChangementMdp"
+									class="row">
+									<div class="form-group col-6">
+										<label for="mot de passe">Votre mot de passe actuel</label> <input
+											type="password" class="form-control" id="mot de passe"
+											name="mot de passe" placeholder="motdepasse">
+									</div>
+									<div class="form-group col-6 col-offset-6">
+										<label for="nouveau mot de passe">Votre nouveau mot de
+											passe</label> <input type="password" class="form-control"
+											id="nouveau mot de passe" name="nouveau mot de passe"
+											placeholder="motdepasse">
+									</div>
+									<div class="form-group col-6">
+										<label for="confirmation">Confirmez votre nouveau mot
+											de passe</label> <input type="password" class="form-control"
+											id="confirmation" name="confirmation"
+											placeholder="motdepasse">
+									</div>
+									<div class="my-4 text-center">
+										<div class="col-4 mx-auto">
+											<button type="submit" class="btn btn-primary mr-2">Modifier
+												le mot de passe</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#collapseThree"
+								aria-expanded="false" aria-controls="collapseThree">
+								Supprimer mon compte !</button>
+						</h2>
+						<div id="collapseThree" class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<strong>This is the third item's accordion body.</strong> It is
+								hidden by default, until the collapse plugin adds the
+								appropriate classes that we use to style each element. These
+								classes control the overall appearance, as well as the showing
+								and hiding via CSS transitions. You can modify any of this with
+								custom CSS or overriding our default variables. It's also worth
+								noting that just about any HTML can go within the
+								<code>.accordion-body</code>
+								, though the transition does limit overflow.
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</div>
 
@@ -89,6 +239,5 @@
 	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
-
 </body>
 </html>

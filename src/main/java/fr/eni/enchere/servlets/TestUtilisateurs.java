@@ -34,7 +34,7 @@ public class TestUtilisateurs extends HttpServlet {
         utilisateur.setPrenom(request.getParameter("prenom"));
         utilisateur.setMotDePasse(request.getParameter("mot de passe"));
         
-        utilisateurDao.insert(utilisateur);
+        utilisateurDao.insertOneUser(utilisateur);
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/tests/utilisateurs.jsp").forward(request, response);
     }

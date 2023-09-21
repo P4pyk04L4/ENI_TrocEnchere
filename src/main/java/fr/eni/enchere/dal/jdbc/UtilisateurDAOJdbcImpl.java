@@ -25,7 +25,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_ONE_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?";
 	private static final String MODIFY_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET activate=? WHERE noUtilisateur=?";
 	private static final String DELETE_ONE_USER = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?";
-	
+	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
+	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?";
+	private static final String UPDATE_MDP = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
+
 	@Override
 	public void insertOneUser(Utilisateur utilisateur) {
 
@@ -41,7 +44,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9, utilisateur.getMotDePasse());
 			pstmt.setBoolean(10, utilisateur.getAdministrateur());
-
+			pstmt.setBoolean(11, true);
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			
@@ -93,16 +96,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return utilisateurs;
 		
 	}
-	
-	
+
 	@Override
-	public Utilisateur connectionOneUser( String pseudo, String motDePasse ) {
-		
+	public Utilisateur connectionUser(String pseudo, String motDePasse) {
 		Utilisateur user = null;
-		
-		try ( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(SELECT_ONE_USER) ) {
-			
+
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(SELECT_ONE_USER)) {
+
 			stmt.setString(1, pseudo);
 			stmt.setString(2, motDePasse);
 			
@@ -130,13 +131,66 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				user = null;
 //				throw new RuntimeException( "Pseudo ou mot de passe incorrect" );
 			}
-			
-		} catch ( Exception e ) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return user;
-		
+
+	}
+
+	@Override
+	public void update(Utilisateur utilisateur, int noUtilisateur) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ONE);
+			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(2, utilisateur.getNom());
+			pstmt.setString(3, utilisateur.getPrenom());
+			pstmt.setString(4, utilisateur.getEmail());
+			pstmt.setString(5, utilisateur.getTelephone());
+			pstmt.setString(6, utilisateur.getRue());
+			pstmt.setInt(7, utilisateur.getCodePostal());
+			pstmt.setString(8, utilisateur.getVille());
+			pstmt.setInt(9, noUtilisateur);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Utilisateur selectById(int noIdentifiant) {
+		Utilisateur utilisateur = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_ID);
+			stmt.setInt(1, noIdentifiant);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"), rs.getString("motDePasse"),
+						rs.getBoolean("administrateur"), rs.getBoolean("activate"));
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+
+	@Override
+	public void updateMdp(Utilisateur utilisateur, int noUtilisateur) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_MDP);
+			pstmt.setString(1, utilisateur.getMotDePasse());
+			pstmt.setInt(2, noUtilisateur);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	@Override

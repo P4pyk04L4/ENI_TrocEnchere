@@ -9,16 +9,16 @@
 
 	<div class="container">
 		<h1 class="my-2">Se connecter</h1>
+		
+		<c:if test="${not empty requestScope.connexionEchouee}">
+			<div class="alert alert-danger">Connexion échouée : Pseudo ou
+				mot de passe incorrect.</div>
+		</c:if>
 
 		<div class="row d-flex justify-content-center py-3">
 			<!-- Formulaire d'inscription -->
 			<div class="col-md-8 bg-light m-3">
-			
-				<c:if test="${not empty requestScope.connexionEchouee}">
-					<div class="alert-danger">Connexion échouée : Pseudo
-						ou mot de passe incorrect.</div>
-				</c:if>
-					
+
 				<form method="post" action="<%=request.getContextPath()%>/connexion">
 
 
