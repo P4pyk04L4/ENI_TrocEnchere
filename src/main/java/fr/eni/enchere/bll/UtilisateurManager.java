@@ -35,7 +35,7 @@ public class UtilisateurManager {
 	}
 
 	public List<Utilisateur> getAllUsers() {
-		return dao.getAllUsers();	
+		return dao.getAllUsers();
 	}
 
 	public Utilisateur connectionUser(String pseudo, String motDePasse) {
@@ -45,28 +45,84 @@ public class UtilisateurManager {
 	public void updateOne(Utilisateur utilisateur, int noUtilisateur) {
 		dao.update(utilisateur, noUtilisateur);
 	}
-	
+
 	public Utilisateur selectById(int noIdentifiant) {
 		return dao.selectById(noIdentifiant);
 	}
-	
+
 	public void updateMdp(Utilisateur utilisateur, int noUtilisateur) {
 		dao.updateMdp(utilisateur, noUtilisateur);
 	}
-	
-	public void desactivateUser(Utilisateur utilisateur) {		
-		utilisateur.setActivate(false);	
-		dao.modifActivateUser(utilisateur);	
+
+	public void desactivateUser(Utilisateur utilisateur) {
+		utilisateur.setActivate(false);
+		dao.modifActivateUser(utilisateur);
 	}
 
-	
 	public void activateUser(Utilisateur utilisateur) {
 		utilisateur.setActivate(true);
 		dao.modifActivateUser(utilisateur);
 	}
-	
+
 	public void deleteUser(Utilisateur utilisateur) {
 		dao.deleteOneUser(utilisateur);
+	}
+
+	/**
+	 * ***************** Vérifications ***************************
+	 */
+
+	public String checkRegistration(Utilisateur utilisateur, String confirmation) {
+
+		if (dao.selectByPseudo(utilisateur.getPseudo()) != null) {
+			return "Ce pseudo est pris!";
+		}
+
+		if (utilisateur.getPseudo() == null || !utilisateur.getPseudo().matches("^[a-zA-Z0-9]*$")) {
+			return "Le pseudo ne peut pas être vide et n’accepte que des caractères alphanumériques!";
+		}
+
+		if (utilisateur.getNom() == null) {
+			return "Entrez s'il vous plait votre nom.";
+		}
+
+		if (utilisateur.getPrenom() == null) {
+			return "Entrez s'il vous plait votre prénom.";
+		}
+
+		if (dao.selectByEmail(utilisateur.getEmail()) != null) {
+			return "Ce e-mail est pris!";
+		}
+
+		if (utilisateur.getEmail() == null || !utilisateur.getEmail().contains("@")) {
+			return "Entrez s'il vous plait l'e-mail.";
+		}
+
+		if (utilisateur.getTelephone() == null) {
+			return "Entrez s'il vous plait votre téléphone.";
+		}
+
+		if (utilisateur.getRue() == null) {
+			return "Entrez s'il vous plait votre rue.";
+		}
+
+		if (utilisateur.getCodePostal() == 0) {
+			return "Entrez s'il vous plait votre code postal.";
+		}
+
+		if (utilisateur.getVille() == null) {
+			return "Entrez s'il vous plait votre ville.";
+		}
+
+		if (utilisateur.getMotDePasse() == null) {
+			return "Entrez s'il vous plait votre mot de passe.";
+		}
+
+		if (confirmation.equals(utilisateur.getMotDePasse())) {
+			return "La confirmation du mot de passe doit correspondre.";
+		}
+
+		return null;
 	}
 
 }

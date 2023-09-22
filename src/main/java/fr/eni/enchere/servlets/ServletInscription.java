@@ -20,34 +20,50 @@ public class ServletInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 //	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
 	private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
-       
-    public ServletInscription() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ServletInscription() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp");
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(request.getParameter("pseudo"));
-        utilisateur.setNom(request.getParameter("nom"));
-        utilisateur.setPrenom(request.getParameter("prenom"));
-        utilisateur.setEmail(request.getParameter("email"));
-        utilisateur.setTelephone(request.getParameter("telephone"));
-        utilisateur.setRue(request.getParameter("rue"));
-        utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
-        utilisateur.setVille(request.getParameter("ville"));
-        utilisateur.setMotDePasse(request.getParameter("mot de passe"));
-        utilisateurManager.insertOneUser(utilisateur);
-        
-//        utilisateurDao.insert(utilisateur);
-        HttpSession session = request.getSession();
-        session.setAttribute("profilConnecte", true);
-        
-        this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
+		utilisateur.setNom(request.getParameter("nom"));
+		utilisateur.setPrenom(request.getParameter("prenom"));
+		utilisateur.setEmail(request.getParameter("email"));
+		utilisateur.setTelephone(request.getParameter("telephone"));
+		utilisateur.setRue(request.getParameter("rue"));
+		try {
+			utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
+		} catch (NumberFormatException ex) {
+			utilisateur.setCodePostal(0);
+		}
+
+		utilisateur.setVille(request.getParameter("ville"));
+		utilisateur.setMotDePasse(request.getParameter("mot de passe"));
+
+		String confirmation = request.getParameter("confirmation");
+
+		if (utilisateurManager.checkRegistration(utilisateur, confirmation) != null) {
+			request.setAttribute("erreur", utilisateurManager.checkRegistration(utilisateur, confirmation));
+			this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp")
+					.forward(request, response);
+		} else {
+			utilisateurManager.insertOneUser(utilisateur);
+//	        utilisateurDao.insert(utilisateur);
+			HttpSession session = request.getSession();
+			session.setAttribute("profilConnecte", true);
+
+			this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
+		}
+
 	}
 
 }
