@@ -49,20 +49,21 @@ public class ServletInscription extends HttpServlet {
 		utilisateur.setMotDePasse(request.getParameter("mot de passe"));
 		String confirmation = request.getParameter("confirmation");
 		String verif = utilisateurManager.checkRegistration(utilisateur, confirmation);
+		
+		//pour sauvegarder les réponses
+		request.setAttribute("pseudo", request.getParameter("pseudo"));
+		request.setAttribute("nom", request.getParameter("nom"));
+		request.setAttribute("prenom", request.getParameter("prenom"));
+		request.setAttribute("email", request.getParameter("email"));
+		request.setAttribute("telephone", request.getParameter("telephone"));
+		request.setAttribute("rue", request.getParameter("rue"));
+		request.setAttribute("codePostal", request.getParameter("codePostal"));
+		request.setAttribute("ville", request.getParameter("ville"));
+		
+		System.out.println(utilisateur.toString());
 
 		if (verif != null) {
 			request.setAttribute("erreur", verif);
-			
-			//pour sauvegarder les réponses
-			request.setAttribute("pseudo", request.getParameter("pseudo"));
-			request.setAttribute("nom", request.getParameter("nom"));
-			request.setAttribute("prenom", request.getParameter("prenom"));
-			request.setAttribute("email", request.getParameter("email"));
-			request.setAttribute("telephone", request.getParameter("telephone"));
-			request.setAttribute("rue", request.getParameter("rue"));
-			request.setAttribute("codePostal", request.getParameter("codePostal"));
-			request.setAttribute("ville", request.getParameter("ville"));
-			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp")
 					.forward(request, response);
 		} else {
@@ -70,7 +71,6 @@ public class ServletInscription extends HttpServlet {
 //	        utilisateurDao.insert(utilisateur);
 			HttpSession session = request.getSession();
 			session.setAttribute("profilConnecte", true);
-
 			this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
 		}
 
