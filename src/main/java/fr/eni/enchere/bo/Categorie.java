@@ -6,6 +6,8 @@ public class Categorie {
 	private Integer noCategorie;
 	private String libelle;
 	
+	public Categorie() {}
+	
 	public Categorie( Integer noCategorie, String libelle ) {
 		this.setNoCategorie(noCategorie);
 		this.setLibelle(libelle);
