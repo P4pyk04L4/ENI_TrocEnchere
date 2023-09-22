@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Retrait;
@@ -16,13 +17,13 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	@Override
 	public void creerArticle( ArticleVendu article, Retrait retrait ) {
 
-		//Insertion dans la base de données
+		//Insertion de l'article dans la base de données
 		String sql = "INSERT INTO ArticleVendu (nom, description, etatVente, dateDebutEncheres, dateFinEncheres, "
 				+ "miseAPrix, prixVente, noCategorie, noUtilisateurVendeur, activate) VALUES (?, ?, ?, ?, ?, ?, "
-				+ "?, ?, ?, ?";
+				+ "?, ?, ?, ?)";
 		
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(sql) ) {
+				PreparedStatement stmt = cnx.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS ) ) {
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
 			stmt.setString(3, article.getEtatVente().toString());
@@ -42,15 +43,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 		}
 		
-		//Une fois que le numéro d'article a été créé, on crée l'adresse du retrait dans la bdd avec le noArticle
+		//Une fois que le numéro d'article a été récupéré, insertion du point de retrait dans la bdd avec le noArticle
 		creerPointRetrait( article, retrait );
-		
-		//on précise le numéro de retrait dans l'article que l'on enregistre ?
 		
 	}	
 
 	
-	/*fonction créant un point de retrait */
+	//Création d'un point de retrait
+	@Override
 	public void creerPointRetrait( ArticleVendu article, Retrait retrait ) {		
 		
 		String sql = "INSERT INTO Retrait (rue, ville, codePostal, noArticle) VALUES (?, ?, ?, ?)";
@@ -65,6 +65,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
+		System.out.println(article.getNoArticle());
 		
 	}
 

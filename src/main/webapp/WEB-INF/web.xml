@@ -4,4 +4,9 @@
   <welcome-file-list>
     <welcome-file>ServletDeTest</welcome-file>
   </welcome-file-list>
+  
+<!-- Configuration de déconnexion après temps d'inactivité (en minutes)-->
+<session-config>
+	<session-timeout>5</session-timeout>
+</session-config>
 </web-app>
