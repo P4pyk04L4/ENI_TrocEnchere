@@ -21,55 +21,53 @@
 			<ul class="navbar-nav col-10">
 				<li class="nav-item active"><a class="nav-link"
 					href="<%=request.getContextPath()%>">Accueil</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+				<c:if test="${not empty sessionScope.profilConnecte}">
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/ServletNouvelleVente">Vendre un
+							article</a></li>
+				</c:if>
 			</ul>
 
 			<!-- Menu du profil avec menu déroulant à droite -->
 			<ul class="navbar-nav col-2">
 				<!-- Utilisez ml-auto ici aussi -->
-				<%
-				// Récupérez la variable de session
-				Boolean profilConnecte = (Boolean) session.getAttribute("profilConnecte");
-
-				// Vérifiez si le profil est connecté
-				if (profilConnecte != null && profilConnecte) {
-				%>
-				<li class="nav-item dropdown">
-					<div class="dropdown">
-						<button class="btn dropdown-toggle text-light" type="button"
-							data-bs-toggle="dropdown" aria-expanded="false">
-							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-								fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+				<c:choose>
+					<c:when test="${not empty sessionScope.profilConnecte}">
+						<li class="nav-item dropdown">
+							<div class="dropdown">
+								<button class="btn dropdown-toggle text-light" type="button"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+										fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
   							<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
   							<path fill-rule="evenodd"
-									d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+											d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
 							</svg>
-							<c:out value="${ user.pseudo }" />
-						</button>
-						<ul class="dropdown-menu dropdown-menu-end">
-							<li><a class="dropdown-item"
-								href="<%=request.getContextPath()%>/ServletProfilUtilisateur">Paramètres</a></li>
-							<c:if test="${ user.administrateur }">
-								<li><a class="dropdown-item"
-									href="<%=request.getContextPath()%>/espace_admin">Administration</a></li>
-							</c:if>
-							<li><a class="dropdown-item"
-								href="<%=request.getContextPath()%>/deconnexion">Se
-									déconnecter</a></li>
-						</ul>
-					</div>
-				</li>
-				<%
-				} else {
-				%>
-				<li class="nav-item"><a class="nav-link"
-					href="<%=request.getContextPath()%>/inscription">S'inscrire</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="<%=request.getContextPath()%>/connexion">Se connecter</a></li>
-				<%
-				}
-				%>
+									<c:out value="${ user.pseudo }" />
+								</button>
+								<ul class="dropdown-menu dropdown-menu-end">
+									<li><a class="dropdown-item"
+										href="<%=request.getContextPath()%>/ServletProfilUtilisateur">Paramètres</a></li>
+									<c:if test="${ user.administrateur }">
+										<li><a class="dropdown-item"
+											href="<%=request.getContextPath()%>/espace_admin">Administration</a></li>
+									</c:if>
+									<li><a class="dropdown-item"
+										href="<%=request.getContextPath()%>/deconnexion">Se
+											déconnecter</a></li>
+								</ul>
+							</div>
+						</li>
+					</c:when>
+					<c:otherwise>
+
+						<li class="nav-item"><a class="nav-link"
+							href="<%=request.getContextPath()%>/inscription">S'inscrire</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="<%=request.getContextPath()%>/connexion">Se connecter</a></li>
+					</c:otherwise>
+				</c:choose>
+
 			</ul>
 		</div>
 	</div>
