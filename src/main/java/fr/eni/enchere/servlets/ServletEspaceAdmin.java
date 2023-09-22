@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletEspaceAdmin

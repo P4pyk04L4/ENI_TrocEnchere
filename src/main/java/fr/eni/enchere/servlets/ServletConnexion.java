@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -21,6 +22,8 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
+	private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+
 
 	public ServletConnexion() {
 		super();
@@ -37,7 +40,7 @@ public class ServletConnexion extends HttpServlet {
 		String pseudo = request.getParameter("pseudo");
 		String motDePasse = request.getParameter("mot de passe");
 
-		Utilisateur utilisateur = utilisateurDao.connectionUser(pseudo, motDePasse);
+		Utilisateur utilisateur = utilisateurManager.connectionUser(pseudo, motDePasse);
 
 		if (utilisateur != null) {
 			HttpSession session = request.getSession(true);
