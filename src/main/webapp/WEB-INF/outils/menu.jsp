@@ -23,7 +23,7 @@
 					href="<%=request.getContextPath()%>">Accueil</a></li>
 				<c:if test="${not empty sessionScope.profilConnecte}">
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/espace_admin">Vendre un
+						href="<%=request.getContextPath()%>/ServletNouvelleVente">Vendre un
 							article</a></li>
 				</c:if>
 			</ul>
