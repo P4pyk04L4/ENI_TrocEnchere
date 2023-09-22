@@ -7,10 +7,6 @@ import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
 
-/**
- * @author user
- *
- */
 public interface UtilisateurDAO {
 	
 	public void insertOneUser(Utilisateur utilisateur);
