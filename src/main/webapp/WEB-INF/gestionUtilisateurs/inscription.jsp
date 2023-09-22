@@ -17,38 +17,38 @@
 					<div class="form-group col-6">
 						<label for="pseudo">Pseudo</label> <input type="text"
 							class="form-control" id="pseudo" name="pseudo"
-							placeholder="Pseudo">
+							placeholder="Pseudo" value="${pseudo}">
 					</div>
 					<div class="form-group col-6">
 						<label for="nom">Nom</label> <input type="text"
-							class="form-control" id="nom" name="nom" placeholder="Nom">
+							class="form-control" id="nom" name="nom" placeholder="Nom" value="${nom}">
 					</div>
 					<div class="form-group col-6">
 						<label for="prenom">Prénom</label> <input type="text"
 							class="form-control" id="prenom" name="prenom"
-							placeholder="Prénom">
+							placeholder="Prénom" value="${prenom}">
 					</div>
 					<div class="form-group col-6">
 						<label for="email">Email</label> <input type="email"
-							class="form-control" id="email" name="email" placeholder="Email">
+							class="form-control" id="email" name="email" placeholder="Email" value="${email}">
 					</div>
 					<div class="form-group col-6">
 						<label for="telephone">Téléphone</label> <input type="tel"
 							class="form-control" id="telephone" name="telephone"
-							placeholder="Téléphone">
+							placeholder="Téléphone" value="${telephone}">
 					</div>
 					<div class="form-group col-6">
 						<label for="rue">Rue</label> <input type="text"
-							class="form-control" id="rue" name="rue" placeholder="Rue">
+							class="form-control" id="rue" name="rue" placeholder="Rue" value="${rue}">
 					</div>
 					<div class="form-group col-6">
 						<label for="codePostal">Code postal</label> <input type="number"
 							class="form-control" id="codePostal" name="codePostal"
-							placeholder="Code postal">
+							placeholder="Code postal" value="${codePostal}">
 					</div>
 					<div class="form-group col-6">
 						<label for="ville">Ville</label> <input type="text"
-							class="form-control" id="ville" name="ville" placeholder="Ville">
+							class="form-control" id="ville" name="ville" placeholder="Ville" value="${ville}">
 					</div>
 					<div class="form-group col-6">
 						<label for="mot de passe">Mot de Passe</label> <input

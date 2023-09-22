@@ -78,15 +78,15 @@ public class UtilisateurManager {
 			return "Ce pseudo est pris!";
 		}
 
-		if (utilisateur.getPseudo() == null || !utilisateur.getPseudo().matches("^[a-zA-Z0-9]*$")) {
+		if (utilisateur.getPseudo().isEmpty() || !utilisateur.getPseudo().matches("^[a-zA-Z0-9]*$")) {
 			return "Le pseudo ne peut pas être vide et n’accepte que des caractères alphanumériques!";
 		}
 
-		if (utilisateur.getNom() == null) {
+		if (utilisateur.getNom().isEmpty()) {
 			return "Entrez s'il vous plait votre nom.";
 		}
 
-		if (utilisateur.getPrenom() == null) {
+		if (utilisateur.getPrenom().isEmpty()) {
 			return "Entrez s'il vous plait votre prénom.";
 		}
 
@@ -94,15 +94,15 @@ public class UtilisateurManager {
 			return "Ce e-mail est pris!";
 		}
 
-		if (utilisateur.getEmail() == null || !utilisateur.getEmail().contains("@")) {
+		if (utilisateur.getEmail().isEmpty() || !utilisateur.getEmail().contains("@")) {
 			return "Entrez s'il vous plait l'e-mail.";
 		}
 
-		if (utilisateur.getTelephone() == null) {
+		if (utilisateur.getTelephone().isEmpty()) {
 			return "Entrez s'il vous plait votre téléphone.";
 		}
 
-		if (utilisateur.getRue() == null) {
+		if (utilisateur.getRue().isEmpty()) {
 			return "Entrez s'il vous plait votre rue.";
 		}
 
@@ -110,15 +110,15 @@ public class UtilisateurManager {
 			return "Entrez s'il vous plait votre code postal.";
 		}
 
-		if (utilisateur.getVille() == null) {
+		if (utilisateur.getVille().isEmpty()) {
 			return "Entrez s'il vous plait votre ville.";
 		}
 
-		if (utilisateur.getMotDePasse() == null) {
+		if (utilisateur.getMotDePasse().isEmpty()) {
 			return "Entrez s'il vous plait votre mot de passe.";
 		}
 
-		if (confirmation.equals(utilisateur.getMotDePasse())) {
+		if (! confirmation.equals(utilisateur.getMotDePasse())) {
 			return "La confirmation du mot de passe doit correspondre.";
 		}
 
