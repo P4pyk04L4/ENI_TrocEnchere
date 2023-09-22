@@ -28,6 +28,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
 	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
 	private static final String UPDATE_MDP = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
+	private static final String SELECT_BY_PSEUDO = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=?";
+	private static final String SELECT_BY_EMAIL = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=?";
 
 	@Override
 	public void insertOneUser(Utilisateur utilisateur) {
@@ -47,15 +49,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setBoolean(11, true);
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
-			
+
 			if (rs.next()) {
 				utilisateur.setIdentifiant(1);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -63,38 +65,27 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			
+
 			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_USER);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 
-				Utilisateur utilisateur = new Utilisateur(
-						rs.getInt("noUtilisateur"),
-						rs.getString("pseudo"),
-						rs.getString("nom"),
-						rs.getString("prenom"),
-						rs.getString("email"),
-						rs.getString("telephone"),
-						rs.getString("rue"),
-						rs.getString("ville"),
-						rs.getInt("codePostal"),
-						rs.getInt("credit"),
-						rs.getString("motDePasse"),
-						rs.getBoolean("administrateur"),
-						rs.getBoolean("activate")
-				);
+				Utilisateur utilisateur = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"),
+						rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"),
+						rs.getString("rue"), rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"),
+						rs.getString("motDePasse"), rs.getBoolean("administrateur"), rs.getBoolean("activate"));
 
 				utilisateurs.add(utilisateur);
 
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return utilisateurs;
-		
+
 	}
 
 	@Override
@@ -106,26 +97,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			stmt.setString(1, pseudo);
 			stmt.setString(2, motDePasse);
-			
+
 			ResultSet rs = stmt.executeQuery();
-			
-			if ( rs.next() ) {
-				
-				user = new Utilisateur(
-						rs.getInt("noUtilisateur"),
-						rs.getString("pseudo"),
-						rs.getString("nom"),
-						rs.getString("prenom"),
-						rs.getString("email"),
-						rs.getString("telephone"),
-						rs.getString("rue"),
-						rs.getString("ville"),
-						rs.getInt("codePostal"),
-						rs.getInt("credit"),
-						rs.getString("motDePasse"),
-						rs.getBoolean("administrateur"),
-						rs.getBoolean("activate")
-				);
+
+			if (rs.next()) {
+
+				user = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"), rs.getString("motDePasse"),
+						rs.getBoolean("administrateur"), rs.getBoolean("activate"));
 
 			} else {
 				user = null;
@@ -190,44 +170,89 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	@Override
 	public void modifActivateUser(Utilisateur utilisateur) {
-		
+
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			
-				PreparedStatement stmt = cnx.prepareStatement(MODIFY_ACTIVATE_ONE_USER);
-				
-				stmt.setBoolean(1, utilisateur.getActivate());	
-				stmt.setInt(2, utilisateur.getIdentifiant());
-				
-				// Update
-				stmt.executeUpdate();
-			
+
+			PreparedStatement stmt = cnx.prepareStatement(MODIFY_ACTIVATE_ONE_USER);
+
+			stmt.setBoolean(1, utilisateur.getActivate());
+			stmt.setInt(2, utilisateur.getIdentifiant());
+
+			// Update
+			stmt.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	@Override
 	public void deleteOneUser(Utilisateur utilisateur) {
-		
+
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			
-				PreparedStatement stmt = cnx.prepareStatement(DELETE_ONE_USER);
-				
-				stmt.setInt(1, utilisateur.getIdentifiant());
-				
-				// Update
-				stmt.executeUpdate();
-			
+
+			PreparedStatement stmt = cnx.prepareStatement(DELETE_ONE_USER);
+
+			stmt.setInt(1, utilisateur.getIdentifiant());
+
+			// Update
+			stmt.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	@Override
+	public Utilisateur selectByPseudo(String pseudo) {
+		Utilisateur utilisateur = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
+			stmt.setString(1, pseudo);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"), rs.getString("motDePasse"),
+						rs.getBoolean("administrateur"), rs.getBoolean("activate"));
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+
+	@Override
+	public Utilisateur selectByEmail(String email) {
+
+		Utilisateur utilisateur = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_EMAIL);
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt("noUtilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("ville"), rs.getInt("codePostal"), rs.getInt("credit"), rs.getString("motDePasse"),
+						rs.getBoolean("administrateur"), rs.getBoolean("activate"));
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+		return utilisateur;
 	}
 
 }

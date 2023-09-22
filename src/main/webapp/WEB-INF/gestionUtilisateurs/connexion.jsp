@@ -9,7 +9,7 @@
 
 	<div class="container">
 		<h1 class="my-2">Se connecter</h1>
-		
+
 		<c:if test="${not empty requestScope.connexionEchouee}">
 			<div class="alert alert-danger">Connexion échouée : Pseudo ou
 				mot de passe incorrect.</div>
@@ -32,9 +32,7 @@
 							type="password" class="form-control" id="mot_de_passe"
 							name="mot de passe" placeholder="Mot de passe">
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Fermer</button>
+					<div class="py-3">
 						<button type="submit" class="btn btn-primary">Se
 							Connecter</button>
 					</div>
@@ -45,12 +43,7 @@
 		</div>
 	</div>
 
-
-
-
-
 	<!-- FOOTER -->
-
 	<%@ include file="../outils/footer.jspf"%>
 
 </body>
