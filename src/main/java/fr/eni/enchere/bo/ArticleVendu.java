@@ -7,18 +7,19 @@ import java.util.List;
 public class ArticleVendu {
 	
 	private Integer noArticle;
-	private String nomArticle, description, etatVente;
+	private String nomArticle, description;
+	private EtatVente etatVente; /*3 valeurs possibles définies dans l'Enumeration EtatVente*/;
 	private LocalDate dateDebutEncheres, dateFinEncheres;
 	private int miseAPrix, prixVente;
-	private Retrait retrait;
 	private Categorie categorie;
 	private Utilisateur vendeur;
+	private Boolean activate = false;
 	private List<Enchere> encheres;
 	
 		
-	public ArticleVendu(Integer noArticle, String nomArticle, String description, String etatVente,
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, Retrait retrait,
-			Categorie categorie, Utilisateur vendeur, List<Enchere> encheres) {
+	public ArticleVendu(Integer noArticle, String nomArticle, String description, EtatVente etatVente,
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres) {
 		this.setNoArticle(noArticle);
 		this.setNomArticle(nomArticle);
 		this.setDescription(description);
@@ -27,17 +28,17 @@ public class ArticleVendu {
 		this.setDateFinEncheres(dateFinEncheres);
 		this.setMiseAPrix(miseAPrix);
 		this.setPrixVente(prixVente);
-		this.setRetrait(retrait);
 		this.setCategorie(categorie);
 		this.setVendeur(vendeur);
+		this.setActivate(activate);
 		this.setEncheres(encheres);
 	}
 	
-	public ArticleVendu(String nomArticle, String description, String etatVente,
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, Retrait retrait,
-			Categorie categorie, Utilisateur vendeur, List<Enchere> encheres) {
+	public ArticleVendu(String nomArticle, String description, EtatVente etatVente,
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
+			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres) {
 		this( null, nomArticle, description, etatVente, dateDebutEncheres, dateFinEncheres, miseAPrix,
-				prixVente, retrait, categorie, vendeur, encheres );
+				prixVente, categorie, vendeur, activate, encheres );
 	}
 	
 	public Integer getNoArticle() {
@@ -58,10 +59,10 @@ public class ArticleVendu {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getEtatVente() {
+	public EtatVente getEtatVente() {
 		return etatVente;
 	}
-	public void setEtatVente(String etatVente) {
+	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
 	}
 	public LocalDate getDateDebutEncheres() {
@@ -88,13 +89,7 @@ public class ArticleVendu {
 	public void setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
 	}
-	public Retrait getRetrait() {
-		return retrait;
-	}
-	public void setRetrait(Retrait retrait) {
-		this.retrait = retrait;
-	}
-	public Categorie getCategorie() {
+		public Categorie getCategorie() {
 		return categorie;
 	}
 	public void setCategorie(Categorie categorie) {
@@ -105,6 +100,12 @@ public class ArticleVendu {
 	}
 	public void setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
+	}
+	public Boolean getActivate() {
+		return activate;
+	}
+	public void setActivate(Boolean activate) {
+		this.activate = activate;
 	}
 	public List<Enchere> getEncheres() {
 		return encheres;
@@ -117,8 +118,8 @@ public class ArticleVendu {
 	public String toString() {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", etatVente=" + etatVente + ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres="
-				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + ", retrait=" + retrait
-				+ ", categorie=" + categorie + ", vendeur=" + vendeur + ", encheres=" + encheres + "]";
+				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + 
+				", categorie=" + categorie + ", vendeur=" + vendeur + ", encheres=" + encheres + "]";
 	}
 	
 			
