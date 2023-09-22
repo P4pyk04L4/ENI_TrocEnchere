@@ -50,77 +50,27 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="dropdown-item"
 								href="<%=request.getContextPath()%>/ServletProfilUtilisateur">Paramètres</a></li>
+							<c:if test="${ user.administrateur }">
+								<li><a class="dropdown-item"
+									href="<%=request.getContextPath()%>/espace_admin">Administration</a></li>
+							</c:if>
 							<li><a class="dropdown-item"
 								href="<%=request.getContextPath()%>/deconnexion">Se
 									déconnecter</a></li>
 						</ul>
 					</div>
-					<div class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="profilDropdown">
-						<h6 class="dropdown-header">
-							<c:out value="${ user.pseudo }" />
-						</h6>
-						<a class="dropdown-item"
-							href="<%=request.getContextPath()%>/ServletProfilUtilisateur">Paramètres</a>
-						<a class="dropdown-item"
-							href="<%=request.getContextPath()%>/deconnexion">Se
-							déconnecter</a>
-					</div>
 				</li>
 				<%
 				} else {
 				%>
-				<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/inscription">S'inscrire</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="<%=request.getContextPath()%>/inscription">S'inscrire</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<%=request.getContextPath()%>/connexion">Se connecter</a></li>
 				<%
 				}
 				%>
 			</ul>
-		</div>
-	</div>
-
-	<!-- Modal de Connexion -->
-	<div class="modal fade" id="connexionModal" tabindex="-1" role="dialog"
-		aria-labelledby="connexionModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="connexionModalLabel">Se connecter</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- Formulaire de Connexion -->
-					<form method="post"
-						action="<%=request.getContextPath()%>/connexion">
-						<c:if test="${not empty requestScope.connexionEchouee}">
-							<div class="alert alert-danger">Connexion échouée : Pseudo
-								ou mot de passe incorrect.</div>
-						</c:if>
-						<div class="form-group">
-							<label for="nom">Pseudo</label> <input type="text"
-								class="form-control" id="pseudo" name="pseudo"
-								placeholder="Pseudo">
-						</div>
-						<div class="form-group">
-							<label for="mot de passe">Mot de Passe</label> <input
-								type="password" class="form-control" id="mot_de_passe"
-								name="mot de passe" placeholder="Mot de passe">
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Fermer</button>
-							<button type="submit" class="btn btn-primary">Se
-								Connecter</button>
-						</div>
-					</form>
-
-				</div>
-
-			</div>
 		</div>
 	</div>
 </nav>

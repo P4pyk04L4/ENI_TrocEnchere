@@ -9,22 +9,28 @@
 
 	<div class="container">
 		<h1 class="my-2">Mon profil</h1>
-		
+
 		<!-- AFFICHAGES INFORMATIONS DIVERSES -->
-		
+
 		<c:if test="${not empty requestScope.MdpErrone}">
 			<div class="alert alert-danger">Votre mot de passe actuel ne
 				correspond pas. Veuillez réessayer.</div>
 		</c:if>
 		<c:if test="${not empty requestScope.ErreurConfirmation}">
-			<div class="alert alert-danger">Les deux nouveaux mots de passe ne correspondent pas. Veuillez réessayer.</div>
+			<div class="alert alert-danger">Les deux nouveaux mots de passe
+				ne correspondent pas. Veuillez réessayer.</div>
 		</c:if>
 		<c:if test="${not empty requestScope.MdpChange}">
-			<div class="alert alert-success">Votre mot de passe a bien été changé.</div>
+			<div class="alert alert-success">Votre mot de passe a bien été
+				changé.</div>
 		</c:if>
-	
+		<c:if test="${not empty requestScope.InformationsProfilModifiees}">
+			<div class="alert alert-success">Les modifications de votre
+				profil ont bien été prises en compte.</div>
+		</c:if>
+
 		<!-- RESTE DE LA PAGE -->
-		
+
 		<div class="row d-flex justify-content-center py-3">
 			<!-- Formulaire d'inscription -->
 			<div class="col-md-8 bg-light m-3">
@@ -214,15 +220,44 @@
 						<div id="collapseThree" class="accordion-collapse collapse"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
-								<strong>This is the third item's accordion body.</strong> It is
-								hidden by default, until the collapse plugin adds the
-								appropriate classes that we use to style each element. These
-								classes control the overall appearance, as well as the showing
-								and hiding via CSS transitions. You can modify any of this with
-								custom CSS or overriding our default variables. It's also worth
-								noting that just about any HTML can go within the
-								<code>.accordion-body</code>
-								, though the transition does limit overflow.
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-danger"
+									data-bs-toggle="modal" data-bs-target="#exampleModal">
+									Supprimer mon compte</button>
+
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal" tabindex="-1"
+									aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<form method="post"
+											action="<%=request.getContextPath()%>/ServletSuppressionUtilisateurActif"
+											class="row">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="exampleModalLabel">Supprimer
+														mon compte</h1>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>Attention, cette action est irréversible.</p>
+													<div class="form-check">
+														<input class="form-check-input" type="checkbox" value=""
+															id="invalidCheck2" required> <label
+															class="form-check-label" for="invalidCheck2">
+															Oui, je désire supprimer mon compte </label>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Annuler</button>
+													<button type="submit" class="btn btn-danger">Supprimer
+														mon compte</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
