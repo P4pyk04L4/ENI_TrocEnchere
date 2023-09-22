@@ -12,25 +12,29 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.enchere.dal.DAOFactory;
-import fr.eni.enchere.dal.UtilisateurDAO;
 
-@WebServlet("/inscription")
-public class ServletInscription extends HttpServlet {
+/**
+ * Servlet implementation class ServletProfilUtilisateur
+ */
+@WebServlet("/ServletProfilUtilisateur")
+public class ServletProfilUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-//	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
 	private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+
        
-    public ServletInscription() {
+    public ServletProfilUtilisateur() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/profilUtilisateur.jsp");
 		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Utilisateur utilisateurActif = (Utilisateur) session.getAttribute("user");
+		
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(request.getParameter("pseudo"));
         utilisateur.setNom(request.getParameter("nom"));
@@ -40,14 +44,13 @@ public class ServletInscription extends HttpServlet {
         utilisateur.setRue(request.getParameter("rue"));
         utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
         utilisateur.setVille(request.getParameter("ville"));
-        utilisateur.setMotDePasse(request.getParameter("mot de passe"));
-        utilisateurManager.insertOneUser(utilisateur);
         
-//        utilisateurDao.insert(utilisateur);
-        HttpSession session = request.getSession();
-        session.setAttribute("profilConnecte", true);
+        utilisateurManager.updateOne(utilisateur, utilisateurActif.getIdentifiant());
+        utilisateurActif = utilisateurManager.selectById(utilisateurActif.getIdentifiant());
+                
+        session.setAttribute("user", utilisateurActif);
         
-        this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/profilUtilisateur.jsp").forward(request, response);
 	}
 
 }

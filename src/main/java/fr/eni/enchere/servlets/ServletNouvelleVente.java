@@ -40,9 +40,16 @@ public class ServletNouvelleVente extends HttpServlet {
 
 		String nomArticle = request.getParameter( "nomArticle" );
 		String description = request.getParameter( "description" );
-		//pour les dates, utiliser DateTimeFormatter et LocalDate.parse
-		LocalDate dateDebutEncheres = request.getParameter("dateDebutEncheres");
-		LocalDate dateFinEncheres = request.getParameter("dateFinEncheres");
+		
+		/*
+		 * pour les dates, utiliser DateTimeFormatter et LocalDate.parse
+		 * 		LocalDate dateDebutEncheres = request.getParameter("dateDebutEncheres");
+		 *		LocalDate dateFinEncheres = request.getParameter("dateFinEncheres");
+		 *
+		 *MISE EN PLACE DATES TEMPORAIRES POUR LES TESTS
+		 */
+		LocalDate dateDebutEncheres = LocalDate.now();
+		LocalDate dateFinEncheres = LocalDate.now();
 		int miseAPrix = Integer.valueOf( request.getParameter("miseAPrix") ) ;
 		int prixVente = miseAPrix;
 		/*

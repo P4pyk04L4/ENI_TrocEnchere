@@ -16,132 +16,50 @@
 			<div class="col-md-8 bg-light">
 				<h2>Objets en vente</h2>
 
-				<c:forEach var="utilisateur" items="${ utilisateurs }">
-					<li><c:out value="${ utilisateur.prenom }" /> <c:out
-							value="${ utilisateur.nom }" /></li>
-				</c:forEach>
+
 
 				<!-- CARTES DE BASE  -->
 				<div class="row">
-					<!-- Première carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="1">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 1</h3>
+					<c:forEach var="utilisateur" items="${ utilisateurs }">
+						<div class="col-lg-4 col-md-6 mb-3">
+							<a href="#" class="text-decoration-none" data-toggle="modal"
+								data-target="#myModal" data-card-id="1">
+								<div class="card">
+									<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
+									<div class="card-body">
+										<h3 class="card-title">
+											<c:out value="${ utilisateur.prenom }" />
+										</h3>
+										<p>
+											<c:out value="${ utilisateur.nom }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.pseudo }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.rue }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.codePostal }" />
+											<c:out value="${ utilisateur.ville }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.credit }" />
+										</p>
+										<p>
+											<c:out value="${ utilisateur.identifiant }" />
+										</p>
+									</div>
 								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Deuxième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="2">
-							<div class="card ">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 2</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Troisième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="3">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 3</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="4">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 4</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="5">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 4</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="6">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 4</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="7">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 4</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="8">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 4</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<!-- Quatrième carte -->
-					<div class="col-lg-4 col-md-6 mb-3">
-						<a href="#" class="text-decoration-none" data-toggle="modal"
-							data-target="#myModal" data-card-id="9">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 4</h3>
-								</div>
-							</div>
-						</a>
-					</div>
+							</a>
+						</div>
+					</c:forEach>
 					<!-- Ajoutez autant de cartes que nécessaire -->
 				</div>
-			</div>
+				</div>
+
+				<!-- 				TEST -->
+				
 
 
 			<div class="col-md-3 bg-light">

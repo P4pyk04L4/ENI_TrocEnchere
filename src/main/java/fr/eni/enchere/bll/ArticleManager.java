@@ -10,9 +10,11 @@ import fr.eni.enchere.dal.DAOFactory;
 
 public class ArticleManager {
 	
-	public static ArticleManager instanceArticleManager;
+	/**
+	 * ***************** Début singleton ***************************
+	 */
 	
-	private ArticleDAO instanceArticleDAO = DAOFactory.getArticleDAO();
+	public static ArticleManager instanceArticleManager;
 	
 	private ArticleManager() {		
 	}
@@ -23,6 +25,12 @@ public class ArticleManager {
 		}
 		return instanceArticleManager;
 	}
+	
+	/**
+	 * ***************** Fin singleton ***************************
+	 */
+	
+	private ArticleDAO instanceArticleDAO = DAOFactory.getArticleDAO();
 	
 	
 	public void creerArticle( ArticleVendu article, Retrait retrait ) {		

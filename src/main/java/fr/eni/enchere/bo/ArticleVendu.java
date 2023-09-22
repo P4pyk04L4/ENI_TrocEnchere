@@ -16,7 +16,7 @@ public class ArticleVendu {
 	private Boolean activate = false;
 	private List<Enchere> encheres;
 	
-		
+
 	public ArticleVendu(Integer noArticle, String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
 			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres) {
@@ -33,6 +33,7 @@ public class ArticleVendu {
 		this.setActivate(activate);
 		this.setEncheres(encheres);
 	}
+
 	
 	public ArticleVendu(String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
@@ -114,12 +115,13 @@ public class ArticleVendu {
 		this.encheres = encheres;
 	}
 
+
 	@Override
 	public String toString() {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", etatVente=" + etatVente + ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres="
-				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + 
-				", categorie=" + categorie + ", vendeur=" + vendeur + ", encheres=" + encheres + "]";
+				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + ", categorie=" + categorie
+				+ ", vendeur=" + vendeur + ", activate=" + activate + ", encheres=" + encheres + "]";
 	}
 	
 			
