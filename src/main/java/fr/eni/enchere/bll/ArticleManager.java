@@ -33,13 +33,14 @@ public class ArticleManager {
 	private ArticleDAO instanceArticleDAO = DAOFactory.getArticleDAO();
 	
 	
+	//Création d'un article en vente par un utilisateur
 	public void creerArticle( ArticleVendu article, Retrait retrait ) {		
-		//si la date de début d'enchère est fixée à aujourd'hui, etatVente est à ENCOURS, sinon il est NONDEBUTEE
+		//si la date de début d'enchère est fixée à aujourd'hui, etatVente est à ENCOURS, sinon il est à NONDEBUTEE
 		EtatVente etatVente = EtatVente.NON_DEBUTEE;
 		if ( article.getDateDebutEncheres().equals(LocalDate.now()) ) {
 			etatVente = EtatVente.EN_COURS;
 		}
-		article.setEtatVente(etatVente);	
+		article.setEtatVente(etatVente);
 		
 		instanceArticleDAO.creerArticle(article, retrait);
 	}
