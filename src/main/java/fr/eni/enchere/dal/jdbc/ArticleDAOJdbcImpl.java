@@ -13,17 +13,18 @@ import fr.eni.enchere.dal.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
+	private static final String CREER_ARTICLE = "INSERT INTO ArticleVendu (nom, description, etatVente, dateDebutEncheres,"
+			+ " dateFinEncheres, miseAPrix, prixVente, noCategorie, noUtilisateurVendeur, activate) VALUES "
+			+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String CREER_POINT_RETRAIT = "INSERT INTO Retrait (rue, ville, codePostal, noArticle) VALUES"
+			+ " (?, ?, ?, ?)";
+	
 	
 	@Override
 	public void creerArticle( ArticleVendu article, Retrait retrait ) {
-
-		//Insertion de l'article dans la base de données
-		String sql = "INSERT INTO ArticleVendu (nom, description, etatVente, dateDebutEncheres, dateFinEncheres, "
-				+ "miseAPrix, prixVente, noCategorie, noUtilisateurVendeur, activate) VALUES (?, ?, ?, ?, ?, ?, "
-				+ "?, ?, ?, ?)";
 		
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS ) ) {
+				PreparedStatement stmt = cnx.prepareStatement( CREER_ARTICLE, Statement.RETURN_GENERATED_KEYS ) ) {
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
 			stmt.setString(3, article.getEtatVente().toString());
@@ -49,14 +50,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 
 	
-	//Création d'un point de retrait
 	@Override
 	public void creerPointRetrait( ArticleVendu article, Retrait retrait ) {		
-		
-		String sql = "INSERT INTO Retrait (rue, ville, codePostal, noArticle) VALUES (?, ?, ?, ?)";
 				
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(sql) ) {
+				PreparedStatement stmt = cnx.prepareStatement(CREER_POINT_RETRAIT) ) {
 			stmt.setString(1, retrait.getRue());
 			stmt.setString(2, retrait.getVille());
 			stmt.setInt(3, retrait.getCodePostal());
