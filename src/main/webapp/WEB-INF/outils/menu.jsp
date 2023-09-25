@@ -50,7 +50,7 @@
 										href="<%=request.getContextPath()%>/ServletProfilUtilisateur">Paramètres</a></li>
 									<c:if test="${ user.administrateur }">
 										<li><a class="dropdown-item"
-											href="<%=request.getContextPath()%>/espace_admin">Administration</a></li>
+											href="<%=request.getContextPath()%>/espace_admin/accueil">Administration</a></li>
 									</c:if>
 									<li><a class="dropdown-item"
 										href="<%=request.getContextPath()%>/deconnexion">Se

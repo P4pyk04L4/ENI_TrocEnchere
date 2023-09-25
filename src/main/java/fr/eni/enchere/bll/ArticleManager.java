@@ -1,10 +1,12 @@
 package fr.eni.enchere.bll;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.EtatVente;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DAOFactory;
 
@@ -45,8 +47,12 @@ public class ArticleManager {
 		instanceArticleDAO.creerArticle(article, retrait);
 	}
 	
+	public List<ArticleVendu> getAllArticles() {
+		return instanceArticleDAO.getAllArticles();
+	}
 	
-	
-	
+	public ArticleVendu selectById(int noArticle) {
+		return instanceArticleDAO.selectById(noArticle);
+	}
 
 }
