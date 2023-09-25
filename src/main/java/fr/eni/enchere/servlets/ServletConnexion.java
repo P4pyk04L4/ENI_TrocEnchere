@@ -21,7 +21,6 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 @WebServlet("/connexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
 	private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 
 

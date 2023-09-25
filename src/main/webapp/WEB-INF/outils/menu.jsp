@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg">
 	<div class="container">
 		<!-- LOGO -->
-		<a class="navbar-brand" href="#"> <img
+		<a class="navbar-brand" href="<%=request.getContextPath()%>"> <img
 			src="images/cocarde_francaise.png" height="50px">
 		</a>
 
@@ -23,8 +23,8 @@
 					href="<%=request.getContextPath()%>">Accueil</a></li>
 				<c:if test="${not empty sessionScope.profilConnecte}">
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/ServletNouvelleVente">Vendre un
-							article</a></li>
+						href="<%=request.getContextPath()%>/ServletNouvelleVente
+						">Vendre un article</a></li>
 				</c:if>
 			</ul>
 
