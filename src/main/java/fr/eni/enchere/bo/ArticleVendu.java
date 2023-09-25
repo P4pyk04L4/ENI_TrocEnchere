@@ -123,6 +123,7 @@ public class ArticleVendu {
 				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + ", categorie=" + categorie
 				+ ", vendeur=" + vendeur + ", activate=" + activate + ", encheres=" + encheres + "]";
 	}
-	
-			
+
+
+				
 }

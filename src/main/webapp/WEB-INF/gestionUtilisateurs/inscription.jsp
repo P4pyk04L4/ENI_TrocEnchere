@@ -19,12 +19,18 @@
 		<div class="row d-flex justify-content-center py-3">
 
 			<div class="col-md-8 bg-light m-3">
+
+					<div>
+						<p style="color: #ff0000">
+							<strong>${erreur}</strong>
+						</p>
+					</div>
 			
 				<form method="post" action="<%=request.getContextPath()%>/inscription" class="row needs-validation" novalidate>
 				
 						<div class="form-group col-6">
 							<label for="pseudo" class="form-label">Pseudo</label>
-							<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" required>
+							<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" value="${pseudo}" required>
 							<div class="invalid-feedback">
       							Veuillez choisir un pseudo.
     						</div>
@@ -32,7 +38,7 @@
 						
 						<div class="form-group col-6">
 							<label for="nom" class="form-label">Nom</label>
-							<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
+							<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="${nom}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer votre nom nom.
     						</div>
@@ -40,7 +46,7 @@
 						
 						<div class="form-group col-6">
 							<label for="prenom" class="form-label">Prénom</label>
-							<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
+							<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="${prenom}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer votre prénom.
     						</div>
@@ -48,7 +54,7 @@
 						
 						<div class="form-group col-6">
 							<label for="email" class="form-label">Email</label>
-							<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+							<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${email}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer votre adresse mail.
     						</div>
@@ -56,7 +62,7 @@
 						
 						<div class="form-group col-6">
 							<label for="telephone" class="form-label">Téléphone</label>
-							<input type="tel" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
+							<input type="tel" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" value="${telephone}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer votre numéro de téléphone.
     						</div>
@@ -64,7 +70,7 @@
 						
 						<div class="form-group col-6">
 							<label for="rue" class="form-label">Rue</label>
-							<input type="text" class="form-control" id="rue" name="rue"	placeholder="Rue" required>
+							<input type="text" class="form-control" id="rue" name="rue"	placeholder="Rue" value="${rue}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer votre rue.
     						</div>
@@ -72,7 +78,7 @@
 						
 						<div class="form-group col-6">
 							<label for="codePostal" class="form-label">Code postal</label>
-							<input type="number" class="form-control" id="codePostal" name="codePostal" placeholder="Code postal" required>
+							<input type="number" class="form-control" id="codePostal" name="codePostal" placeholder="Code postal" value="${codePostal}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer le code postal de votre ville.
     						</div>
@@ -80,7 +86,7 @@
 						
 						<div class="form-group col-6">
 							<label for="ville" class="form-label">Ville</label>
-							<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" required>
+							<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" value="${ville}" required>
 							<div class="invalid-feedback">
       							Veuillez indiquer votre ville.
     						</div>
@@ -109,10 +115,11 @@
 							</div>
 							
 						</div>
-						
-					</form>
+					</div>
 
-				
+				</form>
+
+
 			</div>
 		</div>
 	</div>
@@ -142,7 +149,7 @@
 
 
 
-<!-- FOOTER -->
+	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
 

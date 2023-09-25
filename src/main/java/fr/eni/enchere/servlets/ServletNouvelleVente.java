@@ -26,36 +26,28 @@ public class ServletNouvelleVente extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-
+	//Lorsque l'utilisateur connecté clique sur "vendre un article" 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionArticles/nouvelArticle.jsp");
 		rd.forward(request, response);
 	}
-
+	
+	//Envoi du formulaire "nouvel article"
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		
+		request.setCharacterEncoding("UTF-8");
 		
 		ArticleManager instanceManager = ArticleManager.getInstance();
 
 		String nomArticle = request.getParameter( "nomArticle" );
 		String description = request.getParameter( "description" );
-		
-		/*
-		 * pour les dates, utiliser DateTimeFormatter et LocalDate.parse
-		 * 		LocalDate dateDebutEncheres = request.getParameter("dateDebutEncheres");
-		 *		LocalDate dateFinEncheres = request.getParameter("dateFinEncheres");
-		 *
-		 *MISE EN PLACE DATES TEMPORAIRES POUR LES TESTS
-		 */
-		LocalDate dateDebutEncheres = LocalDate.now();
-		LocalDate dateFinEncheres = LocalDate.now();
-		int miseAPrix = Integer.valueOf( request.getParameter("miseAPrix") ) ;
-		int prixVente = miseAPrix;
-		/*
-		 * RECUPERER LE NUMERO DE CATAGORIE!!!!!!!!!!!!!!!
-		 */
-		Categorie categorie = new Categorie( request.getParameter("libelleCategorie") );
+		LocalDate dateDebutEncheres = LocalDate.parse( request.getParameter( "dateDebutEncheres" ) );
+		LocalDate dateFinEncheres = LocalDate.parse( request.getParameter( "dateFinEncheres" ) );
+		int miseAPrix = Integer.valueOf( request.getParameter("miseAPrix") );
+		int prixVente = miseAPrix; /*Avant que la 1e enchère ne soit faite*/
+		Categorie categorie = new Categorie( 1, request.getParameter("libelleCategorie") );
 		Utilisateur utilisateurActif = (Utilisateur) session.getAttribute("user");
 		List<Enchere> encheres = new ArrayList<>();
 		
@@ -68,7 +60,9 @@ public class ServletNouvelleVente extends HttpServlet {
 		
 		instanceManager.creerArticle(article, retrait);
 		
-		//définir où l'utilisaeur est envoyé ensuite (page d'accueil ? page détail vente ?)
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionArticles/nouvelArticle.jsp");
+		rd.forward(request, response);
+		
 	}
 
 }
