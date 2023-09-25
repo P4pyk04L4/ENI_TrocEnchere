@@ -46,4 +46,7 @@ public class CategorieManager {
 		dao.deleteOneCategory(categorie);
 	}
 
+	public void selectOneCategoryById (int noCategorie) {
+		dao.selectOneCategoryById(noCategorie);
+	}
 }

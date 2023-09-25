@@ -13,5 +13,7 @@ public interface CategorieDAO {
 	public void updateOneCategory(Categorie categorie);
 	
 	public void deleteOneCategory(Categorie categorie);
+	
+	public Categorie selectOneCategoryById (int noCategorie);
 
 }

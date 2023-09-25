@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
 <%@ include file="../outils/entete.jspf"%>
 
 <body>
@@ -16,50 +15,57 @@
 			<div class="col-md-8 bg-light">
 				<h2>Objets en vente</h2>
 
-
-
-				<!-- CARTES DE BASE  -->
 				<div class="row">
-					<c:forEach var="utilisateur" items="${ utilisateurs }">
-						<div class="col-lg-4 col-md-6 mb-3">
-							<a href="#" class="text-decoration-none" data-toggle="modal"
-								data-target="#myModal" data-card-id="1">
-								<div class="card">
-									<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-									<div class="card-body">
-										<h3 class="card-title">
-											<c:out value="${ utilisateur.prenom }" />
-										</h3>
-										<p>
-											<c:out value="${ utilisateur.nom }" />
-										</p>
-										<p>
-											<c:out value="${ utilisateur.pseudo }" />
-										</p>
-										<p>
-											<c:out value="${ utilisateur.rue }" />
-										</p>
-										<p>
-											<c:out value="${ utilisateur.codePostal }" />
-											<c:out value="${ utilisateur.ville }" />
-										</p>
-										<p>
-											<c:out value="${ utilisateur.credit }" />
-										</p>
-										<p>
-											<c:out value="${ utilisateur.identifiant }" />
-										</p>
-									</div>
-								</div>
-							</a>
-						</div>
-					</c:forEach>
-					<!-- Ajoutez autant de cartes que nécessaire -->
-				</div>
-				</div>
+					<c:forEach var="articles" items="${ articles }">
 
-				<!-- 				TEST -->
+						<!-- 					Vérifier l'article Activate (mode dev pour l'instant) -->
+
+						<c:if test="${ articles.activate = true }">
+							<div class="col-lg-4 col-md-6 mb-3">
+								<a href="article?noArticle=<c:out value="${ articles.noArticle }" />" class="text-decoration-none" data-toggle="modal"
+									data-target="#myModal" data-card-id="1">
+									<div class="card h-100">
+									<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
+										<div class="card-body">
+											<h3 class="text-end">
+												<c:out value="${ articles.prixVente }" /> €
+											</h3>
+											<h5 class="card-title">
+												<c:out value="${ articles.nomArticle }" />
+											</h5>
+											<p>
+												Fin de la vente le : <c:out value="${ articles.dateFinEncheres }" />
+											</p>
+											
+										</div>
+										
+										<!-- AFFICHAGE DE L'ETAT DE LA VENTE -->
+										<c:if test="${ articles.etatVente =='EN_COURS' }">
+											<div class="card-footer border-success">
+												<small class="text-body-secondary"><c:out value="${ articles.categorie.libelle }" /></small>
+											</div>
+										</c:if>
+										<c:if test="${ articles.etatVente =='NON_DEBUTEE' }">
+												<div class="card-footer border-warning">
+												<small class="text-body-secondary"><c:out value="${ articles.categorie.libelle }" /></small>
+											</div>
+										</c:if>
+										<c:if test="${ articles.etatVente =='TERMINEE' }">
+											<div class="card-footer border-danger">
+												<small class="text-body-secondary"><c:out value="${ articles.categorie.libelle }" /></small>
+											</div>
+										</c:if>
+									</div>
+								</a>
+							</div>
+						</c:if>
+					</c:forEach>
+				</div>
 				
+			</div>
+
+			<!-- 				TEST -->
+
 
 
 			<div class="col-md-3 bg-light">
