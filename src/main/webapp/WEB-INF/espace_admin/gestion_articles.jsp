@@ -16,6 +16,7 @@
             <main class="col-md-10 ms-sm-auto">
             
                 <h1 class="my-2">Espace Administrateur</h1> 
+                <h4 class="my-1">-> Gestion des Articles en Vente</h4>
 					
             </main>
             
