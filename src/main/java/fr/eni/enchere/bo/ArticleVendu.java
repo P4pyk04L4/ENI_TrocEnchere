@@ -42,6 +42,9 @@ public class ArticleVendu {
 				prixVente, categorie, vendeur, activate, encheres );
 	}
 	
+	public ArticleVendu() {
+	}
+	
 	public Integer getNoArticle() {
 		return noArticle;
 	}
@@ -123,6 +126,7 @@ public class ArticleVendu {
 				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + ", categorie=" + categorie
 				+ ", vendeur=" + vendeur + ", activate=" + activate + ", encheres=" + encheres + "]";
 	}
-	
-			
+
+
+				
 }

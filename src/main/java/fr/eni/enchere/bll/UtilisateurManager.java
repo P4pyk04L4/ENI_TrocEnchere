@@ -77,6 +77,10 @@ public class UtilisateurManager {
 	public void deleteUser(Utilisateur utilisateur) {
 		dao.deleteOneUser(utilisateur);
 	}
+	
+	public void updateCredit(Utilisateur utilisateur, int montant) {
+		dao.updateCredit(utilisateur, montant);
+	}
 
 	/**
 	 * ***************** Vérifications ***************************

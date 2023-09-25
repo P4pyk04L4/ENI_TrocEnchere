@@ -1,10 +1,12 @@
 package fr.eni.enchere.bll;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.EtatVente;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DAOFactory;
 
@@ -33,19 +35,24 @@ public class ArticleManager {
 	private ArticleDAO instanceArticleDAO = DAOFactory.getArticleDAO();
 	
 	
+	//Création d'un article en vente par un utilisateur
 	public void creerArticle( ArticleVendu article, Retrait retrait ) {		
-		//si la date de début d'enchère est fixée à aujourd'hui, etatVente est à ENCOURS, sinon il est NONDEBUTEE
+		//si la date de début d'enchère est fixée à aujourd'hui, etatVente est à ENCOURS, sinon il est à NONDEBUTEE
 		EtatVente etatVente = EtatVente.NON_DEBUTEE;
 		if ( article.getDateDebutEncheres().equals(LocalDate.now()) ) {
 			etatVente = EtatVente.EN_COURS;
 		}
-		article.setEtatVente(etatVente);	
+		article.setEtatVente(etatVente);
 		
 		instanceArticleDAO.creerArticle(article, retrait);
 	}
 	
+	public List<ArticleVendu> getAllArticles() {
+		return instanceArticleDAO.getAllArticles();
+	}
 	
-	
-	
+	public ArticleVendu selectById(int noArticle) {
+		return instanceArticleDAO.selectById(noArticle);
+	}
 
 }

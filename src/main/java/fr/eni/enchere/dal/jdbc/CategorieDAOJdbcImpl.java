@@ -16,6 +16,8 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private static final String INSERT_ONE_CATEGORY = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Categorie (libelle) VALUES(?);";
 	private static final String UPDATE_ONE_CATEGORY = "UPDATE bjx3rvrwhdrtsh8g5edx.Categorie SET libelle=? WHERE noCategorie=?;";
 	private static final String DELETE_ONE_CATEGORY = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Categorie WHERE noCategorie=?;";
+	private static final String SELECT_ONE_CATEGORY_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Categorie WHERE noCategorie=?;";
+
 	
 	@Override
 	public List<Categorie> selectAllCategories() {
@@ -97,6 +99,23 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public Categorie selectOneCategoryById(int noCategorie) {
+		Categorie categorie = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_ONE_CATEGORY_BY_ID);
+			stmt.setInt(1, noCategorie);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				categorie = new Categorie(noCategorie, rs.getString("libelle"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return categorie;
 	}
 	
 }

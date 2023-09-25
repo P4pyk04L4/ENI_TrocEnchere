@@ -27,6 +27,8 @@ public interface UtilisateurDAO {
 
 	public void updateMdp(Utilisateur utilisateur, int noUtilisateur);
 
+	public void updateCredit(Utilisateur utilisateur, int montant);
+
 	public Utilisateur selectByPseudo(String pseudo);
 
 	public Utilisateur selectByEmail(String email);
