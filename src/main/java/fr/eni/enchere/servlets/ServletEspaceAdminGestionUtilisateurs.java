@@ -47,43 +47,56 @@ public class ServletEspaceAdminGestionUtilisateurs extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+        // Définir l'encodage des caractères UTF-8
+        request.setCharacterEncoding("UTF-8");
+		
     	UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
     	
-	    // Récupération du nom du bouton soumis
-	    String boutonNom = request.getParameter("buttonClick");
-
-	    if (boutonNom != null) {
+    	
+    	Utilisateur utilisateur = new Utilisateur();
+    	
+    	String idUserStr = request.getParameter("utilisateurId");
+    	if (idUserStr != null) {
+    	    try {
+    	        int idUser = Integer.parseInt(idUserStr);
+    	        utilisateur.setIdentifiant(idUser);
+    	    } catch (NumberFormatException e) {
+    	        // Gérer l'exception si la conversion échoue (par exemple, enregistrez l'erreur dans les journaux)
+    	    }
+    	}
 	    	
-	    	Utilisateur utilisateur = new Utilisateur();
-	    	String idUserStr = request.getParameter("idUser");
-
-	    	if (idUserStr != null) {
-	    	    try {
-	    	        int idUser = Integer.parseInt(idUserStr);
-	    	        utilisateur.setIdentifiant(idUser);
-	    	    } catch (NumberFormatException e) {
-	    	        // Gérer l'exception si la conversion échoue (par exemple, enregistrez l'erreur dans les journaux)
-	    	    }
-	    	}
-	    	
-	        // Récupération de la valeur du bouton soumis
-	        String boutonValeur = request.getParameter("buttonClick");
-
-	        if ("desactivateUser".equals(boutonValeur)) {
-	        	
-	        	utilisateurManager.desactivateUser(utilisateur); 	
-	        	
-	        } else if ("activateUser".equals(boutonValeur)) {
-	        	
-	        	utilisateurManager.activateUser(utilisateur);
-	        	
-	        } else if ("deleteUser".equals(boutonValeur)) {
-	        	
-	        	utilisateurManager.deleteUser(utilisateur);	
-	        	
-	        }
-	    }
+    	String adminSwitchValue = request.getParameter("adminSwitch");
+    	String activateSwitchValue = request.getParameter("activateSwitch");
+    	String deleteAction = request.getParameter("deleteOneUser");
+    	
+        if (adminSwitchValue != null) {
+        	 if ("true".equals(adminSwitchValue)) {
+        		 // La case "adminSwitch" est cochée (ON)
+        		 utilisateurManager.activateAdmin(utilisateur);
+        	 } else {
+        		 // La case "adminSwitch" est décochée (OFF)
+        		 utilisateurManager.desactivateAdmin(utilisateur);
+        	 }
+        	 
+        }
+        
+        if (activateSwitchValue != null) {
+        	if ("true".equals(activateSwitchValue)) {
+       		 	// La case "activateSwitch" est cochée (ON)
+        		utilisateurManager.activateUser(utilisateur);
+        	} else {
+       		 	// La case "activateSwitch" est décochée (OFF)
+        		utilisateurManager.desactivateUser(utilisateur);
+       	 	}
+       	 
+        }	
+        	
+        if (deleteAction != null) {
+        	utilisateurManager.deleteUser(utilisateur);
+        }
 	    
+        
 		request.setAttribute("utilisateurs", utilisateurManager.getAllUsers());
 		
 		HttpSession session = request.getSession();
