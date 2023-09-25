@@ -26,28 +26,31 @@ public class ServletInscription extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp");
-		rd.forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setPseudo(request.getParameter("pseudo"));
-        utilisateur.setNom(request.getParameter("nom"));
-        utilisateur.setPrenom(request.getParameter("prenom"));
-        utilisateur.setEmail(request.getParameter("email"));
-        utilisateur.setTelephone(request.getParameter("telephone"));
-        utilisateur.setRue(request.getParameter("rue"));
-        utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
-        utilisateur.setVille(request.getParameter("ville"));
-        utilisateur.setMotDePasse(request.getParameter("mot de passe"));
-        utilisateurManager.insertOneUser(utilisateur);
-        
-//        utilisateurDao.insert(utilisateur);
-        HttpSession session = request.getSession();
-        session.setAttribute("profilConnecte", true);
-        
-        this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
+		try {
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo(request.getParameter("pseudo"));
+			utilisateur.setNom(request.getParameter("nom"));
+			utilisateur.setPrenom(request.getParameter("prenom"));
+			utilisateur.setEmail(request.getParameter("email"));
+			utilisateur.setTelephone(request.getParameter("telephone"));
+			utilisateur.setRue(request.getParameter("rue"));
+			utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
+			utilisateur.setVille(request.getParameter("ville"));
+			utilisateur.setMotDePasse(request.getParameter("mot de passe"));
+			utilisateurManager.insertOneUser(utilisateur);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("profilConnecte", true);
+			
+			this.getServletContext().getRequestDispatcher("/WEB-INF/tests/bonjour.jsp").forward(request, response);
+		} catch (ServletException e) {
+			request.setAttribute("ErreurInscription", true);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/gestionUtilisateurs/inscription.jsp.jsp").forward(request, response);
+		}
 	}
 
 }

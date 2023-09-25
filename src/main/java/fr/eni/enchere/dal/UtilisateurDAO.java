@@ -29,4 +29,6 @@ public interface UtilisateurDAO {
 	
 	public void updateMdp(Utilisateur utilisateur, int noUtilisateur);
 	
+	public void updateCredit(Utilisateur utilisateur, int montant);
+	
 }
