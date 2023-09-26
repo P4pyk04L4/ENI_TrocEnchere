@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.enchere.bll.EmailManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -52,54 +53,91 @@ public class ServletEspaceAdminGestionUtilisateurs extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 		
     	UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+    	EmailManager emailmanager = EmailManager.getInstance();
     	
-    	
-    	Utilisateur utilisateur = new Utilisateur();
     	
     	String idUserStr = request.getParameter("utilisateurId");
+    	
     	if (idUserStr != null) {
+    		
     	    try {
+    	    	
+    	    	Utilisateur utilisateur = new Utilisateur();
+    	    	
     	        int idUser = Integer.parseInt(idUserStr);
     	        utilisateur.setIdentifiant(idUser);
+    	        
+    	    	String adminSwitchValue = request.getParameter("adminSwitch");
+    	    	String activateSwitchValue = request.getParameter("activateSwitch");
+    	    	String modifyOneUserAction = request.getParameter("modifyOneUser");
+    	    	String mdpOublieAction = request.getParameter("mdpOublie");
+    	    	String deleteOneUserAction = request.getParameter("deleteOneUser");
+    	    	
+    	        if (adminSwitchValue != null) {
+    	        	 if ("true".equals(adminSwitchValue)) {
+    	        		 // La case "adminSwitch" est cochée (ON)
+    	        		 utilisateurManager.activateAdmin(utilisateur);
+    	        	 } else {
+    	        		 // La case "adminSwitch" est décochée (OFF)
+    	        		 utilisateurManager.desactivateAdmin(utilisateur);
+    	        	 }
+    	        	 
+    	        }
+    	        
+    	        if (activateSwitchValue != null) {
+    	        	if ("true".equals(activateSwitchValue)) {
+    	       		 	// La case "activateSwitch" est cochée (ON)
+    	        		utilisateurManager.activateUser(utilisateur);
+    	        	} else {
+    	       		 	// La case "activateSwitch" est décochée (OFF)
+    	        		utilisateurManager.desactivateUser(utilisateur);
+    	       	 	}
+    	       	 
+    	        }	
+    	        
+    	        if (modifyOneUserAction != null) {
+    	        	
+    	    		utilisateur.setPseudo(request.getParameter("pseudo"));
+    	            utilisateur.setNom(request.getParameter("nom"));
+    	            utilisateur.setPrenom(request.getParameter("prenom"));
+    	            utilisateur.setEmail(request.getParameter("email"));
+    	            utilisateur.setTelephone(request.getParameter("telephone"));
+    	            utilisateur.setRue(request.getParameter("rue"));
+    	            utilisateur.setCodePostal(Integer.valueOf(request.getParameter("codePostal")));
+    	            utilisateur.setVille(request.getParameter("ville"));
+    	            
+    	            utilisateurManager.updateOne(utilisateur, utilisateur.getIdentifiant());
+    	            
+    	        }
+    	        
+    	        if (mdpOublieAction != null) {
+    	        	
+    	            utilisateur.setEmail(request.getParameter("email"));
+    	            
+    	        	String resetPasswordLink = "http://localhost:8080" + request.getContextPath() + "/reinitialisation_mdp?numid=" + utilisateur.getIdentifiant(); // Lien de réinitialisation du Mot de Passe
+
+    	        	boolean sendMailMdpOubliOk = false;
+    	        	sendMailMdpOubliOk = emailmanager.envoiMailMdpOubli(utilisateur, resetPasswordLink);
+    	        	request.setAttribute("sendMailMdpOubliOk", sendMailMdpOubliOk);
+    	        	
+    	        }
+    	        	
+    	        if (deleteOneUserAction != null) {
+    	        	utilisateurManager.deleteUser(utilisateur);
+    	        }
+    	        
     	    } catch (NumberFormatException e) {
     	        // Gérer l'exception si la conversion échoue (par exemple, enregistrez l'erreur dans les journaux)
+    	    } catch (Exception e) {	
+    	    	// Gérer l'exception si une exception est levée
     	    }
+    	    
     	}
-	    	
-    	String adminSwitchValue = request.getParameter("adminSwitch");
-    	String activateSwitchValue = request.getParameter("activateSwitch");
-    	String deleteAction = request.getParameter("deleteOneUser");
-    	
-        if (adminSwitchValue != null) {
-        	 if ("true".equals(adminSwitchValue)) {
-        		 // La case "adminSwitch" est cochée (ON)
-        		 utilisateurManager.activateAdmin(utilisateur);
-        	 } else {
-        		 // La case "adminSwitch" est décochée (OFF)
-        		 utilisateurManager.desactivateAdmin(utilisateur);
-        	 }
-        	 
-        }
-        
-        if (activateSwitchValue != null) {
-        	if ("true".equals(activateSwitchValue)) {
-       		 	// La case "activateSwitch" est cochée (ON)
-        		utilisateurManager.activateUser(utilisateur);
-        	} else {
-       		 	// La case "activateSwitch" est décochée (OFF)
-        		utilisateurManager.desactivateUser(utilisateur);
-       	 	}
-       	 
-        }	
-        	
-        if (deleteAction != null) {
-        	utilisateurManager.deleteUser(utilisateur);
-        }
-	    
         
 		request.setAttribute("utilisateurs", utilisateurManager.getAllUsers());
 		
 		HttpSession session = request.getSession();
+		
 	    this.getServletContext().getRequestDispatcher("/WEB-INF/espace_admin/gestion_utilisateurs.jsp").forward(request, response);
 		
 	}
