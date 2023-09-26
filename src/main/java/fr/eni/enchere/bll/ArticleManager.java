@@ -5,10 +5,7 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.EtatVente;
-<<<<<<< HEAD
-import fr.eni.enchere.bo.Retrait;
-=======
->>>>>>> d980d139d71d3faa83fc2e39b3171eba81ac8a05
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DAOFactory;
 
@@ -63,6 +60,16 @@ public class ArticleManager {
 	
 	public ArticleVendu selectById(int noArticle) {
 		return instanceArticleDAO.selectById(noArticle);
+	}
+	
+	public void activateArticle(ArticleVendu article) {
+		article.setActivate(true);
+		instanceArticleDAO.updateActivateArticle(article);
+	}
+	
+	public void desactivateArticle(ArticleVendu article) {
+		article.setActivate(false);
+		instanceArticleDAO.updateActivateArticle(article);
 	}
 
 }

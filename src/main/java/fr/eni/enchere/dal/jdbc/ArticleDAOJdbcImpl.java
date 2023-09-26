@@ -12,6 +12,7 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.EtatVente;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
@@ -35,6 +36,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String DELETE_ARTICLE = "DELETE FROM ArticleVendu WHERE noArticle=?";
 	private static final String DELETE_RETRAIT = "DELETE FROM Retrait WHERE noRetrait=?";
 	private static final String UPDATE_ETATVENTE = "UPDATE ArticleVendu SET etatVente=? WHERE noArticle=?";
+	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.ArticleVendu SET activate=? WHERE noArticle=?;";
 	
 	
 	@Override
@@ -292,6 +294,25 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setInt( 1, article.getRetrait().getNoRetrait() );
 			stmt.executeUpdate();
 		} catch( SQLException e ) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void updateActivateArticle(ArticleVendu article) {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement stmt = cnx.prepareStatement(UPDATE_ACTIVATE_ONE_USER);
+
+			stmt.setBoolean(1, article.getActivate());
+			stmt.setInt(2, article.getNoArticle());
+
+			// Update
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

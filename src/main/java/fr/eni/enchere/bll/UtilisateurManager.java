@@ -56,22 +56,22 @@ public class UtilisateurManager {
 	
 	public void activateAdmin(Utilisateur utilisateur) {
 		utilisateur.setAdministrateur(true);
-		dao.modifAdminUser(utilisateur);
+		dao.updateAdminUser(utilisateur);
 	}
 	
 	public void desactivateAdmin(Utilisateur utilisateur) {
 		utilisateur.setAdministrateur(false);
-		dao.modifAdminUser(utilisateur);
+		dao.updateAdminUser(utilisateur);
 	}
 
 	public void activateUser(Utilisateur utilisateur) {
 		utilisateur.setActivate(true);
-		dao.modifActivateUser(utilisateur);
+		dao.updateActivateUser(utilisateur);
 	}
 	
 	public void desactivateUser(Utilisateur utilisateur) {
 		utilisateur.setActivate(false);
-		dao.modifActivateUser(utilisateur);
+		dao.updateActivateUser(utilisateur);
 	}
 
 	public void deleteUser(Utilisateur utilisateur) {
