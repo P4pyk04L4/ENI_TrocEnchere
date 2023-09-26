@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.enchere.bll.ArticleManager;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -40,7 +41,10 @@ public class ServletAffichageArticle extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurActif = (Utilisateur) session.getAttribute("user");
 		
+		ArticleVendu article = articleManager.selectById(Integer.valueOf(request.getParameter("noArticle")));
+		
 		if (utilisateurActif.getCredit() >= montant) {
+			
 			LocalDate date = LocalDate.now();
 			
 			Enchere enchere = new Enchere();
@@ -57,6 +61,14 @@ public class ServletAffichageArticle extends HttpServlet {
 			utilisateurActif = utilisateurManager.selectById(utilisateurActif.getIdentifiant());
             session.setAttribute("user", utilisateurActif);
 	        request.setAttribute("EnchereMise", true);
+	        
+	        // Update de la dernière enchère
+	        
+	        // VERIFIER ANCIEN ENCHERISSEUR
+	        
+	        // CHANGER L'UTILISATEUR ACHETEUR DE L'ARTICLE
+	        
+	        
 		} else {
 			System.out.println("Crédits insuffisants");
 			request.setAttribute("CreditsInsuffisants", true);

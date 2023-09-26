@@ -5,6 +5,7 @@ package fr.eni.enchere.bll;
 
 import java.util.List;
 
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -37,8 +38,8 @@ public class EnchereManager {
 	
 	private EnchereDAO instanceEnchereDAO = DAOFactory.getEnchereDAO();
 	
-	public List<Enchere> afficherListeEnchere(){
-		return instanceEnchereDAO.afficherListeEnchere();
+	public List<Enchere> afficherListeEnchere(int noArticle){
+		return instanceEnchereDAO.afficherListeEnchere(noArticle);
 	}
 	
 	public void encherir(Enchere enchere) {
