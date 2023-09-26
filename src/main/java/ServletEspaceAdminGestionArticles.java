@@ -73,16 +73,16 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
     	        if (activateSwitchValue != null) {
     	        	if ("true".equals(activateSwitchValue)) {
     	       		 	// La case "activateSwitch" est cochée (ON)
-    	        		// todo
+    	        		articleManager.activateArticle(articleVendu);
     	        	} else {
     	       		 	// La case "activateSwitch" est décochée (OFF)
-    	        		// todo		
+    	        		articleManager.desactivateArticle(articleVendu);	
     	       	 	}
     	       	 
     	        }
     	        
     	        if (deleteOneArticleAction != null) {
-    	        	// todo
+    	        	articleManager.deleteArticle(articleVendu);
     	        }
     	    	
     	    } catch (NumberFormatException e) {

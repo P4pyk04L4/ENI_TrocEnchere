@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 
 public interface ArticleDAO {
 	
@@ -20,5 +21,7 @@ public interface ArticleDAO {
 	public Retrait getRetraitById( int retraitId );
 	
 	public void deleteArticle( ArticleVendu article );
+	
+	public void updateActivateArticle(ArticleVendu article);
 	
 }

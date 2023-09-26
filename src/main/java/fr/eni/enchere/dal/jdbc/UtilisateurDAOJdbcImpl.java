@@ -23,8 +23,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ " VALUES(?,?,?,?,?,?,?,?,?,?);";
 	private static final String SELECT_ALL_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
 	private static final String SELECT_ONE_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?;";
-	private static final String MODIFY_ADMIN_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET administrateur=? WHERE noUtilisateur=?;";
-	private static final String MODIFY_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET activate=? WHERE noUtilisateur=?;";
+	private static final String UPDATE_ADMIN_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET administrateur=? WHERE noUtilisateur=?;";
+	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET activate=? WHERE noUtilisateur=?;";
 	private static final String DELETE_ONE_USER = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
 	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
 	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
@@ -177,11 +177,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	@Override
-	public void modifAdminUser(Utilisateur utilisateur) {
+	public void updateAdminUser(Utilisateur utilisateur) {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
-			PreparedStatement stmt = cnx.prepareStatement(MODIFY_ADMIN_ONE_USER);
+			PreparedStatement stmt = cnx.prepareStatement(UPDATE_ADMIN_ONE_USER);
 
 			stmt.setBoolean(1, utilisateur.getAdministrateur());
 			stmt.setInt(2, utilisateur.getIdentifiant());
@@ -196,11 +196,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void modifActivateUser(Utilisateur utilisateur) {
+	public void updateActivateUser(Utilisateur utilisateur) {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
-			PreparedStatement stmt = cnx.prepareStatement(MODIFY_ACTIVATE_ONE_USER);
+			PreparedStatement stmt = cnx.prepareStatement(UPDATE_ACTIVATE_ONE_USER);
 
 			stmt.setBoolean(1, utilisateur.getActivate());
 			stmt.setInt(2, utilisateur.getIdentifiant());

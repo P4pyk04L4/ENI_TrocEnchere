@@ -15,9 +15,9 @@ public interface UtilisateurDAO {
 
 	public Utilisateur connectionUser(String pseudo, String motDePasse);
 	
-	public void modifAdminUser(Utilisateur utilisateur);
+	public void updateAdminUser(Utilisateur utilisateur);
 
-	public void modifActivateUser(Utilisateur utilisateur);
+	public void updateActivateUser(Utilisateur utilisateur);
 
 	public void deleteOneUser(Utilisateur utilisateur);
 
