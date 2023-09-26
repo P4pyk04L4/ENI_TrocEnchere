@@ -210,14 +210,45 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								data-bs-toggle="collapse" data-bs-target="#collapseThree"
 								aria-expanded="false" aria-controls="collapseThree">
-								Supprimer mon compte !</button>
+								Ajouter des crédits</button>
 						</h2>
 						<div id="collapseThree" class="accordion-collapse collapse"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<form method="post"
+									action="<%=request.getContextPath()%>/ServletAjoutCredit"
+									class="text-center">
+
+									<div class="form-group col-6 mx-auto">
+										<label for="credits" class="py-2">Quantité de crédits
+											à ajouter</label> <input type="number" class="form-control"
+											name="credits" min="1" required>
+									</div>
+
+									<div class="my-4 text-center">
+										<div class="col-4 mx-auto">
+											<button type="submit" class="btn btn-primary mr-2">Ajouter
+												les crédits à mon compte</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#collapseFour"
+								aria-expanded="false" aria-controls="collapseFour">
+								Supprimer mon compte</button>
+						</h2>
+						<div id="collapseFour" class="accordion-collapse collapse"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<!-- Button trigger modal -->
@@ -229,6 +260,7 @@
 								<div class="modal fade" id="exampleModal" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog">
+
 										<form method="post"
 											action="<%=request.getContextPath()%>/ServletSuppressionUtilisateurActif"
 											class="row">
@@ -242,7 +274,9 @@
 												<div class="modal-body">
 													<p>Attention, cette action est irréversible.</p>
 													<div class="form-check">
-														<input class="form-check-input" type="checkbox" value=""
+														<input type="hidden" name="idUser"
+															value="${utilisateurs.identifiant}"> <input
+															class="form-check-input" type="checkbox" value=""
 															id="invalidCheck2" required> <label
 															class="form-check-label" for="invalidCheck2">
 															Oui, je désire supprimer mon compte </label>
@@ -258,6 +292,9 @@
 										</form>
 									</div>
 								</div>
+
+
+
 							</div>
 						</div>
 					</div>

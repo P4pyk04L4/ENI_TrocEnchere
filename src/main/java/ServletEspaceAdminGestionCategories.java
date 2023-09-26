@@ -49,13 +49,15 @@ public class ServletEspaceAdminGestionCategories extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
         // Définir l'encodage des caractères UTF-8
         request.setCharacterEncoding("UTF-8");
 		
 		CategorieManager categorieManager = CategorieManager.getInstance();
 		
+		
     	Categorie categorie = new Categorie();
-    	
+    		
     	String idCategorieStr = request.getParameter("noCategorie");
     	if (idCategorieStr != null) {
     	    try {
@@ -67,6 +69,7 @@ public class ServletEspaceAdminGestionCategories extends HttpServlet {
     	}
     	
     	categorie.setLibelle(request.getParameter("libelle"));
+    	
     	
     	String createAction = request.getParameter("createOneCategory");
         String modifyAction = request.getParameter("modifyOneCategory");

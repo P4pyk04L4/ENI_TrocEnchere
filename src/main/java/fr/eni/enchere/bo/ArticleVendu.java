@@ -42,6 +42,9 @@ public class ArticleVendu {
 				prixVente, categorie, vendeur, activate, encheres );
 	}
 	
+	public ArticleVendu() {
+	}
+	
 	public Integer getNoArticle() {
 		return noArticle;
 	}

@@ -23,13 +23,16 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ " VALUES(?,?,?,?,?,?,?,?,?,?);";
 	private static final String SELECT_ALL_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
 	private static final String SELECT_ONE_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?;";
+	private static final String MODIFY_ADMIN_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET administrateur=? WHERE noUtilisateur=?;";
 	private static final String MODIFY_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET activate=? WHERE noUtilisateur=?;";
 	private static final String DELETE_ONE_USER = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
 	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
 	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
 	private static final String UPDATE_MDP = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
+	private static final String UPDATE_CREDIT = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET credit = ? WHERE noUtilisateur = ?;";
 	private static final String SELECT_BY_PSEUDO = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=?";
 	private static final String SELECT_BY_EMAIL = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=?";
+
 
 	@Override
 	public void insertOneUser(Utilisateur utilisateur) {
@@ -172,6 +175,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void modifAdminUser(Utilisateur utilisateur) {
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement stmt = cnx.prepareStatement(MODIFY_ADMIN_ONE_USER);
+
+			stmt.setBoolean(1, utilisateur.getAdministrateur());
+			stmt.setInt(2, utilisateur.getIdentifiant());
+
+			// Update
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	@Override
 	public void modifActivateUser(Utilisateur utilisateur) {
@@ -253,6 +275,19 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e.printStackTrace();
 		}
 		return utilisateur;
+	}
+
+	@Override
+	public void updateCredit(Utilisateur utilisateur, int montant) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT);
+			int montantAAjouter = montant + Integer.valueOf(utilisateur.getCredit());
+			pstmt.setInt(1, montantAAjouter);
+			pstmt.setInt(2, utilisateur.getIdentifiant());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 }

@@ -1,47 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<!-- HEADER -->
 <%@ include file="includes/entete.jspf"%>
 
 <body>
 
+	<!-- MENU -->
 	<%@ include file="includes/menu.jspf"%>
 	
     <div class="container-fluid">
         <div class="row">
-            <!-- Menu horizontal Ã  gauche -->
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="position-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="<%=request.getContextPath()%>/espace_admin/accueil">
-                                Accueil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/espace_admin/gestion_utilisateurs">
-                                Utilisateurs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/espace_admin/gestion_categories">
-                                CatÃ©gories d'Articles
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Articles en Vente
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+        
+            <!-- MENU ADMIN -->
+			<%@ include file="includes/menu_admin.jspf"%>
 
             <!-- Contenu principal -->
             <main class="col-md-10 ms-sm-auto">
             
                 <h1 class="my-2">Espace Administrateur</h1>
-                <h4 class="my-1">-> Gestion des CatÃ©gories</h4>
+                <h4 class="my-1">-> Gestion des Catégories</h4>
              	
 				<button type="submit" class="btn btn-success btn-lg my-3" 
 					data-bs-toggle="modal" data-bs-target="#createOneCategoryModal">
@@ -49,25 +24,33 @@
 						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
 					</svg>
-					&nbsp;Ajouter une Nouvelle CatÃ©gorie
+					&nbsp;Ajouter une Nouvelle Catégorie
 				</button>
 				
 				<div class="modal fade" id="createOneCategoryModal" tabindex="-1"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-dialog">
 						<form method="post"
 							action="<%=request.getContextPath()%>/espace_admin/gestion_categories"
 							class="row">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter une Nouvelle CatÃ©gorie</h1>
+									<h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter une Nouvelle Catégorie</h1>
+									<button type="button" class="btn-close"
+										data-bs-dismiss="modal" aria-label="Close">
+									</button>
 								</div>
 								<div class="modal-body">
-									<input type="text" name="libelle" placeholder="LibellÃ© de la CatÃ©gorie" value="">
+									<input type="text" name="libelle" placeholder="Libellé de la Catégorie" value="">
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary btn-sm"
-										data-bs-dismiss="modal">Annuler
+										data-bs-dismiss="modal">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+										  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+										  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+										</svg>
+										&nbsp;Annuler
 									</button>
 									<button type="submit" class="btn btn-success btn-sm"
 										name="createOneCategory">
@@ -87,7 +70,7 @@
 				    <thead>
 				        <tr>
 				            <th scope="col" class="col-1">#</th>
-				            <th scope="col" class="col-3">LibellÃ©</th>
+				            <th scope="col" class="col-3">Libellé</th>
 				            <th scope="col" class="col-1"></th>
 				            <th scope="col"></th>
 				        </tr>
@@ -109,13 +92,16 @@
 				               		
 									<div class="modal fade" id="modifyOneCategoryModal-${categorie.noCategorie}" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-dialog">
 											<form method="post"
 												action="<%=request.getContextPath()%>/espace_admin/gestion_categories"
 												class="row">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h1 class="modal-title fs-5" id="exampleModalLabel">Modification de la CatÃ©gorie nÂ°<c:out value="${categorie.noCategorie}" /></h1>
+														<h1 class="modal-title fs-5" id="exampleModalLabel">Modification de la Catégorie n°<c:out value="${categorie.noCategorie}" /></h1>
+														<button type="button" class="btn-close"
+															data-bs-dismiss="modal" aria-label="Close">
+														</button>
 													</div>
 													<div class="modal-body">
 														<input type="hidden" name="noCategorie" value="${categorie.noCategorie}">
@@ -123,7 +109,13 @@
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-secondary btn-sm"
-															data-bs-dismiss="modal">Annuler</button>
+															data-bs-dismiss="modal">
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+															  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+															  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+															</svg>
+															&nbsp;Annuler
+														</button>
 														<button type="submit" class="btn btn-primary btn-sm"
 															 name="modifyOneCategory">
 															 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -159,27 +151,33 @@
 												<div class="modal-content">
 													<div class="modal-header">
 														<h1 class="modal-title fs-5" id="exampleModalLabel">
-															Suppression de la CatÃ©gorie nÂ°<c:out value="${categorie.noCategorie}" /><br>
-															"<c:out value="${categorie.libelle}" />"</h1>
+															Suppression de la Catégorie n°<c:out value="${categorie.noCategorie}" /><br>
+															"<c:out value="${categorie.libelle}" />"
+														</h1>
 														<button type="button" class="btn-close"
 															data-bs-dismiss="modal" aria-label="Close">
 														</button>
 													</div>
 													<div class="modal-body">
-														<p>Attention, cette action est irrÃ©versible !</p>
+														<p>Attention, cette action est irréversible !</p>
 														<div class="form-check">
 															<input type="hidden" name="noCategorie"
 																 value="${categorie.noCategorie}">
 															<input class="form-check-input" type="checkbox"
 																value="" id="invalidCheck2" required>
 															<label class="form-check-label" for="invalidCheck2">
-																Oui, je dÃ©sire supprimer cette catÃ©gorie
+																Oui, je désire supprimer cette catégorie
 															</label>
 														</div>
 													</div>
 													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-bs-dismiss="modal">Annuler
+														<button type="button" class="btn btn-secondary btn-sm"
+															data-bs-dismiss="modal">
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+															  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+															  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+															</svg>
+															&nbsp;Annuler
 														</button>
 														<button type="submit" class="btn btn-danger btn-sm"
 															name="deleteOneCategory">
@@ -202,6 +200,7 @@
 				</table>
 
             </main>
+            
         </div>
     </div>
 

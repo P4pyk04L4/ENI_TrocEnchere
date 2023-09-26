@@ -53,19 +53,33 @@ public class UtilisateurManager {
 	public void updateMdp(Utilisateur utilisateur, int noUtilisateur) {
 		dao.updateMdp(utilisateur, noUtilisateur);
 	}
-
-	public void desactivateUser(Utilisateur utilisateur) {
-		utilisateur.setActivate(false);
-		dao.modifActivateUser(utilisateur);
+	
+	public void activateAdmin(Utilisateur utilisateur) {
+		utilisateur.setAdministrateur(true);
+		dao.modifAdminUser(utilisateur);
+	}
+	
+	public void desactivateAdmin(Utilisateur utilisateur) {
+		utilisateur.setAdministrateur(false);
+		dao.modifAdminUser(utilisateur);
 	}
 
 	public void activateUser(Utilisateur utilisateur) {
 		utilisateur.setActivate(true);
 		dao.modifActivateUser(utilisateur);
 	}
+	
+	public void desactivateUser(Utilisateur utilisateur) {
+		utilisateur.setActivate(false);
+		dao.modifActivateUser(utilisateur);
+	}
 
 	public void deleteUser(Utilisateur utilisateur) {
 		dao.deleteOneUser(utilisateur);
+	}
+	
+	public void updateCredit(Utilisateur utilisateur, int montant) {
+		dao.updateCredit(utilisateur, montant);
 	}
 
 	/**
