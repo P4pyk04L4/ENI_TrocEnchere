@@ -10,4 +10,6 @@ import fr.eni.enchere.bo.Enchere;
 public interface EnchereDAO {
 
 	public List<Enchere> afficherListeEnchere();
+	
+	public void encherir(Enchere enchere);
 }

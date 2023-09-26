@@ -9,6 +9,13 @@
 
 	<div class="container">
 		<h1 class="my-2">Détail article</h1>
+		
+		<c:if test="${not empty requestScope.EnchereMise}">
+			<div class="alert alert-success">Nous avons bien enregistré votre enchère.</div>
+		</c:if>
+		<c:if test="${not empty requestScope.CreditsInsuffisants}">
+			<div class="alert alert-danger">Vos crédits sont insuffisants.</div>
+		</c:if>
 
 		<div class="row d-flex justify-content-center py-3">
 			<!-- Formulaire d'inscription -->
@@ -121,6 +128,45 @@
 							<p>Crédits</p>
 						</div>
 
+
+						<!-- ENCHERE -->
+						
+						<button type="button" class="btn btn-success"
+									data-bs-toggle="modal" data-bs-target="#exampleModal">Enchérir</button>
+
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal" tabindex="-1"
+									aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+
+										<form method="post"
+											action="<%=request.getContextPath()%>/article"
+											class="row">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="exampleModalLabel">Enchérir</h1>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>Ajouter le montant de votre enchère.</p>
+													<div class="form-check">
+														<input type="hidden" name="idUser" value="${ user.identifiant}">
+														<input type="hidden" name="noArticle" value="${article.noArticle}">
+														<input type="number" min="${ article.prixVente }" name="montantEnchere" >
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Annuler</button>
+													<button type="submit" class="btn btn-danger">Enchérir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+						
+						
 					</div>
 				</div>
 			</div>
