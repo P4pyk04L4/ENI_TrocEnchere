@@ -35,10 +35,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			while (rs.next()) {
 				
-//				UtilisateurDAOJdbcImpl daoUtilisateur = new UtilisateurDAOJdbcImpl();
-//				Utilisateur utilisateur = new Utilisateur();
-//				utilisateur.setIdentifiant(rs.getInt("noUtilisateur"));
-//				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
+				UtilisateurDAOJdbcImpl daoUtilisateur = new UtilisateurDAOJdbcImpl();
+				Utilisateur utilisateur = new Utilisateur();
+				utilisateur.setIdentifiant(rs.getInt("noUtilisateur"));
+				utilisateur.setPseudo(daoUtilisateur.selectById(utilisateur.getIdentifiant()).getPseudo());
 //				
 //				ArticleDAOJdbcImpl daoArticle = new ArticleDAOJdbcImpl();
 //				ArticleVendu article = new ArticleVendu();
@@ -55,7 +55,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 				Enchere enchere = new Enchere();
 				enchere.setNoEnchere(rs.getInt("noEnchere"));
-				enchere.setNoUtilisateur(rs.getInt("noUtilisateur"));
+				enchere.setNoUtilisateur(utilisateur.getIdentifiant());
+				enchere.setPseudoUtilisateur(utilisateur.getPseudo());
 				enchere.setDateEnchere(rs.getDate("dateEnchere").toLocalDate());
 				enchere.setMontantEnchere(rs.getInt("montantEnchere"));
 				enchere.setNoArticle(rs.getInt("noArticle"));

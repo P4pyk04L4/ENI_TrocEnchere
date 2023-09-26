@@ -13,6 +13,7 @@ public class Enchere {
 	private Boolean activate = false;
 	// Attributs secondaires
 	private int noUtilisateur;
+	private String pseudoUtilisateur;
 	private int noArticle;
 	
 	
@@ -109,6 +110,20 @@ public class Enchere {
 		return "Enchere [noEnchere=" + noEnchere + ", utilisateurAcheteur=" + utilisateurAcheteur + ", articleVendu="
 				+ articleVendu + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", activate="
 				+ activate + ", noUtilisateur=" + noUtilisateur + ", noArticle=" + noArticle + "]";
+	}
+
+	/**
+	 * @return the pseudoUtilisateur
+	 */
+	public String getPseudoUtilisateur() {
+		return pseudoUtilisateur;
+	}
+
+	/**
+	 * @param pseudoUtilisateur the pseudoUtilisateur to set
+	 */
+	public void setPseudoUtilisateur(String pseudoUtilisateur) {
+		this.pseudoUtilisateur = pseudoUtilisateur;
 	}	
 	
 	

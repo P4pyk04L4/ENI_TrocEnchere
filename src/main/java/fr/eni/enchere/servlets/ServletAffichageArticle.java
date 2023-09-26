@@ -2,6 +2,8 @@ package fr.eni.enchere.servlets;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -64,7 +66,13 @@ public class ServletAffichageArticle extends HttpServlet {
 	        
 	        // Update de la dernière enchère
 	        
+	        articleManager.updateEnchereArticle(article, montant);
+	        
 	        // VERIFIER ANCIEN ENCHERISSEUR
+	        int noAncienEncherisseur = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getNoUtilisateur();
+	        int ancienMontant = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getMontantEnchere();
+	        Utilisateur AncienEncherisseur = utilisateurManager.selectById(noAncienEncherisseur);
+	        utilisateurManager.updateCredit(AncienEncherisseur, ancienMontant);
 	        
 	        // CHANGER L'UTILISATEUR ACHETEUR DE L'ARTICLE
 	        

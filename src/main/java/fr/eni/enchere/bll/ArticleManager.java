@@ -71,5 +71,9 @@ public class ArticleManager {
 		article.setActivate(false);
 		instanceArticleDAO.updateActivateArticle(article);
 	}
+	
+	public void updateEnchereArticle(ArticleVendu article, int montant) {
+		instanceArticleDAO.updateEnchereArticle(article, montant);
+	}
 
 }
