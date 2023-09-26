@@ -9,9 +9,10 @@
 
 	<div class="container">
 		<h1 class="my-2">Détail article</h1>
-		
+
 		<c:if test="${not empty requestScope.EnchereMise}">
-			<div class="alert alert-success">Nous avons bien enregistré votre enchère.</div>
+			<div class="alert alert-success">Nous avons bien enregistré
+				votre enchère.</div>
 		</c:if>
 		<c:if test="${not empty requestScope.CreditsInsuffisants}">
 			<div class="alert alert-danger">Vos crédits sont insuffisants.</div>
@@ -41,7 +42,7 @@
 				<img src="images/cyber.jpeg" class="img-fluid my-3" alt="Image">
 				<div class="d-flex">
 					<div class="row py-3 col-10">
-					
+
 						<div class="col-1">
 							<div class="text-end">
 								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
@@ -118,22 +119,22 @@
 
 						<div class="col-1">
 							<div class="text-end">
-								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" 
-								class="bi bi-house" viewBox="0 0 16 16">
-  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+								<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+									fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+  <path
+										d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
 </svg>
 							</div>
 						</div>
 						<div class="col-11">
 							<p>
-								<strong>Retrait</strong> <br>
-								${article.retrait.rue}<br>
+								<strong>Retrait</strong> <br> ${article.retrait.rue}<br>
 								${article.retrait.codePostal} ${article.retrait.ville}
 							</p>
 						</div>
 
-					</div>					
-					
+					</div>
+
 
 					<!-- CADRE DERNIERE ENCHERE -->
 
@@ -148,47 +149,69 @@
 
 
 						<!-- ENCHERE -->
-						
+
 						<button type="button" class="btn btn-success"
-									data-bs-toggle="modal" data-bs-target="#exampleModal">Enchérir</button>
+							data-bs-toggle="modal" data-bs-target="#exampleModal">Enchérir</button>
 
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModal" tabindex="-1"
-									aria-labelledby="exampleModalLabel" aria-hidden="true">
-									<div class="modal-dialog">
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
 
-										<form method="post"
-											action="<%=request.getContextPath()%>/article"
-											class="row">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h1 class="modal-title fs-5" id="exampleModalLabel">Enchérir</h1>
-													<button type="button" class="btn-close"
-														data-bs-dismiss="modal" aria-label="Close"></button>
-												</div>
-												<div class="modal-body">
-													<p>Ajouter le montant de votre enchère.</p>
-													<div class="form-check">
-														<input type="hidden" name="idUser" value="${ user.identifiant}">
-														<input type="hidden" name="noArticle" value="${article.noArticle}">
-														<input type="number" min="${ article.prixVente }" name="montantEnchere" >
-													</div>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary"
-														data-bs-dismiss="modal">Annuler</button>
-													<button type="submit" class="btn btn-danger">Enchérir</button>
-												</div>
+								<form method="post"
+									action="<%=request.getContextPath()%>/article" class="row">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Enchérir</h1>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<p>Ajouter le montant de votre enchère.</p>
+											<div class="form-check">
+												<input type="hidden" name="idUser"
+													value="${ user.identifiant}"> <input type="hidden"
+													name="noArticle" value="${article.noArticle}"> <input
+													type="number" min="${ article.prixVente }"
+													name="montantEnchere">
 											</div>
-										</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Annuler</button>
+											<button type="submit" class="btn btn-danger">Enchérir</button>
+										</div>
 									</div>
-								</div>
-						
-						
+								</form>
+							</div>
+						</div>
+
+
 					</div>
 				</div>
-			</div>
+				<c:out value="${ article.encheres }" />
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Pseudo</th>
+							<th scope="col">Date de l'enchère</th>
+							<th scope="col">Montant</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="enchere" items="${article.encheres}">
+							<tr>
+								
+								<td><c:out value="${utilisateurManager.selectById(enchere.noUtilisateur)}" /></td>
+								<td>${enchere.dateEnchere}</td>
+								<td>${enchere.montantEnchere}</td>
+							</tr>
+						</c:forEach>
 
+
+					</tbody>
+				</table>
+			</div>
 
 
 		</div>
