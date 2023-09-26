@@ -41,4 +41,8 @@ public class EnchereManager {
 		return instanceEnchereDAO.afficherListeEnchere();
 	}
 	
+	public void encherir(Enchere enchere) {
+		instanceEnchereDAO.encherir(enchere);
+	}
+	
 }

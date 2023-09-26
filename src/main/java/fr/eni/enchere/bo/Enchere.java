@@ -27,6 +27,12 @@ public class Enchere {
 		this( null, utilisateurAcheteur, dateEnchere, montantEnchere, articleVendu, activate );
 	}
 	
+	/**
+	 * 
+	 */
+	public Enchere() {
+	}
+
 	public Integer getNoEnchere() {
 		return noEnchere;
 	}
