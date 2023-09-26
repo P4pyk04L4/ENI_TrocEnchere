@@ -5,7 +5,6 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.EtatVente;
-import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DAOFactory;
 
@@ -44,11 +43,14 @@ public class ArticleManager {
 		article.setEtatVente(etatVente);
 		
 		instanceArticleDAO.creerArticle(article);
+	}	
+	
+	public void updateArticle( ArticleVendu article ) {
+		instanceArticleDAO.updateArticle(article);
 	}
 	
-	
-	public void supprimerArticle( ArticleVendu article, Retrait retrait ) {
-		
+	public void deleteArticle( ArticleVendu article ) {
+		instanceArticleDAO.deleteArticle(article);
 	}
 	
 	public List<ArticleVendu> getAllArticles() {
