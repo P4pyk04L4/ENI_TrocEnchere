@@ -37,6 +37,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String DELETE_RETRAIT = "DELETE FROM Retrait WHERE noRetrait=?";
 	private static final String UPDATE_ETATVENTE = "UPDATE ArticleVendu SET etatVente=? WHERE noArticle=?";
 	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.ArticleVendu SET activate=? WHERE noArticle=?;";
+	private static final String UPDATE_ENCHERE_ARTICLE = "UPDATE ArticleVendu SET prixVente=? WHERE noArticle=?";
 	
 	
 	@Override
@@ -313,6 +314,20 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.executeUpdate();
 
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	@Override
+	public void updateEnchereArticle(ArticleVendu article, int montant) {
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ENCHERE_ARTICLE)) {
+			stmt.setInt( 1, montant );
+			stmt.setInt( 2, article.getNoArticle() );
+			stmt.executeUpdate();
+		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
 		

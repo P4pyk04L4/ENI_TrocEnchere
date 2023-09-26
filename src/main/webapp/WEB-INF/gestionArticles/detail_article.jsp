@@ -149,7 +149,7 @@
 
 
 						<!-- ENCHERE -->
-
+						<c:if test="${ article.etatVente =='EN_COURS' }">
 						<button type="button" class="btn btn-success"
 							data-bs-toggle="modal" data-bs-target="#exampleModal">Enchérir</button>
 
@@ -185,11 +185,10 @@
 								</form>
 							</div>
 						</div>
-
+						</c:if>
 
 					</div>
 				</div>
-				<c:out value="${ article.encheres }" />
 				<table class="table">
 					<thead>
 						<tr>
@@ -202,7 +201,7 @@
 						<c:forEach var="enchere" items="${article.encheres}">
 							<tr>
 								
-								<td><c:out value="${utilisateurManager.selectById(enchere.noUtilisateur)}" /></td>
+								<td><a href="ServletAffichageProfilLambda?noUtilisateur=<c:out value="${ enchere.noUtilisateur }" />" class="text-decoration-none" >${enchere.pseudoUtilisateur}</td>
 								<td>${enchere.dateEnchere}</td>
 								<td>${enchere.montantEnchere}</td>
 							</tr>

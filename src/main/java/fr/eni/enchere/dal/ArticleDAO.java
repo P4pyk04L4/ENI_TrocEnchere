@@ -24,4 +24,6 @@ public interface ArticleDAO {
 	
 	public void updateActivateArticle(ArticleVendu article);
 	
+	public void updateEnchereArticle(ArticleVendu article, int montant);
+	
 }
