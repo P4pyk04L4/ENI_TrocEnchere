@@ -20,17 +20,20 @@ import fr.eni.enchere.dal.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
-	private static final String CREER_ARTICLE = "INSERT INTO ArticleVendu (nom, description, etatVente, dateDebutEncheres,"
-			+ " dateFinEncheres, miseAPrix, prixVente, noCategorie, noUtilisateurVendeur, activate) VALUES "
-			+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String CREER_ARTICLE = "INSERT INTO bjx3rvrwhdrtsh8g5edx.ArticleVendu (nom, description, "
+			+ "etatVente, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, noCategorie, noUtilisateurVendeur,"
+			+ " activate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERER_NUMERO_RETRAIT = "UPDATE bjx3rvrwhdrtsh8g5edx.ArticleVendu SET NoRetrait =? "
+			+ "											WHERE noArticle =?";
 	private static final String CREER_POINT_RETRAIT = "INSERT INTO Retrait (rue, ville, codePostal, noArticle) VALUES"
-			+ " (?, ?, ?, ?)";
+														+ " (?, ?, ?, ?)";
 	private static final String SELECT_ALL_ARTICLES = "SELECT * from bjx3rvrwhdrtsh8g5edx.ArticleVendu;";
 	private static final String SELECT_ONE_ARTICLE = "SELECT * from bjx3rvrwhdrtsh8g5edx.ArticleVendu WHERE noArticle=?;";
+	private static final String SELECT_ONE_RETRAIT = "SELECT * FROM bjx3rvrwhdrtsh8g5edx.Retrait WHERE noRetrait =?";
 	
 	
 	@Override
-	public void creerArticle( ArticleVendu article, Retrait retrait ) {
+	public void creerArticle( ArticleVendu article ) {
 		
 		try( Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement stmt = cnx.prepareStatement( CREER_ARTICLE, Statement.RETURN_GENERATED_KEYS ) ) {
@@ -53,29 +56,61 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 		}
 		
-		//Une fois que le numéro d'article a été récupéré, insertion du point de retrait dans la bdd avec le noArticle
-		creerPointRetrait( article, retrait );
+		/*Une fois que le numéro d'article a été récupéré, insertion du point de retrait dans la bdd avec le noArticle,
+		puis récupération du numéro de Retrait pour l'insérer dans l'attribut Retrait de l'Article*/
+		int numeroRetrait = creerPointRetrait( article );
+		
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement( INSERER_NUMERO_RETRAIT )) {
+			stmt.setInt( 1, numeroRetrait);
+			stmt.setInt( 2, article.getNoArticle() );
+			stmt.executeUpdate();
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
 		
 	}	
 
 	
 	@Override
-	public void creerPointRetrait( ArticleVendu article, Retrait retrait ) {		
-				
+	public int creerPointRetrait( ArticleVendu article ) {
+		
+		Integer numeroRetrait = null;
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(CREER_POINT_RETRAIT) ) {
-			stmt.setString(1, retrait.getRue());
-			stmt.setString(2, retrait.getVille());
-			stmt.setInt(3, retrait.getCodePostal());
+				PreparedStatement stmt = cnx.prepareStatement(CREER_POINT_RETRAIT, Statement.RETURN_GENERATED_KEYS) ) {
+			stmt.setString(1, article.getRetrait().getRue());
+			stmt.setString(2, article.getRetrait().getVille());
+			stmt.setInt(3, article.getRetrait().getCodePostal());
 			stmt.setInt(4, article.getNoArticle());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				numeroRetrait = rs.getInt(1);
+			}
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
-		System.out.println(article.getNoArticle());
-		
+		return numeroRetrait;
 	}
-
+	
+	
+	public Retrait getRetraitById( int retraitId ) {
+		
+		Retrait retrait = null;
+		
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement( SELECT_ONE_RETRAIT ) ) {
+			stmt.setInt(1, retraitId);
+			ResultSet rs = stmt.executeQuery();
+			if ( rs.next() ) {
+				retrait = new Retrait( retraitId, rs.getString("rue"), rs.getString("ville"), rs.getInt("codePostal") );
+			}
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
+		return retrait;
+	}
+	
 
 	@Override
 	public List<ArticleVendu> getAllArticles() {
@@ -101,6 +136,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				Utilisateur utilisateur = new Utilisateur();
 				utilisateur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
 				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
+				
+				Retrait retrait = getRetraitById( rs.getInt("noRetrait") );
 
 				article.setNoArticle(rs.getInt("noArticle"));
 				article.setNomArticle(rs.getString("nom"));
@@ -114,6 +151,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setVendeur(utilisateur);
 				article.setActivate(rs.getBoolean("activate"));
 				article.setEncheres(null);
+				article.setRetrait(retrait);
 
 				articles.add(article);
 			}
@@ -148,6 +186,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				Utilisateur utilisateur = new Utilisateur();
 				utilisateur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
 				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
+				
+				Retrait retrait = getRetraitById( rs.getInt("noRetrait") );
 
 				article.setNoArticle(rs.getInt("noArticle"));
 				article.setNomArticle(rs.getString("nom"));
@@ -161,6 +201,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setVendeur(utilisateur);
 				article.setActivate(rs.getBoolean("activate"));
 				article.setEncheres(null);
+				article.setRetrait(retrait);
 			}
 		} catch (
 
@@ -168,6 +209,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 		}
 		return article;
+	}	
+	
+	
+	@Override
+	public void supprimerArticle( ArticleVendu article, Retrait retrait ) {
+		
 	}
 
 }

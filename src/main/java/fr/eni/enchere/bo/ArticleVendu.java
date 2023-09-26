@@ -15,11 +15,12 @@ public class ArticleVendu {
 	private Utilisateur vendeur;
 	private Boolean activate = false;
 	private List<Enchere> encheres;
+	private Retrait retrait;
 	
 
 	public ArticleVendu(Integer noArticle, String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
-			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres) {
+			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres, Retrait retrait) {
 		this.setNoArticle(noArticle);
 		this.setNomArticle(nomArticle);
 		this.setDescription(description);
@@ -32,14 +33,15 @@ public class ArticleVendu {
 		this.setVendeur(vendeur);
 		this.setActivate(activate);
 		this.setEncheres(encheres);
+		this.setRetrait(retrait);
 	}
 
 	
 	public ArticleVendu(String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
-			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres) {
+			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres, Retrait retrait ) {
 		this( null, nomArticle, description, etatVente, dateDebutEncheres, dateFinEncheres, miseAPrix,
-				prixVente, categorie, vendeur, activate, encheres );
+				prixVente, categorie, vendeur, activate, encheres, retrait );
 	}
 	
 	public ArticleVendu() {
@@ -117,6 +119,12 @@ public class ArticleVendu {
 	public void setEncheres(List<Enchere> encheres) {
 		this.encheres = encheres;
 	}
+	public Retrait getRetrait() {
+		return retrait;
+	}
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
 
 
 	@Override
@@ -124,9 +132,9 @@ public class ArticleVendu {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", etatVente=" + etatVente + ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres="
 				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + ", categorie=" + categorie
-				+ ", vendeur=" + vendeur + ", activate=" + activate + ", encheres=" + encheres + "]";
+				+ ", vendeur=" + vendeur + ", activate=" + activate + ", encheres=" + encheres + ", retrait=" + retrait
+				+ "]";
 	}
-
 
 				
 }
