@@ -8,14 +8,27 @@
 <body>
 
 	<%@ include file="../outils/menu.jsp"%>
+	
+	<!-- Confirmation éventuelle d'enregistrement de l'article si l'utilisateur vient d'en créer un -->
+	<c:if test="${ confirmation }">
+		<div class="alert alert-success my-2" role="alert" style="text-align: center">
+			Votre article a bien été enregistré !		
+		</div>
+	</c:if>
 
-	<div class="container">
+<main class="container row d-flex">
+
+	<div class="col-3 border border-3 mx-5 mt-5" style="height: 350px">
+		<img alt="" src="" class="img-fluid">
+	</div>
+
+	<div class="col-8 mx-0 mt-2">
 	
 		<h1 class="m-3">Vendre un article</h1>
 		
-		<div class="row d-flex justify-content-center py-3 col-md-7 bg-light m-3">
+		<div class="row d-flex py-3 bg-light m-3">
 		
-			<form method="post" action="ServletNouvelleVente">
+			<form id="formulaire">
 			
 				<div class="form-group">
 					<label for="nomArticle">Nom de l'article :</label>
@@ -29,33 +42,39 @@
 								required style="height: 150px"></textarea>
 				</div>
 				
-				<div class="form-group my-2">
+				<div class="form-group col-6 my-2">
 					<label for="libelleCategorie">Choisir une catégorie :</label>
-					<input type="text" name="libelleCategorie" id="libelleCategorie" list="listeChoix"
-					class="form-control" required>
-					<datalist id="listeChoix">
-						<option value="valeur1">
-						<option value="valeur2">
-					</datalist>
+					<select name="libelleCategorie" id="libelleCategorie" class="form-select">
+						<c:forEach var="categorie" items="${ categories }">
+							<option value="${ categorie.getLibelle() }">${ categorie.getLibelle() }</option>
+						</c:forEach>
+					</select>						
 				</div>
 				
 				<div class="my-2">
 					<label for="formFile">Photo de l'article</label>
-					<input class="form-control" type="file" id="formFile" name="photoArticle">
+					<input class="form-control" type="file" id="formFile" name="photoArticle" accept="image/*">
 				</div>
 				
 				<div class="form-group col-4 my-2">
 					<label for="miseAPrix">Mise à prix :</label>
 					<input type="number" name="miseAPrix" id="miseAPrix" min=0 class="form-control" required>					
 				</div>
+		  		
+		  		<!-- Message d'erreur si la date de fin des enchères est antérieure à celle de début -->
+		  		<c:if test="${ erreurDates }">
+		  			<div class="alert alert-danger my-2" role="alert">
+		  				La date de fin des enchères doit être postérieure à la date de début des enchères !			
+		  			</div>
+		  		</c:if>
 				
-				<!-- Début conteneur réunissant les dates de début et fin d'enchères -->
+				<!-- Début regroupement des dates de début et fin d'enchères -->
 				<div class="column d-flex my-2">	
 					<div class="form-group col-7">
 						<label for="dateDebutEncheres">Début de l'enchère</label>
 						<div class="col-6">
 							<input type="date" name="dateDebutEncheres" id="dateDebutEncheres" value="" 
-									min="" class="form-control"><br>
+									min="" class="form-control" required><br>
 						</div>
 					</div>				
 					<!-- mise en place des valeurs par défaut et minimum pour la date de début des enchères -->
@@ -70,7 +89,7 @@
 						<label for="dateFinEncheres">Fin de l'enchère</label>
 						<div class="col-6">
 							<input type="date" name="dateFinEncheres" id="dateFinEncheres" value="" 
-									min="" class="form-control"><br>
+									min="" class="form-control" required><br>
 						</div>
 					</div>
 					<script>
@@ -78,7 +97,7 @@
 				        dateFinEncheres.min = dateActuelle;
 			  		</script>
 		  		</div>
-		  		<!-- Fin conteneur réunissant les dates de début et fin d'enchères -->
+		  		<!-- Fin regroupement des dates de début et fin d'enchères -->
 		  		
 				<fieldset class="border border-3 p-2 mb-3" style="border-radius: 15px">
 				
@@ -86,7 +105,8 @@
 					
 					<div class="form-group col-10 my-2">
 						<label for="rue">Rue :</label>
-						<input class="form-control" type="text" name="rue" id="rue" maxlength="50" required>
+						<input class="form-control" type="text" name="rue" id="rue" maxlength="50" 
+								value="${ rueUser }" required>
 					</div>
 					
 					<!-- début regroupement du code postal et de la ville sur une même ligne -->
@@ -97,14 +117,15 @@
 						</div>
 						<div class="col-2">
 							<input class="form-control" type="text" name="codePostal" id="codePostal" 
-									maxlength="6" required>
+									maxlength="6" value="${ codePostalUser }" required>
 						</div>
 						<div class="col-1"></div>						
 						<div class="col-1 px-0 mx-0">
 							<label for="ville" class="col-form-label">Ville :</label>
 						</div>
 						<div class="col-4">
-							<input class="form-control" type="text" name="ville" id="ville" maxlength="30" required>
+							<input class="form-control" type="text" name="ville" id="ville" maxlength="30" 
+									value="${ villeUser }" required>
 						</div>
 						
 					</div>
@@ -112,16 +133,27 @@
 					
 				</fieldset>								
 					
-				<input type="submit" class="btn btn-success" value="Valider">			
+				<input type="submit" class="btn btn-success" value="Valider" formaction="ServletNouvelleVente"
+						formmethod="POST">			
 				
-				<input type="reset" class="btn btn-secondary" value="Réinitialiser">							
+				<input type="reset" class="btn btn-secondary" value="Réinitialiser">
 				
+				<input type="button" class="btn btn-danger" value="Annuler" id="boutonAnnuler">
+					
+				<!--Script pour renvoyer vers la page d'accueil lors du clic sur le bouton Annuler-->	
+				<script>
+				    document.getElementById("boutonAnnuler").addEventListener("click", function() {
+				        window.location.href = "ServletDeTest";
+				    });
+				</script>
 				
 			</form>
 		
 		</div>
 		
 	</div>
+
+</main>
 	
 		<!-- FOOTER -->
 

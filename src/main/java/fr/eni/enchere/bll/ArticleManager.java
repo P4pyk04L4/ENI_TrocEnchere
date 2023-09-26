@@ -5,7 +5,10 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.EtatVente;
+<<<<<<< HEAD
 import fr.eni.enchere.bo.Retrait;
+=======
+>>>>>>> d980d139d71d3faa83fc2e39b3171eba81ac8a05
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.DAOFactory;
 
@@ -35,7 +38,7 @@ public class ArticleManager {
 	
 	
 	//Création d'un article en vente par un utilisateur
-	public void creerArticle( ArticleVendu article, Retrait retrait ) {		
+	public void creerArticle( ArticleVendu article ) {		
 		//si la date de début d'enchère est fixée à aujourd'hui, etatVente est à ENCOURS, sinon il est à NONDEBUTEE
 		EtatVente etatVente = EtatVente.NON_DEBUTEE;
 		if ( article.getDateDebutEncheres().equals(LocalDate.now()) ) {
@@ -43,7 +46,15 @@ public class ArticleManager {
 		}
 		article.setEtatVente(etatVente);
 		
-		instanceArticleDAO.creerArticle(article, retrait);
+		instanceArticleDAO.creerArticle(article);
+	}	
+	
+	public void updateArticle( ArticleVendu article ) {
+		instanceArticleDAO.updateArticle(article);
+	}
+	
+	public void deleteArticle( ArticleVendu article ) {
+		instanceArticleDAO.deleteArticle(article);
 	}
 	
 	public List<ArticleVendu> getAllArticles() {

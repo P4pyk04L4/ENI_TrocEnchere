@@ -20,6 +20,8 @@ public class Retrait {
 		this.setCodePostal(codePostal);
 	}
 	
+	public Retrait() {}
+	
 	public Integer getNoRetrait() {
 		return noRetrait;
 	}

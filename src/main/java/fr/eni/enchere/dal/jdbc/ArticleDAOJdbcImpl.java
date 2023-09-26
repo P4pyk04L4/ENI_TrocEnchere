@@ -12,7 +12,6 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
-import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.EtatVente;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
@@ -20,17 +19,26 @@ import fr.eni.enchere.dal.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
-	private static final String CREER_ARTICLE = "INSERT INTO ArticleVendu (nom, description, etatVente, dateDebutEncheres,"
-			+ " dateFinEncheres, miseAPrix, prixVente, noCategorie, noUtilisateurVendeur, activate) VALUES "
-			+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String CREER_ARTICLE = "INSERT INTO bjx3rvrwhdrtsh8g5edx.ArticleVendu (nom, description, "
+			+ "etatVente, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, noCategorie, noUtilisateurVendeur,"
+			+ " activate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERER_NUMERO_RETRAIT = "UPDATE bjx3rvrwhdrtsh8g5edx.ArticleVendu SET NoRetrait =? "
+			+ "											WHERE noArticle =?";
 	private static final String CREER_POINT_RETRAIT = "INSERT INTO Retrait (rue, ville, codePostal, noArticle) VALUES"
-			+ " (?, ?, ?, ?)";
+														+ " (?, ?, ?, ?)";
 	private static final String SELECT_ALL_ARTICLES = "SELECT * from bjx3rvrwhdrtsh8g5edx.ArticleVendu;";
 	private static final String SELECT_ONE_ARTICLE = "SELECT * from bjx3rvrwhdrtsh8g5edx.ArticleVendu WHERE noArticle=?;";
+	private static final String SELECT_ONE_RETRAIT = "SELECT * FROM bjx3rvrwhdrtsh8g5edx.Retrait WHERE noRetrait =?";
+	private static final String UPDATE_ARTICLE = "UPDATE ArticleVendu SET nom=?, description=?, dateDebutEncheres=?,"
+			+ "dateFinEncheres=?, miseAPrix=?, prixVente=?, noCategorie=? WHERE noArticle=?";
+	private static final String UPDATE_RETRAIT = "UPDATE Retrait SET rue=?, codePostal=?, ville=? WHERE noRetrait=?";
+	private static final String DELETE_ARTICLE = "DELETE FROM ArticleVendu WHERE noArticle=?";
+	private static final String DELETE_RETRAIT = "DELETE FROM Retrait WHERE noRetrait=?";
+	private static final String UPDATE_ETATVENTE = "UPDATE ArticleVendu SET etatVente=? WHERE noArticle=?";
 	
 	
 	@Override
-	public void creerArticle( ArticleVendu article, Retrait retrait ) {
+	public void creerArticle( ArticleVendu article ) {
 		
 		try( Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement stmt = cnx.prepareStatement( CREER_ARTICLE, Statement.RETURN_GENERATED_KEYS ) ) {
@@ -53,29 +61,62 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 		}
 		
-		//Une fois que le numéro d'article a été récupéré, insertion du point de retrait dans la bdd avec le noArticle
-		creerPointRetrait( article, retrait );
+		/*Une fois que le numéro d'article a été récupéré, insertion du point de retrait dans la bdd avec le noArticle,
+		puis récupération du numéro de Retrait pour l'insérer dans l'attribut Retrait de l'Article*/
+		int numeroRetrait = creerPointRetrait( article );
+		
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement( INSERER_NUMERO_RETRAIT )) {
+			stmt.setInt( 1, numeroRetrait);
+			stmt.setInt( 2, article.getNoArticle() );
+			stmt.executeUpdate();
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
 		
 	}	
 
 	
 	@Override
-	public void creerPointRetrait( ArticleVendu article, Retrait retrait ) {		
-				
+	public int creerPointRetrait( ArticleVendu article ) {
+		
+		Integer numeroRetrait = null;
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(CREER_POINT_RETRAIT) ) {
-			stmt.setString(1, retrait.getRue());
-			stmt.setString(2, retrait.getVille());
-			stmt.setInt(3, retrait.getCodePostal());
+				PreparedStatement stmt = cnx.prepareStatement(CREER_POINT_RETRAIT, Statement.RETURN_GENERATED_KEYS) ) {
+			stmt.setString(1, article.getRetrait().getRue());
+			stmt.setString(2, article.getRetrait().getVille());
+			stmt.setInt(3, article.getRetrait().getCodePostal());
 			stmt.setInt(4, article.getNoArticle());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				numeroRetrait = rs.getInt(1);
+			}
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
-		System.out.println(article.getNoArticle());
-		
+		return numeroRetrait;
 	}
-
+	
+	
+	@Override
+	public Retrait getRetraitById( int retraitId ) {
+		
+		Retrait retrait = null;
+		
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement( SELECT_ONE_RETRAIT ) ) {
+			stmt.setInt(1, retraitId);
+			ResultSet rs = stmt.executeQuery();
+			if ( rs.next() ) {
+				retrait = new Retrait( retraitId, rs.getString("rue"), rs.getString("ville"), rs.getInt("codePostal") );
+			}
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
+		return retrait;
+	}
+	
 
 	@Override
 	public List<ArticleVendu> getAllArticles() {
@@ -101,6 +142,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				Utilisateur utilisateur = new Utilisateur();
 				utilisateur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
 				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
+				
+//				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
+//				List<Enchere> encheres = new ArrayList<Enchere>();
+//				encheres = daoEnchere.afficherListeEnchere(rs.getInt("noArticle"));
+				
+				Retrait retrait = getRetraitById( rs.getInt("noRetrait") );
 
 				article.setNoArticle(rs.getInt("noArticle"));
 				article.setNomArticle(rs.getString("nom"));
@@ -113,7 +160,24 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setCategorie(categorie);
 				article.setVendeur(utilisateur);
 				article.setActivate(rs.getBoolean("activate"));
-				article.setEncheres(null);
+//				article.setEncheres(encheres);
+				article.setRetrait(retrait);
+				
+				//Mise à jour de l'attribut EtatVente dans la bdd en fonction de la date du jour
+				if( article.getDateDebutEncheres().equals( LocalDate.now() ) ) {
+					article.setEtatVente( EtatVente.EN_COURS );
+					PreparedStatement stmtUpdate = cnx.prepareStatement(UPDATE_ETATVENTE);
+					stmtUpdate.setString( 1, "EN_COURS" );
+					stmtUpdate.setInt( 2, article.getNoArticle() );
+					stmtUpdate.executeUpdate();
+				}
+				if( article.getDateFinEncheres().equals( LocalDate.now() ) ) {
+					article.setEtatVente( EtatVente.TERMINEE );
+					PreparedStatement stmtUpdate = cnx.prepareStatement(UPDATE_ETATVENTE);
+					stmtUpdate.setString( 1, "TERMINEE" );
+					stmtUpdate.setInt( 2, article.getNoArticle() );
+					stmtUpdate.executeUpdate();
+				}
 
 				articles.add(article);
 			}
@@ -148,6 +212,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				Utilisateur utilisateur = new Utilisateur();
 				utilisateur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
 				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
+				
+				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
+				List<Enchere> encheres = new ArrayList<Enchere>();
+				encheres = daoEnchere.afficherListeEnchere(noArticle);
+				
+				Retrait retrait = getRetraitById( rs.getInt("noRetrait") );
 
 				article.setNoArticle(rs.getInt("noArticle"));
 				article.setNomArticle(rs.getString("nom"));
@@ -160,7 +230,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setCategorie(categorie);
 				article.setVendeur(utilisateur);
 				article.setActivate(rs.getBoolean("activate"));
-				article.setEncheres(null);
+				article.setEncheres(encheres);
+				article.setRetrait(retrait);
+				
 			}
 		} catch (
 
@@ -168,6 +240,61 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 		}
 		return article;
+	}	
+	
+	
+	@Override
+	public void updateArticle( ArticleVendu article ) {
+		
+		//modifications dans la table Article
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ARTICLE)) {
+			stmt.setString( 1, article.getNomArticle() );
+			stmt.setString( 2, article.getDescription() );
+			stmt.setDate( 3, Date.valueOf( article.getDateDebutEncheres() ) );
+			stmt.setDate( 4, Date.valueOf( article.getDateFinEncheres() ) );
+			stmt.setInt( 5, article.getMiseAPrix() );
+			stmt.setInt( 6, article.getPrixVente() );
+			stmt.setInt( 7, article.getCategorie().getNoCategorie() );
+			stmt.executeUpdate();
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+		}
+		
+		//modifications dans la table Retrait
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_RETRAIT) ) {
+			stmt.setString( 1, article.getRetrait().getRue() );
+			stmt.setInt( 2, article.getRetrait().getCodePostal() );
+			stmt.setString( 3, article.getRetrait().getVille() );
+			stmt.executeUpdate();
+		} catch( SQLException e ) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void deleteArticle( ArticleVendu article ) {
+		
+		//suppression de l'article
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(DELETE_ARTICLE) ) {
+			stmt.setInt( 1, article.getNoArticle() );
+			stmt.executeUpdate();
+		} catch( SQLException e ) {
+			e.printStackTrace();
+		}
+		
+		//suppression du retrait associé
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(DELETE_RETRAIT) ) {
+			stmt.setInt( 1, article.getRetrait().getNoRetrait() );
+			stmt.executeUpdate();
+		} catch( SQLException e ) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
