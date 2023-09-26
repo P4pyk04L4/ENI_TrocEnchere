@@ -4,13 +4,14 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Retrait;
-import fr.eni.enchere.bo.Utilisateur;
 
 public interface ArticleDAO {
 	
-	public void creerArticle( ArticleVendu article, Retrait retrait );
+	public void creerArticle( ArticleVendu article );
 	
-	public void creerPointRetrait( ArticleVendu article, Retrait retrait );
+	public int creerPointRetrait( ArticleVendu article );
+	
+	public void supprimerArticle( ArticleVendu article, Retrait retrait );
 
 	public List<ArticleVendu> getAllArticles();
 	

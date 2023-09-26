@@ -85,21 +85,19 @@ public class ServletNouvelleVente extends HttpServlet {
 		Utilisateur utilisateurActif = (Utilisateur) session.getAttribute("user");
 		List<Enchere> encheres = new ArrayList<>();
 		
-		//etatVente mis en place dans la bll (fonction de la date de début des enchères)
-		ArticleVendu article = new ArticleVendu( nomArticle, description, null, dateDebutEncheres, dateFinEncheres,
-				miseAPrix, prixVente, categorieAEnvoyer, utilisateurActif, false, encheres );		
-
-		//création d'un nouveau point de retrait
+		//création d'un nouveau point de retrait (relation 1 à 1 entre ArticleVendu et Retrait)
 		Retrait retrait = new Retrait( request.getParameter("rue"), request.getParameter("ville"),
 										Integer.valueOf( request.getParameter("codePostal") ) );
 		
+		//etatVente sera mis en place dans la bll (fonction de la date de début des enchères)
+		ArticleVendu article = new ArticleVendu( nomArticle, description, null, dateDebutEncheres, dateFinEncheres,
+				miseAPrix, prixVente, categorieAEnvoyer, utilisateurActif, false, encheres, retrait );		
+
+	
 		if ( verif ) {//si les dates sont correctement entrées, renvoi sur la page d'insertion avec confirmation
-			instanceManager.creerArticle(article, retrait);
-			
-			List<Categorie> renvoyerCategories = new ArrayList<Categorie>();
-			renvoyerCategories = categorieManager.getAllCategories();	
-			request.setAttribute( "categories", listeCategories );
-			
+			instanceManager.creerArticle(article);
+				
+			request.setAttribute( "categories", listeCategories );			
 			request.setAttribute( "rueUser", utilisateurActif.getRue() );
 			request.setAttribute( "villeUser", utilisateurActif.getVille() );
 			request.setAttribute( "codePostalUser", utilisateurActif.getCodePostal() );
@@ -109,6 +107,12 @@ public class ServletNouvelleVente extends HttpServlet {
 			rd.forward(request, response);
 			
 		} else {//renvoi sur la page d'insertion avec un message d'erreur
+				
+			request.setAttribute( "categories", listeCategories );			
+			request.setAttribute( "rueUser", utilisateurActif.getRue() );
+			request.setAttribute( "villeUser", utilisateurActif.getVille() );
+			request.setAttribute( "codePostalUser", utilisateurActif.getCodePostal() );
+			
 			request.setAttribute( "erreurDates", true );
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionArticles/nouvelArticle.jsp");
 			rd.forward(request, response);
