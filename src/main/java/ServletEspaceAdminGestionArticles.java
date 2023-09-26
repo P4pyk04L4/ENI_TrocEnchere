@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bll.ArticleManager;
+import fr.eni.enchere.bo.ArticleVendu;
 
 /**
  * Servlet implementation class ServletEspaceAdminGestionArticles
@@ -24,7 +25,6 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
      */
     public ServletEspaceAdminGestionArticles() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,6 +33,10 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/espace_admin/gestion_articles.jsp");
+		
+		ArticleManager articleManager = ArticleManager.getInstance();
+		
+		request.setAttribute("articles", articleManager.getAllArticles());
 		
 		HttpSession session = request.getSession();
 		
@@ -44,8 +48,57 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		
+        // Définir l'encodage des caractères UTF-8
+        request.setCharacterEncoding("UTF-8");
+		
+        ArticleManager articleManager = ArticleManager.getInstance();
+    	
+        
+    	String idArticleStr = request.getParameter("articleId");
+    	
+    	if (idArticleStr != null) {
+    		
+    	    try {
+    	    	
+    	    	ArticleVendu articleVendu = new ArticleVendu();
+    	    	
+    	        int idArticle = Integer.parseInt(idArticleStr);
+    	        articleVendu.setNoArticle(idArticle);
+    	        
+    	    	String activateSwitchValue = request.getParameter("activateSwitch");
+    	    	String deleteOneArticleAction = request.getParameter("deleteOneArticle");
+    	    	
+    	        if (activateSwitchValue != null) {
+    	        	if ("true".equals(activateSwitchValue)) {
+    	       		 	// La case "activateSwitch" est cochée (ON)
+    	        		// todo
+    	        	} else {
+    	       		 	// La case "activateSwitch" est décochée (OFF)
+    	        		// todo		
+    	       	 	}
+    	       	 
+    	        }
+    	        
+    	        if (deleteOneArticleAction != null) {
+    	        	// todo
+    	        }
+    	    	
+    	    } catch (NumberFormatException e) {
+    	        // Gérer l'exception si la conversion échoue (par exemple, enregistrez l'erreur dans les journaux)
+    	    } catch (Exception e) {	
+    	    	// Gérer l'exception si une exception est levée
+    	    }
+    	    
+    	}
+    	
+		request.setAttribute("articles", articleManager.getAllArticles());
+		
+		HttpSession session = request.getSession();
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/espace_admin/gestion_articles.jsp").forward(request, response);
+		
 	}
 
 }

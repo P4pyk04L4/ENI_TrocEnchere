@@ -35,11 +35,18 @@ public class ServletEspaceAdmin extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/espace_admin/accueil.jsp");
 		
-		UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
-		request.setAttribute("utilisateurs", utilisateurManager.getAllUsers());
-		
 		HttpSession session = request.getSession();
+		
 		rd.forward(request, response);
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
 		
 	}
 
