@@ -68,9 +68,6 @@
 				
 			</div>
 
-			<!-- 				TEST -->
-
-
 
 			<div class="col-md-3 bg-light">
 				<h2>Mes enchères</h2>
@@ -103,7 +100,7 @@
 		</div>
 	</div>
 
-
+	
 	<!-- MODAL DE CARTE -->
 
 	<div class="modal fade" id="myModal">
@@ -122,7 +119,7 @@
 
 
 
-
+<c:out value="${ articles }" />
 	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
