@@ -35,6 +35,7 @@
 				    <tbody>
 					    <c:forEach var="article" items="${articles}">
 				           <tr class="${article.etatVente == 'TERMINEE' ? 'table-danger' : (article.etatVente == 'EN_COURS' ? 'table-success' : 'table-warning')}">
+				                
 				                <th scope="row"><c:out value="${article.noArticle}" /></th>
 				                <td><c:out value="${article.nomArticle}" /></td>
 				                <td><c:out value="${article.categorie.libelle}" /></td>
@@ -49,7 +50,19 @@
 								    <td>-----</td>
 								</c:if>
 								
-								<td><c:out value="${article.etatVente}" /></td>
+								<td>
+								    <c:choose>
+								        <c:when test="${article.etatVente == 'TERMINEE'}">
+								            Terminée
+								        </c:when>
+								        <c:when test="${article.etatVente == 'EN_COURS'}">
+								            En Cours
+								        </c:when>
+								        <c:otherwise>
+								            Non Débutée
+								        </c:otherwise>
+								    </c:choose>
+								</td>
 								
 								<td>
 								
