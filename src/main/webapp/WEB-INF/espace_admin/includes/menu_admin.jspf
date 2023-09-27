@@ -18,7 +18,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/espace_admin/gestion_articles">
-                    Articles en Vente
+                    Gestion d'Articles en Vente
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/espace_admin/gestion_encheres">
+                    Gestion des Enchères
                 </a>
             </li>
         </ul>

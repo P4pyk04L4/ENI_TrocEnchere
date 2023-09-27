@@ -1,6 +1,7 @@
 package fr.eni.enchere.bo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //Classe définissant un article mis en vente
@@ -73,14 +74,16 @@ public class ArticleVendu {
 	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
 	}
-	public LocalDate getDateDebutEncheres() {
-		return dateDebutEncheres;
+	public String getDateDebutEncheres() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateDebutEncheres.format(formatter);
 	}
 	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
-	public LocalDate getDateFinEncheres() {
-		return dateFinEncheres;
+	public String getDateFinEncheres() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateFinEncheres.format(formatter);
 	}
 	public void setDateFinEncheres(LocalDate dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
