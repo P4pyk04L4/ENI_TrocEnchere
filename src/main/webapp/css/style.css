@@ -45,6 +45,12 @@ body {
 	transform : none;
 }
 
+#iconWin, #iconFail {
+/* 	border: 1px solid green; */
+	position : absolute;
+	top : 20px;
+}
+
 /* .dropdown-menu { */
 /*    right: 0 !important; */
 /*    left: auto !important; */
