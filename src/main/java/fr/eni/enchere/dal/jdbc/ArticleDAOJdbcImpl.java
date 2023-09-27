@@ -142,9 +142,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				categorie = daoCategorieDAOJdbcImpl.selectOneCategoryById(categorie.getNoCategorie());
 				
 				UtilisateurDAOJdbcImpl daoUtilisateur = new UtilisateurDAOJdbcImpl();
-				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
-				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
+				
+				Utilisateur vendeur = new Utilisateur();
+				vendeur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
+				vendeur = daoUtilisateur.selectById(vendeur.getIdentifiant());
+				
+				Utilisateur acheteur = new Utilisateur();
+				acheteur.setIdentifiant(rs.getInt("noUtilisateurAcheteur"));
+				acheteur = daoUtilisateur.selectById(acheteur.getIdentifiant());
 				
 //				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
 //				List<Enchere> encheres = new ArrayList<Enchere>();
@@ -161,7 +166,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setMiseAPrix(rs.getInt("miseAPrix"));
 				article.setPrixVente(rs.getInt("prixVente"));
 				article.setCategorie(categorie);
-				article.setVendeur(utilisateur);
+				article.setVendeur(vendeur);
+				article.setAcheteur(acheteur);
 				article.setActivate(rs.getBoolean("activate"));
 //				article.setEncheres(encheres);
 				article.setRetrait(retrait);
