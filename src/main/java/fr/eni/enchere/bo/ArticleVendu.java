@@ -13,6 +13,7 @@ public class ArticleVendu {
 	private int miseAPrix, prixVente;
 	private Categorie categorie;
 	private Utilisateur vendeur;
+	private Utilisateur acheteur;
 	private Boolean activate = false;
 	private List<Enchere> encheres;
 	private Retrait retrait;
@@ -20,7 +21,7 @@ public class ArticleVendu {
 
 	public ArticleVendu(Integer noArticle, String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
-			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres, Retrait retrait) {
+			Categorie categorie, Utilisateur vendeur, Utilisateur acheteur,Boolean activate, List<Enchere> encheres, Retrait retrait) {
 		this.setNoArticle(noArticle);
 		this.setNomArticle(nomArticle);
 		this.setDescription(description);
@@ -31,6 +32,7 @@ public class ArticleVendu {
 		this.setPrixVente(prixVente);
 		this.setCategorie(categorie);
 		this.setVendeur(vendeur);
+		this.setAcheteur(acheteur);
 		this.setActivate(activate);
 		this.setEncheres(encheres);
 		this.setRetrait(retrait);
@@ -39,9 +41,9 @@ public class ArticleVendu {
 	
 	public ArticleVendu(String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
-			Categorie categorie, Utilisateur vendeur, Boolean activate, List<Enchere> encheres, Retrait retrait ) {
+			Categorie categorie, Utilisateur vendeur, Utilisateur acheteur, Boolean activate, List<Enchere> encheres, Retrait retrait ) {
 		this( null, nomArticle, description, etatVente, dateDebutEncheres, dateFinEncheres, miseAPrix,
-				prixVente, categorie, vendeur, activate, encheres, retrait );
+				prixVente, categorie, vendeur, acheteur, activate, encheres, retrait );
 	}
 	
 	public ArticleVendu() {
@@ -107,6 +109,12 @@ public class ArticleVendu {
 	public void setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
 	}
+	public Utilisateur getAcheteur() {
+		return acheteur;
+	}
+	public void setAcheteur(Utilisateur acheteur) {
+		this.acheteur = acheteur;
+	}
 	public Boolean getActivate() {
 		return activate;
 	}
@@ -132,7 +140,7 @@ public class ArticleVendu {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", etatVente=" + etatVente + ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres="
 				+ dateFinEncheres + ", miseAPrix=" + miseAPrix + ", prixVente=" + prixVente + ", categorie=" + categorie
-				+ ", vendeur=" + vendeur + ", activate=" + activate + ", encheres=" + encheres + ", retrait=" + retrait
+				+ ", vendeur=" + vendeur + ", acheteur=" + acheteur + ", activate=" + activate + ", encheres=" + encheres + ", retrait=" + retrait
 				+ "]";
 	}
 

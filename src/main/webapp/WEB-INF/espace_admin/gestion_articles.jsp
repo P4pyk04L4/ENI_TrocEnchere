@@ -26,7 +26,8 @@
 				            <th scope="col" class="col-2">Catégorie</th>
 				            <th scope="col" class="col-2">Vendeur</th>
 				            <th scope="col" class="col-1">Mise à Prix</th>
-				            <th scope="col" class="col-1">Prix Vendu</th>
+				            <th scope="col" class="col-1">Meilleur Enchère</th>
+				            <th scope="col" class="col-1">Acheteur</th>
 				            <th scope="col" class="col-2">Statut</th>
 				            <th scope="col" class="col-2">Activation</th>
 				            <th scope="col" class="col-2"></th>
@@ -44,11 +45,37 @@
 				                <td><c:out value="${article.miseAPrix}" />&nbsp;&euro;</td>
 				                
 								<c:if test="${article.etatVente eq 'TERMINEE'}">
-								    <td><c:out value="${article.prixVente}" />&nbsp;&euro;</td>
+									<c:if test="${article.prixVente eq 0}">
+								    	<td>Aucune Enchère</td>
+								    	<td>Pas d'Acheteur</td>
+								    </c:if>
+								    <c:if test="${article.prixVente ne 0}">
+								    	<td><c:out value="${article.prixVente}" />&nbsp;&euro;<br>(prix final)</td>
+								    	<td>
+								    		Remporté par<br>
+								    		<c:out value="${article.acheteur.prenom}" />&nbsp;<c:out value="${article.acheteur.nom}" />
+								    	</td>
+								    </c:if>
 								</c:if>
-								<c:if test="${article.etatVente ne 'TERMINEE'}">
+								<c:if test="${article.etatVente eq 'EN_COURS'}">
+									<c:if test="${article.prixVente eq 0}">
+								    	<td>Aucune Enchère</td>
+								    	<td>Pas d'Acheteur</td>
+								    </c:if>
+								    <c:if test="${article.prixVente ne 0}">
+								    	<td><c:out value="${article.prixVente}" />&nbsp;&euro;</td>
+								    	<td>
+								    		<c:out value="${article.acheteur.prenom}" />&nbsp;<c:out value="${article.acheteur.nom}" />
+								    		<br>(temporaire)
+								    	</td>
+								    </c:if>
+								</c:if>
+								<c:if test="${article.etatVente eq 'NON_DEBUTEE'}">
+								    <td>-----</td>
 								    <td>-----</td>
 								</c:if>
+								
+								<td><c:out value="${article.acheteur.prenom}" />&nbsp;<c:out value="${article.acheteur.nom}" /></td>
 								
 								<td>
 								    <c:choose>
