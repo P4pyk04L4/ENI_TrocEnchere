@@ -25,6 +25,8 @@
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/ServletNouvelleVente">Vendre un
 							article</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/affichageUtilisateur">Rechercher un profil</a></li>
 				</c:if>
 			</ul>
 

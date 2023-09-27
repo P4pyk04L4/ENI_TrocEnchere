@@ -67,6 +67,10 @@ public class UtilisateurManager {
 	public void deleteUser(Utilisateur utilisateur) {
 		dao.deleteOneUser(utilisateur);
 	}
+	
+	public Utilisateur selectByPseudo(String pseudo) {
+		return dao.selectByPseudo(pseudo);
+	}
 
 	/**
 	 * ***************** Vérifications ***************************
