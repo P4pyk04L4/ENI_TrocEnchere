@@ -13,4 +13,19 @@
         maxIdle="30"
         maxWaitMillis="10000"
     />
+    
+    <!-- MAMP NCD -->
+    <Resource
+        name="jdbc/pool_cnx_encheres_save"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        type="javax.sql.DataSource"
+
+		url="jdbc:mysql://localhost:3306/eni_trocenchere"
+		username="utilisateurENI"
+		password="trocenchere"
+        
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+    />
 </Context>

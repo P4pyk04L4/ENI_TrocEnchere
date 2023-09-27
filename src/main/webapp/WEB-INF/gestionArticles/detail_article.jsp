@@ -139,7 +139,7 @@
 					<!-- CADRE DERNIERE ENCHERE -->
 
 					<div class="col-2">
-						<div class="card p-3">
+						<div class="card p-3" id="derniereEnchere">
 							<strong>Dernière enchère</strong>
 							<h2>
 								<c:out value="${ article.prixVente }" />
@@ -150,7 +150,7 @@
 
 						<!-- ENCHERE -->
 						<c:if test="${ article.etatVente =='EN_COURS' }">
-						<button type="button" class="btn btn-success"
+						<button type="button" class="btn btn-warning"
 							data-bs-toggle="modal" data-bs-target="#exampleModal">Enchérir</button>
 
 						<!-- Modal -->
@@ -167,26 +167,28 @@
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
+											<strong>Votre solde : <c:out value="${ user.credit }" /> crédits</strong>
 											<p>Ajouter le montant de votre enchère.</p>
 											<div class="form-check">
 												<input type="hidden" name="idUser"
 													value="${ user.identifiant}"> <input type="hidden"
-													name="noArticle" value="${article.noArticle}"> <input
-													type="number" min="${ article.prixVente }"
+													name="noArticle" value="${article.noArticle}">
+													<input
+													type="number" class="form-control" min="${ article.prixVente + 1 }" value="${ article.prixVente + 1 }"
 													name="montantEnchere">
 											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary"
 												data-bs-dismiss="modal">Annuler</button>
-											<button type="submit" class="btn btn-danger">Enchérir</button>
+											<button type="submit" class="btn btn-warning">Enchérir maintenant</button>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 						</c:if>
-
+						
 					</div>
 				</div>
 				<table class="table">
