@@ -11,25 +11,31 @@ public class Enchere {
 	private LocalDate dateEnchere;
 	private int montantEnchere;
 	private Boolean activate = false;
+	private EtatEnchere etatEnchere; /*3 valeurs possibles définies dans l'Enumeration EtatEnchere*/;
 	// Attributs secondaires
 	private int noUtilisateur;
 	private String pseudoUtilisateur;
 	private int noArticle;
 	
 	
-	public Enchere( Integer noEnchere, Utilisateur utilisateurAcheteur, LocalDate dateEnchere, int montantEnchere,
-			ArticleVendu articleVendu, Boolean activate ) {
+	public Enchere( Integer noEnchere, Utilisateur utilisateurAcheteur, ArticleVendu articleVendu, LocalDate dateEnchere,
+		int montantEnchere, Boolean activate, EtatEnchere etatEnchere ) {
+		
 		this.setNoEnchere(noEnchere);
 		this.setUtilisateurAcheteur(utilisateurAcheteur);
 		this.setArticleVendu(articleVendu);
 		this.setDateEnchere(dateEnchere);
 		this.setMontantEnchere(montantEnchere);
 		this.setActivate(activate);
+		this.setEtatEnchere(etatEnchere);
+		
 	}
 	
-	public Enchere( Utilisateur utilisateurAcheteur, LocalDate dateEnchere, int montantEnchere,
-				ArticleVendu articleVendu, Boolean activate ) {
-		this( null, utilisateurAcheteur, dateEnchere, montantEnchere, articleVendu, activate );
+	public Enchere( Utilisateur utilisateurAcheteur, ArticleVendu articleVendu, LocalDate dateEnchere,
+		int montantEnchere, Boolean activate, EtatEnchere etatEnchere ) {
+		
+		this( null, utilisateurAcheteur, articleVendu, dateEnchere, montantEnchere, activate, etatEnchere );
+		
 	}
 	
 	/**
@@ -76,6 +82,12 @@ public class Enchere {
 	public void setActivate(Boolean activate) {
 		this.activate = activate;
 	}
+	public EtatEnchere getEtatEnchere() {
+		return etatEnchere;
+	}
+	public void setEtatEnchere(EtatEnchere etatEnchere) {
+		this.etatEnchere = etatEnchere;
+	}
 
 	/**
 	 * @return the noUtilisateur
@@ -109,7 +121,7 @@ public class Enchere {
 	public String toString() {
 		return "Enchere [noEnchere=" + noEnchere + ", utilisateurAcheteur=" + utilisateurAcheteur + ", articleVendu="
 				+ articleVendu + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", activate="
-				+ activate + ", noUtilisateur=" + noUtilisateur + ", noArticle=" + noArticle + "]";
+				+ activate + ", etatEnchere=" + etatEnchere + ", noUtilisateur=" + noUtilisateur + ", noArticle=" + noArticle + "]";
 	}
 
 	/**
@@ -125,6 +137,5 @@ public class Enchere {
 	public void setPseudoUtilisateur(String pseudoUtilisateur) {
 		this.pseudoUtilisateur = pseudoUtilisateur;
 	}	
-	
 	
 }
