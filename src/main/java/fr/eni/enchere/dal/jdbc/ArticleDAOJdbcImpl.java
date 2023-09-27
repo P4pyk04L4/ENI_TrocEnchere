@@ -151,9 +151,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				acheteur.setIdentifiant(rs.getInt("noUtilisateurAcheteur"));
 				acheteur = daoUtilisateur.selectById(acheteur.getIdentifiant());
 				
-//				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
-//				List<Enchere> encheres = new ArrayList<Enchere>();
-//				encheres = daoEnchere.afficherListeEnchere(rs.getInt("noArticle"));
+				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
+				List<Enchere> encheres = new ArrayList<Enchere>();
+				encheres = daoEnchere.afficherListeEnchere(rs.getInt("noArticle"));
 				
 				Retrait retrait = getRetraitById( rs.getInt("noRetrait") );
 
@@ -169,7 +169,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setVendeur(vendeur);
 				article.setAcheteur(acheteur);
 				article.setActivate(rs.getBoolean("activate"));
-//				article.setEncheres(encheres);
+				article.setEncheres(encheres);
 				article.setRetrait(retrait);
 				
 				//Mise à jour de l'attribut EtatVente dans la bdd en fonction de la date du jour
