@@ -1,6 +1,7 @@
 package fr.eni.enchere.bo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 //Classe représentant l'offre faite par un utilisateur pour un article donné
 public class Enchere {
@@ -58,9 +59,10 @@ public class Enchere {
 	public void setUtilisateurAcheteur(Utilisateur utilisateurAcheteur) {
 		this.utilisateurAcheteur = utilisateurAcheteur;
 	}
-	public LocalDate getDateEnchere() {
-		return dateEnchere;
-	}
+    public String getDateEnchere() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateEnchere.format(formatter);
+    }
 	public void setDateEnchere(LocalDate dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
