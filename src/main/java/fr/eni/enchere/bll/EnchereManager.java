@@ -7,6 +7,7 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.EtatEnchere;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.EnchereDAO;
 
@@ -45,5 +46,10 @@ public class EnchereManager {
 	public void encherir(Enchere enchere) {
 		instanceEnchereDAO.encherir(enchere);
 	}
+	
+	public void updateEnchere(int noEnchere, EtatEnchere etatEnchere) {
+		instanceEnchereDAO.updateEnchere(noEnchere, etatEnchere);
+	}
+
 	
 }
