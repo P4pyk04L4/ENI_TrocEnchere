@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Context>
+
+	<!-- MAMP CLEVER CLOUD -->
+    <Resource
+
+        name="jdbc/pool_cnx_encheres"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        type="javax.sql.DataSource"
+
+        url="jdbc:mysql://ufsdruo9bixz6bci:YYEFQRDJDdpE5OQnSsOK@bprpidhs8s6evs0vvjkb-mysql.services.clever-cloud.com:21027/bprpidhs8s6evs0vvjkb"
+        username="ufsdruo9bixz6bci"
+        password="YYEFQRDJDdpE5OQnSsOK"
+        
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+
+    />
+
+    
+
+    <!-- MAMP NCD -->
+    <Resource
+
+        name="jdbc/pool_cnx_encheres_save"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        type="javax.sql.DataSource"
+ 
+		url="jdbc:mysql://localhost:3306/eni_trocenchere"
+		username="utilisateurENI"
+		password="trocenchere"
+        
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+
+    />
 
     <!-- MAMP OVH -->
     <Resource
@@ -17,5 +54,7 @@
         maxWaitMillis="10000"
 
     />
-    
+
 </Context>
+
+ 
