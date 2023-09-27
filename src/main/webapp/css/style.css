@@ -28,13 +28,21 @@ body {
 	border-radius: 15px
 }
 
-.card {
+.card#carteArticle {
 	transition: transform 0.3s ease-in-out;
 }
 
-.card:hover{
+.card#carteArticle:hover{
 	color: navy;
 	transform: scale(1.05);
+}
+
+.card#derniereEnchere {
+	transition : none;
+}
+
+.card#derniereEnchere:hover {
+	transform : none;
 }
 
 /* .dropdown-menu { */

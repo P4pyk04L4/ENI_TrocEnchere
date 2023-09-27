@@ -18,20 +18,20 @@ import fr.eni.enchere.dal.UtilisateurDAO;
  */
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String INSERT_ONE_USER = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Utilisateur (pseudo, nom, prenom, email,"
+	private static final String INSERT_ONE_USER = "INSERT INTO Utilisateur (pseudo, nom, prenom, email,"
 			+ " telephone, rue, codePostal, ville, motDePasse, administrateur)"
 			+ " VALUES(?,?,?,?,?,?,?,?,?,?);";
-	private static final String SELECT_ALL_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur;";
-	private static final String SELECT_ONE_USER = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=? AND motDePasse=?;";
-	private static final String UPDATE_ADMIN_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET administrateur=? WHERE noUtilisateur=?;";
-	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET activate=? WHERE noUtilisateur=?;";
-	private static final String DELETE_ONE_USER = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
-	private static final String UPDATE_ONE = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
-	private static final String SELECT_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE noUtilisateur=?;";
-	private static final String UPDATE_MDP = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
-	private static final String UPDATE_CREDIT = "UPDATE bjx3rvrwhdrtsh8g5edx.Utilisateur SET credit = ? WHERE noUtilisateur = ?;";
-	private static final String SELECT_BY_PSEUDO = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=?";
-	private static final String SELECT_BY_EMAIL = "SELECT * from bjx3rvrwhdrtsh8g5edx.Utilisateur WHERE pseudo=?";
+	private static final String SELECT_ALL_USER = "SELECT * from Utilisateur;";
+	private static final String SELECT_ONE_USER = "SELECT * from Utilisateur WHERE pseudo=? AND motDePasse=?;";
+	private static final String UPDATE_ADMIN_ONE_USER = "UPDATE Utilisateur SET administrateur=? WHERE noUtilisateur=?;";
+	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE Utilisateur SET activate=? WHERE noUtilisateur=?;";
+	private static final String DELETE_ONE_USER = "DELETE FROM Utilisateur WHERE noUtilisateur=?;";
+	private static final String UPDATE_ONE = "UPDATE Utilisateur SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, codePostal = ?, ville = ? WHERE noUtilisateur = ?;";
+	private static final String SELECT_BY_ID = "SELECT * from Utilisateur WHERE noUtilisateur=?;";
+	private static final String UPDATE_MDP = "UPDATE Utilisateur SET motDePasse = ? WHERE noUtilisateur = ?;";
+	private static final String UPDATE_CREDIT = "UPDATE Utilisateur SET credit = ? WHERE noUtilisateur = ?;";
+	private static final String SELECT_BY_PSEUDO = "SELECT * from Utilisateur WHERE pseudo=?";
+	private static final String SELECT_BY_EMAIL = "SELECT * from Utilisateur WHERE pseudo=?";
 
 
 	@Override

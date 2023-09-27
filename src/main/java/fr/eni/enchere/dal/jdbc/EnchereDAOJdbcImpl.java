@@ -7,11 +7,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.EtatEnchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
 
@@ -20,9 +21,9 @@ import fr.eni.enchere.dal.EnchereDAO;
  *
  */
 public class EnchereDAOJdbcImpl implements EnchereDAO {
-	private static final String SELECT_BY_ARTICLE = "SELECT * from bjx3rvrwhdrtsh8g5edx.Enchere WHERE noArticle=? ORDER BY montantEnchere DESC";
-	private static final String INSERT_ENCHERE = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Enchere (noUtilisateur, noArticle, dateEnchere, montantEnchere, activate) VALUES (?,?,?,?,?)";
-
+	private static final String SELECT_BY_ARTICLE = "SELECT * from Enchere WHERE noArticle=? ORDER BY montantEnchere DESC";
+	private static final String INSERT_ENCHERE = "INSERT INTO Enchere (noUtilisateur, noArticle, dateEnchere, montantEnchere, activate, etatEnchere) VALUES (?,?,?,?,?,?)";
+	private static final String UPDATE_ETATENCHERE = "UPDATE Enchere SET etatEnchere=? WHERE noEnchere=?";
 	@Override
 	public List<Enchere> afficherListeEnchere(int noArticle) {
 		List<Enchere> encheres = new ArrayList<Enchere>();
@@ -61,6 +62,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				enchere.setMontantEnchere(rs.getInt("montantEnchere"));
 				enchere.setNoArticle(rs.getInt("noArticle"));
 				enchere.setActivate(rs.getBoolean("activate"));
+				enchere.setEtatEnchere(EtatEnchere.valueOf(rs.getString("etatEnchere")));
 				
 				encheres.add(enchere);
 				System.out.println(rs.getInt("noUtilisateur"));
@@ -78,11 +80,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	public void encherir(Enchere enchere) {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
+			
 			pstmt.setInt(1, enchere.getUtilisateurAcheteur().getIdentifiant());
 			pstmt.setInt(2, enchere.getArticleVendu().getNoArticle());
 			pstmt.setDate(3, Date.valueOf(enchere.getDateEnchere()));
 			pstmt.setInt(4, enchere.getMontantEnchere());
 			pstmt.setBoolean(5, enchere.getActivate());
+			pstmt.setString(6, EtatEnchere.MEILLEUR.toString());
 			pstmt.executeUpdate();
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -92,6 +96,19 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void updateEnchere(int noEnchere, EtatEnchere etatEnchere) {
+		try( Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ETATENCHERE)) {
+			stmt.setString( 1, etatEnchere.toString());
+			stmt.setInt(2, noEnchere);
+			stmt.executeUpdate();
+		} catch ( SQLException e ) {
 			e.printStackTrace();
 		}
 	}

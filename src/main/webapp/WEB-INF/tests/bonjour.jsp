@@ -22,9 +22,11 @@
 
 						<c:if test="${ articles.activate = true }">
 							<div class="col-lg-4 col-md-6 mb-3">
-								<a href="article?noArticle=<c:out value="${ articles.noArticle }" />" class="text-decoration-none" data-toggle="modal"
-									data-target="#myModal" data-card-id="1">
-									<div class="card h-100">
+								<c:if test="${not empty sessionScope.profilConnecte}">
+									<a href="article?noArticle=<c:out value="${ articles.noArticle }" />"
+									class="text-decoration-none">
+									</c:if>
+									<div class="card h-100" id="carteArticle">
 									<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
 										<div class="card-body">
 											<h3 class="text-end">
@@ -56,16 +58,15 @@
 											</div>
 										</c:if>
 									</div>
-								</a>
+								<c:if test="${not empty sessionScope.profilConnecte}">
+									</a>
+								</c:if>
 							</div>
 						</c:if>
 					</c:forEach>
 				</div>
 				
 			</div>
-
-			<!-- 				TEST -->
-
 
 
 			<div class="col-md-3 bg-light">
@@ -99,7 +100,7 @@
 		</div>
 	</div>
 
-
+	
 	<!-- MODAL DE CARTE -->
 
 	<div class="modal fade" id="myModal">
@@ -118,7 +119,7 @@
 
 
 
-
+<c:out value="${ articles }" />
 	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
