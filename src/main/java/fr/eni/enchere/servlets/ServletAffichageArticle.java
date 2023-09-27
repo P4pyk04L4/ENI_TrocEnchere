@@ -17,6 +17,7 @@ import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.EtatEnchere;
 import fr.eni.enchere.bo.Utilisateur;
 
 @WebServlet("/article")
@@ -68,14 +69,23 @@ public class ServletAffichageArticle extends HttpServlet {
 	        
 	        articleManager.updateEnchereArticle(article, montant);
 	        
-	        // VERIFIER ANCIEN ENCHERISSEUR
-	        int noAncienEncherisseur = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getNoUtilisateur();
-	        int ancienMontant = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getMontantEnchere();
-	        Utilisateur AncienEncherisseur = utilisateurManager.selectById(noAncienEncherisseur);
-	        utilisateurManager.updateCredit(AncienEncherisseur, ancienMontant);
+	        List listeEncheres = new ArrayList();
+	        listeEncheres = enchereManager.afficherListeEnchere(article.getNoArticle());
 	        
-	        // CHANGER L'UTILISATEUR ACHETEUR DE L'ARTICLE
+	        if (listeEncheres.size()>1) {
+	        	
+	        	// VERIFIER ANCIEN ENCHERISSEUR
+	        	int noAncienEncherisseur = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getNoUtilisateur();
+	        	int ancienMontant = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getMontantEnchere();
+	        	Utilisateur AncienEncherisseur = utilisateurManager.selectById(noAncienEncherisseur);
+	        	utilisateurManager.updateCredit(AncienEncherisseur, ancienMontant);
+	        	
+	        	// CHANGER L'UTILISATEUR ACHETEUR DE L'ARTICLE
+	        	
+	        	int noAncienneEnchere = enchereManager.afficherListeEnchere(article.getNoArticle()).get(1).getNoEnchere();
+	        	enchereManager.updateEnchere(noAncienneEnchere, EtatEnchere.PERDU);
 	        
+	        }
 	        
 		} else {
 			System.out.println("Crédits insuffisants");

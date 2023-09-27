@@ -39,7 +39,6 @@ body {
 
 .card#derniereEnchere {
 	transition : none;
-	color: red;
 }
 
 .card#derniereEnchere:hover {
