@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.ArticleManager;
+import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bo.ArticleVendu;
 
 /**
  * Servlet implementation class ServletEspaceAdminGestionArticles
  */
-@WebServlet("/espace_admin/gestion_articles")
-public class ServletEspaceAdminGestionArticles extends HttpServlet {
+@WebServlet("/espace_admin/gestion_ventes")
+public class ServletEspaceAdminGestionVentes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletEspaceAdminGestionArticles() {
+    public ServletEspaceAdminGestionVentes() {
         super();
     }
 
@@ -32,7 +33,7 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/espace_admin/gestion_articles.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/espace_admin/gestion_ventes.jsp");
 		
 		ArticleManager articleManager = ArticleManager.getInstance();
 		
@@ -54,7 +55,7 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 		
         ArticleManager articleManager = ArticleManager.getInstance();
-    	
+    	EnchereManager enchereManager = EnchereManager.getInstance();
         
     	String idArticleStr = request.getParameter("articleId");
     	
@@ -62,10 +63,10 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
     		
     	    try {
     	    	
-    	    	ArticleVendu articleVendu = new ArticleVendu();
+    	    	ArticleVendu article = new ArticleVendu();
     	    	
     	        int idArticle = Integer.parseInt(idArticleStr);
-    	        articleVendu.setNoArticle(idArticle);
+    	        article.setNoArticle(idArticle);
     	        
     	    	String activateSwitchValue = request.getParameter("activateSwitch");
     	    	String deleteOneArticleAction = request.getParameter("deleteOneArticle");
@@ -73,16 +74,19 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
     	        if (activateSwitchValue != null) {
     	        	if ("true".equals(activateSwitchValue)) {
     	       		 	// La case "activateSwitch" est cochée (ON)
-    	        		articleManager.activateArticle(articleVendu);
+    	        		enchereManager.activateAllEncheresByArticle(article);
+    	        		articleManager.activateArticle(article);
     	        	} else {
     	       		 	// La case "activateSwitch" est décochée (OFF)
-    	        		articleManager.desactivateArticle(articleVendu);	
+    	        		enchereManager.desactivateAllEncheresByArticle(article);
+    	        		articleManager.desactivateArticle(article);	
     	       	 	}
     	       	 
     	        }
     	        
     	        if (deleteOneArticleAction != null) {
-    	        	articleManager.deleteArticle(articleVendu);
+    	        	enchereManager.deleteAllEnchersByArticle(article);
+    	        	articleManager.deleteArticle(article);
     	        }
     	    	
     	    } catch (NumberFormatException e) {
@@ -97,7 +101,7 @@ public class ServletEspaceAdminGestionArticles extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/espace_admin/gestion_articles.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/espace_admin/gestion_ventes.jsp").forward(request, response);
 		
 	}
 

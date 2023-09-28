@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
@@ -17,6 +18,7 @@ import fr.eni.enchere.bo.EtatVente;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
+import fr.eni.enchere.dal.EnchereDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
@@ -38,7 +40,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String UPDATE_ETATVENTE = "UPDATE ArticleVendu SET etatVente=? WHERE noArticle=?";
 	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE ArticleVendu SET activate=? WHERE noArticle=?;";
 	private static final String UPDATE_ENCHERE_ARTICLE = "UPDATE ArticleVendu SET prixVente=? WHERE noArticle=?";
-	
+	private static final String SELECT_ALL_ARTICLES_NON_TERMINEE = "SELECT noArticle FROM ArticleVendu WHERE noUtilisateurVendeur=? AND etatVente<>'TERMINEE'";
+	private static final String DELETE_ALL_ARTICLES_NON_TERMINEE = "DELETE FROM ArticleVendu WHERE noUtilisateurVendeur=? AND etatVente<>'TERMINEE'";
+	private static final String UPDATE_ACIVATE_ALL_ARTICLES_NON_TERMINEE = "UPDATE ArticleVendu set activate=? WHERE noUtilisateurVendeur=? AND etatVente<>'TERMINEE'";
 	
 	@Override
 	public void creerArticle( ArticleVendu article ) {
@@ -339,6 +343,75 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public void deleteAllArticlesByUser(Utilisateur utilisateur) {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+	        // Sélectionnez les identifiants des articles à supprimer
+	        PreparedStatement selectStmt = cnx.prepareStatement(SELECT_ALL_ARTICLES_NON_TERMINEE);
+	        selectStmt.setInt(1, utilisateur.getIdentifiant());
+	        
+	        EnchereManager enchereManager = EnchereManager.getInstance();
+	        
+	        ResultSet resultSet = selectStmt.executeQuery();
+	        
+	        // Suppressions des enchères correspondant aux articles à supprimer pour les ventes non terminées
+	        while (resultSet.next()) {
+	        	ArticleVendu article = new ArticleVendu();
+	        	article.setNoArticle(resultSet.getInt("noArticle"));
+	        	enchereManager.deleteAllEnchersByArticle(article);
+	        }
+				
+	        // Suppression des articles
+	        PreparedStatement deleteStmt = cnx.prepareStatement(DELETE_ALL_ARTICLES_NON_TERMINEE);
+	        deleteStmt.setInt(1, utilisateur.getIdentifiant());
+	        
+	        // Exécutez la requête DELETE
+	        deleteStmt.executeUpdate();
+				
+		} catch( SQLException e ) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateActivateAllArticlesByUser(Utilisateur utilisateur, ArticleVendu article) {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+	        // Sélectionnez les identifiants des articles à supprimer
+	        PreparedStatement selectStmt = cnx.prepareStatement(SELECT_ALL_ARTICLES_NON_TERMINEE);
+	        selectStmt.setInt(1, utilisateur.getIdentifiant());
+	        
+	        EnchereManager enchereManager = EnchereManager.getInstance();
+	        
+	        ResultSet resultSet = selectStmt.executeQuery();
+	        
+	        // Désactivation des enchères correspondant aux articles à désactiver pour les ventes non terminées
+	        while (resultSet.next()) {
+	        	ArticleVendu article2 = new ArticleVendu();
+	        	article2.setNoArticle(resultSet.getInt("noArticle"));
+	        	if (article.getActivate() == true) {
+	        		enchereManager.activateAllEncheresByArticle(article2);
+	        	} else {
+	        		enchereManager.desactivateAllEncheresByArticle(article2);
+	        	}
+	        }
+				
+	        // Désactivation des articles
+	        PreparedStatement updateStmt = cnx.prepareStatement(UPDATE_ACIVATE_ALL_ARTICLES_NON_TERMINEE);
+	        updateStmt.setBoolean(1, article.getActivate());
+	        updateStmt.setInt(2, utilisateur.getIdentifiant());
+	        
+	        // Exécutez la requête UPDATE
+	        updateStmt.executeUpdate();
+				
+		} catch( SQLException e ) {
+			e.printStackTrace();
+		}
 	}
 
 }

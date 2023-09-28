@@ -21,6 +21,8 @@ public interface EnchereDAO {
 	
 	public void deleteOneEnchere(Enchere enchere);
 	
-	public void updateActivateOneEnchere(Enchere enchere);
+	public void updateActivateAllEnchersByArticle(Enchere enchere, ArticleVendu article);
+	
+	public void deleteAllEnchersByArticle(ArticleVendu article);
 	
 }
