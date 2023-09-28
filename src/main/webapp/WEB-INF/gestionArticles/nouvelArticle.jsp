@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 
 <%@ include file="../outils/entete.jspf"%>
@@ -18,9 +19,7 @@
 
 <main class="container row d-flex">
 
-	<div class="col-3 border border-3 mx-5 mt-5" style="height: 350px">
-		<img alt="" src="" class="img-fluid">
-	</div>
+	<div class="col-4"></div>
 
 	<div class="col-8 mx-0 mt-2">
 	
@@ -33,38 +32,37 @@
 				<div class="form-group">
 					<label for="nomArticle">Nom de l'article :</label>
 					<input type="text" name="nomArticle" id="nomArticle" class="form-control"
-							maxlength="50" autofocus required>
+							maxlength="50" value="${nomArticle}" required>
 				</div>
 				
 				<div class="form-group my-2">
 					<label for="description">Description :</label>
 					<textarea id="description" name="description" maxlength="800" class="form-control"
-								required style="height: 150px"></textarea>
+							 required style="height: 150px">${description}</textarea>
 				</div>
 				
 				<div class="form-group col-6 my-2">
 					<label for="libelleCategorie">Choisir une catégorie :</label>
 					<select name="libelleCategorie" id="libelleCategorie" class="form-select">
 						<c:forEach var="categorie" items="${ categories }">
-							<option value="${ categorie.getLibelle() }">${ categorie.getLibelle() }</option>
+							<option value="${ categorie.getLibelle() }"
+							<c:if test="${ categorie.libelle == categoriePrecise }">selected</c:if>
+							>${ categorie.getLibelle() }</option>
 						</c:forEach>
 					</select>						
 				</div>
-				
-				<div class="my-2">
-					<label for="formFile">Photo de l'article</label>
-					<input class="form-control" type="file" id="formFile" name="photoArticle" accept="image/*">
-				</div>
-				
+				 
 				<div class="form-group col-4 my-2">
 					<label for="miseAPrix">Mise à prix :</label>
-					<input type="number" name="miseAPrix" id="miseAPrix" min=0 class="form-control" required>					
+					<input type="number" name="miseAPrix" id="miseAPrix" min=0 class="form-control"
+					value="${miseAPrix}" required>					
 				</div>
 		  		
 		  		<!-- Message d'erreur si la date de fin des enchères est antérieure à celle de début -->
 		  		<c:if test="${ erreurDates }">
 		  			<div class="alert alert-danger my-2" role="alert">
-		  				La date de fin des enchères doit être postérieure à la date de début des enchères !			
+		  				La date de fin des enchères doit être postérieure à la date de début des enchères ! <br>
+		  				<strong>Veuillez ressaisir les dates et l'adresse de retrait</strong>	
 		  			</div>
 		  		</c:if>
 				
@@ -80,7 +78,7 @@
 					<!-- mise en place des valeurs par défaut et minimum pour la date de début des enchères -->
 					<script>
 			       		const dateActuelle = new Date().toISOString().split('T')[0];
-				        const dateDebutEncheres = document.getElementById("dateDebutEncheres");
+				        var dateDebutEncheres = document.getElementById("dateDebutEncheres");
 				        dateDebutEncheres.value = dateActuelle;
 				        dateDebutEncheres.min = dateActuelle;
 			  		</script>
@@ -93,9 +91,10 @@
 						</div>
 					</div>
 					<script>
-				        const dateFinEncheres = document.getElementById("dateFinEncheres");
+				        var dateFinEncheres = document.getElementById("dateFinEncheres");
 				        dateFinEncheres.min = dateActuelle;
 			  		</script>
+
 		  		</div>
 		  		<!-- Fin regroupement des dates de début et fin d'enchères -->
 		  		

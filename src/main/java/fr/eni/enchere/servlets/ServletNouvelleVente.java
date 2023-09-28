@@ -33,6 +33,7 @@ public class ServletNouvelleVente extends HttpServlet {
 		//Envoi de l'adresse de l'utilisateur (entrée par défaut lors de la vente d'un article)
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurActif = (Utilisateur) session.getAttribute("user");
+		request.setAttribute( "userId", utilisateurActif.getIdentifiant() );
 		request.setAttribute( "rueUser", utilisateurActif.getRue() );
 		request.setAttribute( "villeUser", utilisateurActif.getVille() );
 		request.setAttribute( "codePostalUser", utilisateurActif.getCodePostal() );
@@ -61,8 +62,6 @@ public class ServletNouvelleVente extends HttpServlet {
 		//Vérification que la date de fin des enchères est postérieure à celle de début des enchères
 		LocalDate dateDebutEncheres = LocalDate.parse( request.getParameter( "dateDebutEncheres" ) );
 		LocalDate dateFinEncheres = LocalDate.parse( request.getParameter( "dateFinEncheres" ) );
-		System.out.println(dateDebutEncheres);
-		System.out.println(dateFinEncheres);
 		if ( dateFinEncheres.isBefore(dateDebutEncheres) || dateFinEncheres.isEqual(dateDebutEncheres) ) {
 			verif = false;
 		}
@@ -109,10 +108,11 @@ public class ServletNouvelleVente extends HttpServlet {
 			
 		} else {//renvoi sur la page d'insertion avec un message d'erreur
 				
-			request.setAttribute( "categories", listeCategories );			
-			request.setAttribute( "rueUser", utilisateurActif.getRue() );
-			request.setAttribute( "villeUser", utilisateurActif.getVille() );
-			request.setAttribute( "codePostalUser", utilisateurActif.getCodePostal() );
+			request.setAttribute( "categories", listeCategories );
+			request.setAttribute( "categoriePrecise", request.getParameter("libelleCategorie") );
+			request.setAttribute( "nomArticle", nomArticle);
+			request.setAttribute( "description", description);
+			request.setAttribute( "miseAPrix", miseAPrix);
 			
 			request.setAttribute( "erreurDates", true );
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gestionArticles/nouvelArticle.jsp");
