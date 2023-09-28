@@ -2,10 +2,6 @@
 
 <Context>
 
-<<<<<<< HEAD
-=======
-	<!-- MAMP CLEVER CLOUD -->
->>>>>>> e18959f68966d52ab5b68bb8b9c4b3a0ad04669a
     <Resource
 
         name="jdbc/pool_cnx_encheres"
@@ -14,14 +10,10 @@
 
         type="javax.sql.DataSource"
 
-<<<<<<< HEAD
  
 
         url="jdbc:mysql://ufsdruo9bixz6bci:YYEFQRDJDdpE5OQnSsOK@bprpidhs8s6evs0vvjkb-mysql.services.clever-cloud.com:21027/bprpidhs8s6evs0vvjkb"
 
-=======
-        url="jdbc:mysql://ufsdruo9bixz6bci:YYEFQRDJDdpE5OQnSsOK@bprpidhs8s6evs0vvjkb-mysql.services.clever-cloud.com:21027/bprpidhs8s6evs0vvjkb"
->>>>>>> e18959f68966d52ab5b68bb8b9c4b3a0ad04669a
         username="ufsdruo9bixz6bci"
 
         password="YYEFQRDJDdpE5OQnSsOK"
@@ -36,7 +28,6 @@
 
     />
 
-<<<<<<< HEAD
     
 
     <!-- MAMP NCD -->
@@ -63,26 +54,10 @@
 
         maxIdle="30"
 
-=======
-    <!-- MAMP NCD -->
-    <Resource
-
-        name="jdbc/pool_cnx_encheres_save"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        type="javax.sql.DataSource"
- 
-		url="jdbc:mysql://localhost:3306/eni_trocenchere"
-		username="utilisateurENI"
-		password="trocenchere"
-        
-        maxTotal="100"
-        maxIdle="30"
->>>>>>> e18959f68966d52ab5b68bb8b9c4b3a0ad04669a
         maxWaitMillis="10000"
 
     />
 
-<<<<<<< HEAD
     
 
     <!-- MAMP OVH -->
@@ -109,28 +84,8 @@
 
         maxIdle="30"
 
-=======
-    <!-- MAMP OVH -->
-    <Resource
-
-        name="jdbc/pool_cnx_encheres_OVH"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        type="javax.sql.DataSource"
-
-		url="jdbc:mysql://winbresbigmat29.mysql.db/winbresbigmat29"
-		username="winbresbigmat29"
-		password="Spiramyl29"
-
-        maxTotal="100"
-        maxIdle="30"
->>>>>>> e18959f68966d52ab5b68bb8b9c4b3a0ad04669a
         maxWaitMillis="10000"
 
     />
 
-<<<<<<< HEAD
 </Context>
-=======
-</Context>
- 
->>>>>>> e18959f68966d52ab5b68bb8b9c4b3a0ad04669a

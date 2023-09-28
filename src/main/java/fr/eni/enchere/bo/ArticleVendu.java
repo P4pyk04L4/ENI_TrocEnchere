@@ -11,6 +11,7 @@ public class ArticleVendu {
 	private String nomArticle, description;
 	private EtatVente etatVente; /*3 valeurs possibles définies dans l'Enumeration EtatVente*/;
 	private LocalDate dateDebutEncheres, dateFinEncheres;
+	//miseAPrix : prix de départ fixé par le vendeur | prixVente : meilleure enchère
 	private int miseAPrix, prixVente;
 	private Categorie categorie;
 	private Utilisateur vendeur;
