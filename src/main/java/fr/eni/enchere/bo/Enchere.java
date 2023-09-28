@@ -59,7 +59,10 @@ public class Enchere {
 	public void setUtilisateurAcheteur(Utilisateur utilisateurAcheteur) {
 		this.utilisateurAcheteur = utilisateurAcheteur;
 	}
-    public String getDateEnchere() {
+    public LocalDate getDateEnchere() {
+        return dateEnchere;
+    }
+    public String getAffichageDateEnchere() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return dateEnchere.format(formatter);
     }
