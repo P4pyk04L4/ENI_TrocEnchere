@@ -12,7 +12,7 @@ body {
 
 /* MENU */
 .navbar {
-    background-color: navy;
+    background-color: #004040;
     width: 100%;
     height: 80px;
 }
@@ -33,7 +33,7 @@ body {
 }
 
 .card#carteArticle:hover{
-	color: navy;
+	color: #004040;
 	transform: scale(1.05);
 }
 
@@ -45,12 +45,6 @@ body {
 	transform : none;
 }
 
-#iconWin, #iconFail {
-/* 	border: 1px solid green; */
-	position : absolute;
-	top : 20px;
-}
-
 /* .dropdown-menu { */
 /*    right: 0 !important; */
 /*    left: auto !important; */
@@ -58,7 +52,33 @@ body {
 
 /* CORPS */
 h1 {
-    color: navy;
+    color: #004040;
+}
+
+.typewriter h1 {
+	color: white;
+	font-size : 16px;
+	font-family: courier, courier new, serif;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 2.5s steps(15, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
 }
 
 /* FOOTER */
@@ -67,7 +87,7 @@ footer {
     width: 100%;
 /*     position: absolute; */
 /*     bottom: 0; */
-    background-color: navy;
+    background-color: #004040;
     color: white;
 }
 

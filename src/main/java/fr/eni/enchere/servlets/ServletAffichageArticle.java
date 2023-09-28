@@ -67,7 +67,7 @@ public class ServletAffichageArticle extends HttpServlet {
 	        
 	        // Update de la dernière enchère
 	        
-	        articleManager.updateEnchereArticle(article, montant);
+	        articleManager.updateEnchereArticle(article, utilisateurActif.getIdentifiant() , montant);
 	        
 	        List listeEncheres = new ArrayList();
 	        listeEncheres = enchereManager.afficherListeEnchere(article.getNoArticle());

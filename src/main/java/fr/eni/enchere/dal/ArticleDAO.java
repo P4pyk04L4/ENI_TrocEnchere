@@ -24,7 +24,7 @@ public interface ArticleDAO {
 	
 	public void updateActivateArticle(ArticleVendu article);
 	
-	public void updateEnchereArticle(ArticleVendu article, int montant);
+	public void updateEnchereArticle(ArticleVendu article, int noUtilisateurAcheteur, int montant);
 	
 	public void deleteAllArticlesByUser(Utilisateur utilisateur);
 	

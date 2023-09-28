@@ -111,7 +111,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				enchere.setEtatEnchere(EtatEnchere.valueOf(rs.getString("etatEnchere")));
 				
 				encheres.add(enchere);
-				System.out.println(rs.getInt("noUtilisateur"));
 			}
 
 		} catch (Exception e) {

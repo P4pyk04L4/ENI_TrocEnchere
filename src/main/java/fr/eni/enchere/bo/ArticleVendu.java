@@ -76,9 +76,11 @@ public class ArticleVendu {
 	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
 	}
+
 	public String getAffichageDateDebutEncheres() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return dateDebutEncheres.format(formatter);
+
 	}
 	public LocalDate getDateDebutEncheres() {
         return dateDebutEncheres;
@@ -86,9 +88,11 @@ public class ArticleVendu {
 	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
+  
 	public String getAffichageDateFinEncheres() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return dateFinEncheres.format(formatter);
+
 	}
 	public LocalDate getDateFinEncheres() {
         return dateFinEncheres;

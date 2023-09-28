@@ -39,7 +39,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String DELETE_RETRAIT = "DELETE FROM Retrait WHERE noRetrait=?";
 	private static final String UPDATE_ETATVENTE = "UPDATE ArticleVendu SET etatVente=? WHERE noArticle=?";
 	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE ArticleVendu SET activate=? WHERE noArticle=?;";
-	private static final String UPDATE_ENCHERE_ARTICLE = "UPDATE ArticleVendu SET prixVente=? WHERE noArticle=?";
+	private static final String UPDATE_ENCHERE_ARTICLE = "UPDATE ArticleVendu SET prixVente=?, noUtilisateurAcheteur=? WHERE noArticle=?";
 	private static final String SELECT_ALL_ARTICLES_NON_TERMINEE = "SELECT noArticle FROM ArticleVendu WHERE noUtilisateurVendeur=? AND etatVente<>'TERMINEE'";
 	private static final String DELETE_ALL_ARTICLES_NON_TERMINEE = "DELETE FROM ArticleVendu WHERE noUtilisateurVendeur=? AND etatVente<>'TERMINEE'";
 	private static final String UPDATE_ACIVATE_ALL_ARTICLES_NON_TERMINEE = "UPDATE ArticleVendu set activate=? WHERE noUtilisateurVendeur=? AND etatVente<>'TERMINEE'";
@@ -333,11 +333,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 
 	@Override
-	public void updateEnchereArticle(ArticleVendu article, int montant) {
+	public void updateEnchereArticle(ArticleVendu article, int noUtilisateurAcheteur ,int montant) {
 		try( Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ENCHERE_ARTICLE)) {
 			stmt.setInt( 1, montant );
-			stmt.setInt( 2, article.getNoArticle() );
+			stmt.setInt(2, noUtilisateurAcheteur);
+			stmt.setInt( 3, article.getNoArticle() );
 			stmt.executeUpdate();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
