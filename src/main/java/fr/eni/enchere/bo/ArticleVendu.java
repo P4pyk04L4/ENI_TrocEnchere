@@ -11,6 +11,7 @@ public class ArticleVendu {
 	private String nomArticle, description;
 	private EtatVente etatVente; /*3 valeurs possibles définies dans l'Enumeration EtatVente*/;
 	private LocalDate dateDebutEncheres, dateFinEncheres;
+	//miseAPrix : prix de départ fixé par le vendeur | prixVente : meilleure enchère
 	private int miseAPrix, prixVente;
 	private Categorie categorie;
 	private Utilisateur vendeur;
@@ -22,7 +23,8 @@ public class ArticleVendu {
 
 	public ArticleVendu(Integer noArticle, String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
-			Categorie categorie, Utilisateur vendeur, Utilisateur acheteur,Boolean activate, List<Enchere> encheres, Retrait retrait) {
+			Categorie categorie, Utilisateur vendeur, Utilisateur acheteur, Boolean activate, 
+			List<Enchere> encheres, Retrait retrait) {
 		this.setNoArticle(noArticle);
 		this.setNomArticle(nomArticle);
 		this.setDescription(description);
@@ -74,11 +76,23 @@ public class ArticleVendu {
 	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
 	}
+
+	public String getAffichageDateDebutEncheres() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateDebutEncheres.format(formatter);
+
+	}
 	public LocalDate getDateDebutEncheres() {
         return dateDebutEncheres;
 	}
 	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
+	}
+  
+	public String getAffichageDateFinEncheres() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateFinEncheres.format(formatter);
+
 	}
 	public LocalDate getDateFinEncheres() {
         return dateFinEncheres;

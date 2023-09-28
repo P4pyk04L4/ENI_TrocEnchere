@@ -16,7 +16,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private static final String INSERT_ONE_CATEGORY = "INSERT INTO Categorie (libelle) VALUES(?);";
 	private static final String UPDATE_ONE_CATEGORY = "UPDATE Categorie SET libelle=? WHERE noCategorie=?;";
 	private static final String DELETE_ONE_CATEGORY = "DELETE FROM Categorie WHERE noCategorie=?;";
-	private static final String SELECT_ONE_CATEGORY_BY_ID = "SELECT * from Categorie WHERE noCategorie=?;";
+	private static final String SELECT_ONE_CATEGORY_BY_ID = "SELECT * FROM Categorie WHERE noCategorie=?;";
 
 	
 	@Override

@@ -16,42 +16,65 @@
             <main class="col-md-10 ms-sm-auto">
             
                 <h1 class="my-2">Espace Administrateur</h1> 
-                <h4 class="my-1">-> Gestion des Articles en Vente</h4>
+                <h4 class="my-1">-> Gestion des Ventes</h4><br><hr><br>
                 
-                <table class="table">
-				    <thead>
-				        <tr>
-				            <th scope="col" class="col-1">#</th>
-				            <th scope="col" class="col-3">Libellé</th>
-				            <th scope="col" class="col-1">Catégorie</th>
-				            <th scope="col" class="col-2">Vendeur</th>
-				            <th scope="col" class="col-1">Mise à Prix</th>
-				            <th scope="col" class="col-2">Meilleure Enchère</th>
-				            <th scope="col" class="col-2">Meilleur Acheteur</th>
-				            <th scope="col" class="col-2">Statut</th>
-				            <th scope="col" class="col-2">Activation</th>
-				            <th scope="col" class="col-2"></th>
-				        </tr>
-				    </thead>
-				    <tbody>
-					    <c:forEach var="article" items="${articles}">
+                <c:forEach var="article" items="${articles}">
+                
+                	<!-- GESTION DES ARTICLES -->
+                	
+					<h4 class="my-2">----- VENTE du <c:out value="${article.getAffichageDateDebutEncheres()}" /> au <c:out value="${article.getAffichageDateFinEncheres()}" /> -----</h4><br>
+                	
+                	<h4 class="my-2">--> ARTICLE</h4>
+                	
+	                <table class="table">
+					    <thead>
+					        <tr>
+					            <th scope="col" class="col-1">#</th>
+					            <th scope="col" class="col-1">Libellé</th>
+					            <th scope="col" class="col-1">Catégorie</th>
+					            <th scope="col" class="col-1">Vendeur</th>
+					            <th scope="col" class="col-1 text-center">Mise à Prix</th>
+					            <th scope="col" class="col-1 text-center">Meilleure Enchère</th>
+					            <th scope="col" class="col-1 text-center">Meilleur Acheteur</th>
+					            <th scope="col" class="col-1 text-center">Statut</th>
+					            <th scope="col" class="col-1">Activation</th>
+					            <th scope="col" class="col-1"></th>
+					        </tr>
+					    </thead>
+				    	<tbody>
 				           <tr class="${article.etatVente == 'TERMINEE' ? 'table-danger' : (article.etatVente == 'EN_COURS' ? 'table-success' : 'table-warning')}">
 				                
 				                <th scope="row"><c:out value="${article.noArticle}" /></th>
 				                <th scope="row"><c:out value="${article.nomArticle}" /></th>
 				                <td><c:out value="${article.categorie.libelle}" /></td>
-				                <td><c:out value="${article.vendeur.prenom}" />&nbsp;<c:out value="${article.vendeur.nom}" /></td>
 				                
-				                <th scope="row"><c:out value="${article.miseAPrix}" />&nbsp;&euro;</th>
+								<c:choose>
+								    <c:when test="${not empty article.vendeur}">
+								    	<c:if test="${article.vendeur.activate eq true}">
+								        	<td><c:out value="${article.vendeur.pseudo}" /></td>
+								        </c:if>
+								        <c:if test="${article.vendeur.activate eq false}">
+								        	<td>
+								        		<c:out value="${article.vendeur.pseudo}" /><br>
+								        		(profil désactivé)
+								        	</td>
+								        </c:if>
+								    </c:when>
+								    <c:otherwise>
+								        <th scope="row">VENDEUR SUPPRIMÉ</th>
+								    </c:otherwise>
+								</c:choose>
+				                
+				                <td class="text-center"><c:out value="${article.miseAPrix}" />&nbsp;&euro;</td>
 				                
 								<c:if test="${article.etatVente eq 'TERMINEE'}">
 									<c:if test="${article.prixVente eq 0}">
-								    	<td>Aucune Enchère</td>
-								    	<td>Pas d'Acheteur</td>
+								    	<td class="text-center">Aucune Enchère</td>
+								    	<td class="text-center">Pas d'Acheteur</td>
 								    </c:if>
 								    <c:if test="${article.prixVente ne 0}">
-								    	<th scope="row"><c:out value="${article.prixVente}" />&nbsp;&euro;<br>(prix final)</th>
-								    	<th scope="row">
+								    	<th scope="row" class="text-center"><c:out value="${article.prixVente}" />&nbsp;&euro;<br>(prix final)</th>
+								    	<th scope="row" class="text-center">
 							    			Remporté par<br>
 							    			<c:out value="${article.acheteur.pseudo}" />
 								    	</th>
@@ -59,34 +82,34 @@
 								</c:if>
 								<c:if test="${article.etatVente eq 'EN_COURS'}">
 									<c:if test="${article.prixVente eq 0}">
-								    	<td>Aucune Enchère</td>
-								    	<td>Pas d'Acheteur</td>
+								    	<td class="text-center">Aucune Enchère</td>
+								    	<td class="text-center">Pas d'Acheteur</td>
 								    </c:if>
 								    <c:if test="${article.prixVente ne 0}">
-								    	<th scope="row"><c:out value="${article.prixVente}" />&nbsp;&euro;</th>
-								    	<td>
+								    	<th scope="row" class="text-center"><c:out value="${article.prixVente}" />&nbsp;&euro;</th>
+								    	<td class="text-center">
 								    		<c:out value="${article.acheteur.pseudo}" />
 								    	</td>
 								    </c:if>
 								</c:if>
 								<c:if test="${article.etatVente eq 'NON_DEBUTEE'}">
-								    <td>-----</td>
-								    <td>-----</td>
+								    <td class="text-center">-----</td>
+								    <td class="text-center">-----</td>
 								</c:if>
 								
-								<td>
+								<th scope="row" class="text-center">
 								    <c:choose>
 								        <c:when test="${article.etatVente == 'TERMINEE'}">
-								            Terminée
+								            VENTE TERMINÉE
 								        </c:when>
 								        <c:when test="${article.etatVente == 'EN_COURS'}">
-								            En Cours
+								            VENTE EN COURS
 								        </c:when>
 								        <c:otherwise>
-								            Non Débutée
+								            VENTE NON DÉBUTÉE
 								        </c:otherwise>
 								    </c:choose>
-								</td>
+								</th>
 								
 								<td>
 								
@@ -94,7 +117,7 @@
 								
 										<input type="checkbox" id="activateSwitch-${article.noArticle}" data-on-text="ON" data-off-text="OFF" 
 											data-on-color="success" data-off-color="danger" ${article.activate ? 'checked' : ''} 
-									        data-servlet-url="<%=request.getContextPath()%>/espace_admin/gestion_articles" 
+									        data-servlet-url="<%=request.getContextPath()%>/espace_admin/gestion_ventes" 
 									        data-article-id="${article.noArticle}" name="activateSwitch" />
 									        
 									    <script>
@@ -122,6 +145,8 @@
 									                    },
 									                    success: function(response) {
 									                    	 console.log('Requête réussie, réponse du serveur');
+									                         // Redirigez vers la même page après que la réponse ait été obtenue
+									                         window.location.reload();
 									                    },
 									                    error: function(jqXHR, textStatus, errorThrown) {
 									                    	console.error('Erreur lors de la requête :', errorThrown);
@@ -155,7 +180,7 @@
 											<div class="modal-dialog">
 	
 												<form method="post"
-													action="<%=request.getContextPath()%>/espace_admin/gestion_articles"
+													action="<%=request.getContextPath()%>/espace_admin/gestion_ventes"
 													class="row">
 													<div class="modal-content">
 														<div class="modal-header">
@@ -208,10 +233,88 @@
 								</td>
 
 				           	</tr>
-				        </c:forEach>
-				  	</tbody>
-				</table>	  	
-					
+				  		</tbody>
+					</table>	
+	           		
+	           		
+	           		<!-- GESTION DES ENCHERES -->
+					<c:if test="${empty article.encheres}">
+					    <h4 class="my-2">----- AUCUNE ENCHÈRE -----</h4>
+					</c:if>
+	           		
+	           		<c:if test="${not empty article.encheres}">
+	           		
+	           		 	<div class="col-md-6">
+	           		 	
+	           		 	 	<h4 class="my-2">--> ENCHÈRES</h4>
+	           		
+	           				<table class="table">
+	           			
+							    <thead>
+							    
+									<tr>
+							            <th scope="col" class="col-1">#</th>
+							            <th scope="col" class="col-1">Date</th>
+							            <th scope="col" class="col-1 text-center">Enchérisseur</th>
+							            <th scope="col" class="col-1 text-center">Montant</th>
+							            <th scope="col" class="col-1 text-center">État</th>
+							            <th scope="col" class="col-1 text-center">Activation</th>
+							        </tr>
+							        
+							    </thead>
+		           		
+		           				<tbody>
+	
+							    	<c:forEach var="enchere" items="${article.encheres}">
+						    	
+						  				<tr class="${enchere.etatEnchere == 'PERDU' ? 'table-danger' : (enchere.etatEnchere == 'MEILLEUR' ? 'table-success' : 'table-warning')}">
+						                
+						                	<th scope="row"><c:out value="${enchere.noEnchere}" /></th>
+											<th scope="row"><c:out value="${enchere.getAffichageDateEnchere()}" /></th>
+						                	<th scope="row" class="text-center"><c:out value="${enchere.pseudoUtilisateur}" /></th>
+						                	<th scope="row" class="text-center"><c:out value="${enchere.montantEnchere}" />&nbsp;&euro;</th>
+						                	
+						                	<th scope="row" class="text-center">
+									        	<c:choose>
+											        <c:when test="${enchere.etatEnchere == 'MEILLEUR'}">
+											            MEILLEUR ENCHÉREUR
+											        </c:when>
+											        <c:when test="${enchere.etatEnchere == 'PERDU'}">
+											            VENTE PERDUE
+											        </c:when>
+											        <c:otherwise>
+											        	VENTE REMPORTÉE
+											        </c:otherwise>
+											    </c:choose>
+											</th>
+						                
+											<td class="text-center">
+												<input type="checkbox" id="adminSwitch-${enchere.noEnchere}"
+											  		data-on-text="ON" data-off-text="OFF"
+											    	data-on-color="success" data-off-color="danger"
+											   	 	${enchere.activate ? 'checked' : ''} disabled name="adminSwitch" />
+											   	 	
+												<script>
+											 		$(document).ready(function() {
+											        	$('#adminSwitch-${enchere.noEnchere}').bootstrapSwitch();
+											    	});
+												</script>
+											</td>
+											
+						           		</tr>
+						           	
+						           	</c:forEach>
+						  			
+						  		</tbody>
+						  		
+							</table>
+							
+						</div>
+						
+					</c:if><br><hr><br>
+							 
+	        	</c:forEach>
+	           		
             </main>
             
         </div>

@@ -7,6 +7,13 @@
 
 <body>
 	<%@ include file="../outils/menu.jsp"%>
+	
+	<!-- Confirmation éventuelle de suppression d'un article par son vendeur -->
+	<c:if test="${ confirmationSuppression }">
+		<div class="alert alert-success my-2" role="alert" style="text-align: center">
+			Votre article a bien été supprimé !		
+		</div>
+	</c:if>
 
 	<div class="container">
 		<h1 class="my-2">Bienvenue</h1>

@@ -33,7 +33,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO = "SELECT * from Utilisateur WHERE pseudo=?";
 	private static final String SELECT_BY_EMAIL = "SELECT * from Utilisateur WHERE pseudo=?";
 
-
 	@Override
 	public void insertOneUser(Utilisateur utilisateur) {
 

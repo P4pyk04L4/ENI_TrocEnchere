@@ -75,5 +75,21 @@ public class ArticleManager {
 	public void updateEnchereArticle(ArticleVendu article, int noUtilisateurAcheteur, int montant) {
 		instanceArticleDAO.updateEnchereArticle(article, noUtilisateurAcheteur, montant);
 	}
+	
+	public void deleteAllArticlesByUser(Utilisateur utilisateur) {
+		instanceArticleDAO.deleteAllArticlesByUser(utilisateur);
+	}
+	
+	public void activateAllArticlesByUser(Utilisateur utilisateur) {
+		ArticleVendu article = new ArticleVendu();
+		article.setActivate(true);
+		instanceArticleDAO.updateActivateAllArticlesByUser(utilisateur, article);
+	}
+	
+	public void desactivateAllArticlesByUser(Utilisateur utilisateur) {
+		ArticleVendu article = new ArticleVendu();
+		article.setActivate(false);
+		instanceArticleDAO.updateActivateAllArticlesByUser(utilisateur, article);
+	}
 
 }
