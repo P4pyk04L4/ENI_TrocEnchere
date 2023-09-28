@@ -69,7 +69,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return encheres;
 		
 	}
-	
 	@Override
 	public List<Enchere> afficherListeEnchere(int noArticle) {
 		List<Enchere> encheres = new ArrayList<Enchere>();

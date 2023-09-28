@@ -54,7 +54,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setInt(7, article.getPrixVente());
 			stmt.setInt(8, article.getCategorie().getNoCategorie());
 			stmt.setInt(9, article.getVendeur().getIdentifiant());
-			stmt.setInt(10, 0);
+			stmt.setInt(10, 1);
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -257,7 +257,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 		//modifications dans la table Article
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ARTICLE)) {
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ARTICLE) ) {
 			stmt.setString( 1, article.getNomArticle() );
 			stmt.setString( 2, article.getDescription() );
 			stmt.setDate( 3, Date.valueOf( article.getDateDebutEncheres() ) );
@@ -265,6 +265,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setInt( 5, article.getMiseAPrix() );
 			stmt.setInt( 6, article.getPrixVente() );
 			stmt.setInt( 7, article.getCategorie().getNoCategorie() );
+			stmt.setInt( 8, article.getNoArticle() );
 			stmt.executeUpdate();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
@@ -276,6 +277,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setString( 1, article.getRetrait().getRue() );
 			stmt.setInt( 2, article.getRetrait().getCodePostal() );
 			stmt.setString( 3, article.getRetrait().getVille() );
+			stmt.setInt( 4, article.getRetrait().getNoRetrait() );
 			stmt.executeUpdate();
 		} catch( SQLException e ) {
 			e.printStackTrace();
