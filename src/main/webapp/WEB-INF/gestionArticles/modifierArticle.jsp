@@ -18,9 +18,7 @@
 
 <main class="container row d-flex">
 
-	<div class="col-3 border border-3 mx-5 mt-5" style="height: 350px">
-		<img alt="" src="" class="img-fluid">
-	</div>
+	<div class="col-4">	</div>
 
 	<div class="col-8 mx-0 mt-2">
 	
@@ -51,11 +49,6 @@
 							${ categorie.getLibelle() }</option>
 						</c:forEach>
 					</select>						
-				</div>
-				
-				<div class="my-2">
-					<label for="formFile">Photo de l'article</label>
-					<input class="form-control" type="file" id="formFile" name="photoArticle" accept="image/*">
 				</div>
 				
 				<div class="form-group col-4 my-2">
