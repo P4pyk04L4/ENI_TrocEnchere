@@ -22,6 +22,8 @@
                 
                 	<!-- GESTION DES ARTICLES -->
                 	
+					<h4 class="my-2">----- VENTE du <c:out value="${article.getAffichageDateDebutEncheres()}" /> au <c:out value="${article.getAffichageDateFinEncheres()}" /> -----</h4><br>
+                	
                 	<h4 class="my-2">--> ARTICLE</h4>
                 	
 	                <table class="table">
@@ -63,7 +65,7 @@
 								    </c:otherwise>
 								</c:choose>
 				                
-				                <th scope="row" class="text-center"><c:out value="${article.miseAPrix}" />&nbsp;&euro;</th>
+				                <td class="text-center"><c:out value="${article.miseAPrix}" />&nbsp;&euro;</td>
 				                
 								<c:if test="${article.etatVente eq 'TERMINEE'}">
 									<c:if test="${article.prixVente eq 0}">
@@ -268,7 +270,7 @@
 						  				<tr class="${enchere.etatEnchere == 'PERDU' ? 'table-danger' : (enchere.etatEnchere == 'MEILLEUR' ? 'table-success' : 'table-warning')}">
 						                
 						                	<th scope="row"><c:out value="${enchere.noEnchere}" /></th>
-											<th scope="row"><c:out value="${enchere.dateEnchere}" /></th>
+											<th scope="row"><c:out value="${enchere.getAffichageDateEnchere()}" /></th>
 						                	<th scope="row" class="text-center"><c:out value="${enchere.pseudoUtilisateur}" /></th>
 						                	<th scope="row" class="text-center"><c:out value="${enchere.montantEnchere}" />&nbsp;&euro;</th>
 						                	
