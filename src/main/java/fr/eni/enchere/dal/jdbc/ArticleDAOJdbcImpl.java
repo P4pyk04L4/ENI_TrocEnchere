@@ -20,23 +20,23 @@ import fr.eni.enchere.dal.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
-	private static final String CREER_ARTICLE = "INSERT INTO bjx3rvrwhdrtsh8g5edx.ArticleVendu (nom, description, "
+	private static final String CREER_ARTICLE = "INSERT INTO ArticleVendu (nom, description, "
 			+ "etatVente, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, noCategorie, noUtilisateurVendeur,"
 			+ " activate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String INSERER_NUMERO_RETRAIT = "UPDATE bjx3rvrwhdrtsh8g5edx.ArticleVendu SET NoRetrait =? "
+	private static final String INSERER_NUMERO_RETRAIT = "UPDATE ArticleVendu SET NoRetrait =? "
 			+ "											WHERE noArticle =?";
 	private static final String CREER_POINT_RETRAIT = "INSERT INTO Retrait (rue, ville, codePostal, noArticle) VALUES"
 														+ " (?, ?, ?, ?)";
-	private static final String SELECT_ALL_ARTICLES = "SELECT * from bjx3rvrwhdrtsh8g5edx.ArticleVendu;";
-	private static final String SELECT_ONE_ARTICLE = "SELECT * from bjx3rvrwhdrtsh8g5edx.ArticleVendu WHERE noArticle=?;";
-	private static final String SELECT_ONE_RETRAIT = "SELECT * FROM bjx3rvrwhdrtsh8g5edx.Retrait WHERE noRetrait =?";
+	private static final String SELECT_ALL_ARTICLES = "SELECT * from ArticleVendu;";
+	private static final String SELECT_ONE_ARTICLE = "SELECT * from ArticleVendu WHERE noArticle=?;";
+	private static final String SELECT_ONE_RETRAIT = "SELECT * FROM Retrait WHERE noRetrait =?";
 	private static final String UPDATE_ARTICLE = "UPDATE ArticleVendu SET nom=?, description=?, dateDebutEncheres=?,"
 			+ "dateFinEncheres=?, miseAPrix=?, prixVente=?, noCategorie=? WHERE noArticle=?";
 	private static final String UPDATE_RETRAIT = "UPDATE Retrait SET rue=?, codePostal=?, ville=? WHERE noRetrait=?";
 	private static final String DELETE_ARTICLE = "DELETE FROM ArticleVendu WHERE noArticle=?";
 	private static final String DELETE_RETRAIT = "DELETE FROM Retrait WHERE noRetrait=?";
 	private static final String UPDATE_ETATVENTE = "UPDATE ArticleVendu SET etatVente=? WHERE noArticle=?";
-	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE bjx3rvrwhdrtsh8g5edx.ArticleVendu SET activate=? WHERE noArticle=?;";
+	private static final String UPDATE_ACTIVATE_ONE_USER = "UPDATE ArticleVendu SET activate=? WHERE noArticle=?;";
 	private static final String UPDATE_ENCHERE_ARTICLE = "UPDATE ArticleVendu SET prixVente=? WHERE noArticle=?";
 	
 	
@@ -251,7 +251,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 		//modifications dans la table Article
 		try( Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ARTICLE)) {
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_ARTICLE) ) {
 			stmt.setString( 1, article.getNomArticle() );
 			stmt.setString( 2, article.getDescription() );
 			stmt.setDate( 3, Date.valueOf( article.getDateDebutEncheres() ) );
@@ -259,6 +259,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setInt( 5, article.getMiseAPrix() );
 			stmt.setInt( 6, article.getPrixVente() );
 			stmt.setInt( 7, article.getCategorie().getNoCategorie() );
+			stmt.setInt( 8, article.getNoArticle() );
 			stmt.executeUpdate();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
@@ -270,6 +271,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setString( 1, article.getRetrait().getRue() );
 			stmt.setInt( 2, article.getRetrait().getCodePostal() );
 			stmt.setString( 3, article.getRetrait().getVille() );
+			stmt.setInt( 4, article.getRetrait().getNoRetrait() );
 			stmt.executeUpdate();
 		} catch( SQLException e ) {
 			e.printStackTrace();

@@ -20,8 +20,8 @@ import fr.eni.enchere.dal.EnchereDAO;
  *
  */
 public class EnchereDAOJdbcImpl implements EnchereDAO {
-	private static final String SELECT_BY_ARTICLE = "SELECT * from bjx3rvrwhdrtsh8g5edx.Enchere WHERE noArticle=? ORDER BY montantEnchere DESC";
-	private static final String INSERT_ENCHERE = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Enchere (noUtilisateur, noArticle, dateEnchere, montantEnchere, activate) VALUES (?,?,?,?,?)";
+	private static final String SELECT_BY_ARTICLE = "SELECT * from Enchere WHERE noArticle=? ORDER BY montantEnchere DESC";
+	private static final String INSERT_ENCHERE = "INSERT INTO Enchere (noUtilisateur, noArticle, dateEnchere, montantEnchere, activate) VALUES (?,?,?,?,?)";
 
 	@Override
 	public List<Enchere> afficherListeEnchere(int noArticle) {

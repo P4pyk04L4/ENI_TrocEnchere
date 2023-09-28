@@ -12,11 +12,11 @@ import fr.eni.enchere.dal.CategorieDAO;
 
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 	
-	private static final String SELECT_ALL_CATEGORIES = "SELECT * from bjx3rvrwhdrtsh8g5edx.Categorie;";
-	private static final String INSERT_ONE_CATEGORY = "INSERT INTO bjx3rvrwhdrtsh8g5edx.Categorie (libelle) VALUES(?);";
-	private static final String UPDATE_ONE_CATEGORY = "UPDATE bjx3rvrwhdrtsh8g5edx.Categorie SET libelle=? WHERE noCategorie=?;";
-	private static final String DELETE_ONE_CATEGORY = "DELETE FROM bjx3rvrwhdrtsh8g5edx.Categorie WHERE noCategorie=?;";
-	private static final String SELECT_ONE_CATEGORY_BY_ID = "SELECT * from bjx3rvrwhdrtsh8g5edx.Categorie WHERE noCategorie=?;";
+	private static final String SELECT_ALL_CATEGORIES = "SELECT * from Categorie;";
+	private static final String INSERT_ONE_CATEGORY = "INSERT INTO Categorie (libelle) VALUES(?);";
+	private static final String UPDATE_ONE_CATEGORY = "UPDATE Categorie SET libelle=? WHERE noCategorie=?;";
+	private static final String DELETE_ONE_CATEGORY = "DELETE FROM Categorie WHERE noCategorie=?;";
+	private static final String SELECT_ONE_CATEGORY_BY_ID = "SELECT * FROM Categorie WHERE noCategorie=?;";
 
 	
 	@Override

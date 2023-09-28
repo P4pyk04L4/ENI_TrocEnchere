@@ -19,6 +19,14 @@
 		</c:if>
 
 		<div class="row d-flex justify-content-center py-3">
+		
+			<!-- Confirmation éventuelle de modification de l'article par le vendeur -->
+			<c:if test="${ confirmationModification }">
+				<div class="alert alert-success my-2" role="alert" style="text-align: center">
+					Votre article a bien été modifié !		
+				</div>
+			</c:if>
+		
 			<!-- Formulaire d'inscription -->
 			<div class="col-md-8 bg-light m-3 p-4">
 				<div class="row">
@@ -128,8 +136,9 @@
 						</div>
 						<div class="col-11">
 							<p>
-								<strong>Retrait</strong> <br> ${article.retrait.rue}<br>
-								${article.retrait.codePostal} ${article.retrait.ville}
+								<strong>Retrait</strong> <br>
+								<c:out value="${article.retrait.rue}"/> <br>
+								<c:out value="${article.retrait.codePostal}"/><c:out value="${article.retrait.ville}"/>
 							</p>
 						</div>
 
@@ -150,7 +159,7 @@
 
 						<!-- ENCHERE -->
 						<c:if test="${ article.etatVente =='EN_COURS' }">
-						<button type="button" class="btn btn-success"
+						<button type="button" class="btn btn-success my-2"
 							data-bs-toggle="modal" data-bs-target="#exampleModal">Enchérir</button>
 
 						<!-- Modal -->
@@ -186,6 +195,78 @@
 							</div>
 						</div>
 						</c:if>
+
+						<!-- DEBUT BOUTONS MODIFICATION/SUPPRESSION D'ARTICLE PAR LE VENDEUR -->
+						
+						<c:if test="${ user.nom == article.vendeur.nom && article.etatVente == 'NON_DEBUTEE' }">
+							
+							<!-- Modification d'article : redirection vers page de modification -->
+							<form method="get" action="ServletModifierArticle">
+								<input type="hidden" name="idArticleAModifier" value="${article.noArticle}">
+								<button type="submit" class="btn btn-warning my-2">Modifier l'article</button>
+							</form>
+							
+							<!-- Annulation d'un article : confirmation avec modal -->
+							<button type="submit" class="btn btn-danger btn-sm"
+		              			data-bs-toggle="modal" data-bs-target="#deleteOneArticle-${article.noArticle}">
+		                    	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+									<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+									<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+								</svg>
+		                		&nbsp;Annuler la vente
+				            </button>
+							
+							<!-- Modal pour suppression d'un article -->
+							<div class="modal fade" id="deleteOneArticle-${article.noArticle}" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<form method="post" action="ServletAnnulerArticle">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h1 class="modal-title fs-5" id="exampleModalLabel">
+													Êtes-vous sûr de vouloir supprimer l'Article <c:out value="${article.nomArticle}" /> ?<br>
+												</h1>
+												<button type="button" class="btn-close"
+													data-bs-dismiss="modal" aria-label="Close">
+												</button>
+											</div>
+											<div class="modal-body">
+												<p>Attention, cette action est irréversible !</p>
+												<div class="form-check">
+													<input type="hidden" name="idArticleASupprimer"
+														 value="${article.noArticle}">
+													<input class="form-check-input" type="checkbox"
+														value="" id="invalidCheck2" required>
+													<label class="form-check-label" for="invalidCheck2">
+														Oui, je désire supprimer cet article
+													</label>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary btn-sm"
+																data-bs-dismiss="modal">
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+													  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+													  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+													</svg>
+													&nbsp;Annuler
+												</button>
+												<button type="submit" class="btn btn-danger btn-sm"
+															name="deleteOneArticle">
+							                    	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+			  											<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+			  											<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+													</svg>
+							                		&nbsp;Supprimer
+												</button>
+											</div>
+										</div>
+									</form>	
+								</div>
+							</div>
+			
+						</c:if>
+						<!-- FIN MODIFICATION/SUPPRESSION D'ARTICLE PAR LE VENDEUR -->
 
 					</div>
 				</div>

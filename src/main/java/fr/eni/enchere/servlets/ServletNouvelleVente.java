@@ -61,6 +61,8 @@ public class ServletNouvelleVente extends HttpServlet {
 		//Vérification que la date de fin des enchères est postérieure à celle de début des enchères
 		LocalDate dateDebutEncheres = LocalDate.parse( request.getParameter( "dateDebutEncheres" ) );
 		LocalDate dateFinEncheres = LocalDate.parse( request.getParameter( "dateFinEncheres" ) );
+		System.out.println(dateDebutEncheres);
+		System.out.println(dateFinEncheres);
 		if ( dateFinEncheres.isBefore(dateDebutEncheres) || dateFinEncheres.isEqual(dateDebutEncheres) ) {
 			verif = false;
 		}
@@ -91,8 +93,8 @@ public class ServletNouvelleVente extends HttpServlet {
 		
 		//etatVente sera mis en place dans la bll (fonction de la date de début des enchères)
 		ArticleVendu article = new ArticleVendu( nomArticle, description, null, dateDebutEncheres, dateFinEncheres,
-				miseAPrix, prixVente, categorieAEnvoyer, utilisateurActif, false, encheres, retrait );		
-
+				miseAPrix, prixVente, categorieAEnvoyer, utilisateurActif, null, false, encheres, retrait );		
+		System.out.println(article.getDateDebutEncheres() + " " + article.getDateFinEncheres());
 	
 		if ( verif ) {//si les dates sont correctement entrées, renvoi sur la page d'insertion avec confirmation
 			instanceManager.creerArticle(article);
