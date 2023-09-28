@@ -93,8 +93,7 @@ public class ServletNouvelleVente extends HttpServlet {
 		
 		//etatVente sera mis en place dans la bll (fonction de la date de début des enchères)
 		ArticleVendu article = new ArticleVendu( nomArticle, description, null, dateDebutEncheres, dateFinEncheres,
-				miseAPrix, prixVente, categorieAEnvoyer, utilisateurActif, null, false, encheres, retrait );		
-		System.out.println(article.getDateDebutEncheres() + " " + article.getDateFinEncheres());
+				miseAPrix, prixVente, categorieAEnvoyer, utilisateurActif, null, false, encheres, retrait );
 	
 		if ( verif ) {//si les dates sont correctement entrées, renvoi sur la page d'insertion avec confirmation
 			instanceManager.creerArticle(article);

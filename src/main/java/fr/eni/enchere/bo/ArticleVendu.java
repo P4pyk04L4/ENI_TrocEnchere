@@ -22,7 +22,8 @@ public class ArticleVendu {
 
 	public ArticleVendu(Integer noArticle, String nomArticle, String description, EtatVente etatVente,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,
-			Categorie categorie, Utilisateur vendeur, Utilisateur acheteur, Boolean activate, List<Enchere> encheres, Retrait retrait) {
+			Categorie categorie, Utilisateur vendeur, Utilisateur acheteur, Boolean activate, 
+			List<Enchere> encheres, Retrait retrait) {
 		this.setNoArticle(noArticle);
 		this.setNomArticle(nomArticle);
 		this.setDescription(description);

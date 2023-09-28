@@ -54,7 +54,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setInt(7, article.getPrixVente());
 			stmt.setInt(8, article.getCategorie().getNoCategorie());
 			stmt.setInt(9, article.getVendeur().getIdentifiant());
-			stmt.setInt(10, 0);
+			stmt.setInt(10, 1);
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -142,13 +142,18 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				categorie = daoCategorieDAOJdbcImpl.selectOneCategoryById(categorie.getNoCategorie());
 				
 				UtilisateurDAOJdbcImpl daoUtilisateur = new UtilisateurDAOJdbcImpl();
-				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
-				utilisateur = daoUtilisateur.selectById(utilisateur.getIdentifiant());
 				
-//				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
-//				List<Enchere> encheres = new ArrayList<Enchere>();
-//				encheres = daoEnchere.afficherListeEnchere(rs.getInt("noArticle"));
+				Utilisateur vendeur = new Utilisateur();
+				vendeur.setIdentifiant(rs.getInt("noUtilisateurVendeur"));
+				vendeur = daoUtilisateur.selectById(vendeur.getIdentifiant());
+				
+				Utilisateur acheteur = new Utilisateur();
+				acheteur.setIdentifiant(rs.getInt("noUtilisateurAcheteur"));
+				acheteur = daoUtilisateur.selectById(acheteur.getIdentifiant());
+				
+				EnchereDAOJdbcImpl daoEnchere = new EnchereDAOJdbcImpl();
+				List<Enchere> encheres = new ArrayList<Enchere>();
+				encheres = daoEnchere.afficherListeEnchere(rs.getInt("noArticle"));
 				
 				Retrait retrait = getRetraitById( rs.getInt("noRetrait") );
 
@@ -161,9 +166,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article.setMiseAPrix(rs.getInt("miseAPrix"));
 				article.setPrixVente(rs.getInt("prixVente"));
 				article.setCategorie(categorie);
-				article.setVendeur(utilisateur);
+				article.setVendeur(vendeur);
+				article.setAcheteur(acheteur);
 				article.setActivate(rs.getBoolean("activate"));
-//				article.setEncheres(encheres);
+				article.setEncheres(encheres);
 				article.setRetrait(retrait);
 				
 				//Mise à jour de l'attribut EtatVente dans la bdd en fonction de la date du jour

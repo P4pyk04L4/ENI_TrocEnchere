@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <%@ include file="../outils/entete.jspf"%>
 
@@ -29,121 +30,123 @@
 
 						<c:if test="${ articles.activate = true }">
 							<div class="col-lg-4 col-md-6 mb-3">
-								<a href="article?noArticle=<c:out value="${ articles.noArticle }" />" class="text-decoration-none" data-toggle="modal"
-									data-target="#myModal" data-card-id="1">
-									<div class="card h-100">
+								<c:if test="${not empty sessionScope.profilConnecte}">
+									<a
+										href="article?noArticle=<c:out value="${ articles.noArticle }" />"
+										class="text-decoration-none">
+								</c:if>
+								<div class="card h-100" id="carteArticle">
 									<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-										<div class="card-body">
-											<h3 class="text-end">
-												<c:out value="${ articles.prixVente }" /> €
-											</h3>
-											<h5 class="card-title">
-												<c:out value="${ articles.nomArticle }" />
-											</h5>
-											<p>
-												Fin de la vente le : <c:out value="${ articles.dateFinEncheres }" />
-											</p>
-											
-										</div>
-										
-										<!-- AFFICHAGE DE L'ETAT DE LA VENTE -->
-										<c:if test="${ articles.etatVente =='EN_COURS' }">
-											<div class="card-footer border-success">
-												<small class="text-body-secondary"><c:out value="${ articles.categorie.libelle }" /></small>
-											</div>
-										</c:if>
-										<c:if test="${ articles.etatVente =='NON_DEBUTEE' }">
-												<div class="card-footer border-warning">
-												<small class="text-body-secondary"><c:out value="${ articles.categorie.libelle }" /></small>
-											</div>
-										</c:if>
-										<c:if test="${ articles.etatVente =='TERMINEE' }">
-											<div class="card-footer border-danger">
-												<small class="text-body-secondary"><c:out value="${ articles.categorie.libelle }" /></small>
-											</div>
-										</c:if>
+									<div class="card-body">
+										<h3 class="text-end">
+											<c:out value="${ articles.prixVente }" />
+											€
+										</h3>
+										<h5 class="card-title">
+											<c:out value="${ articles.nomArticle }" />
+										</h5>
+										<p>
+											Fin de la vente le :
+											<c:out value="${ articles.dateFinEncheres }" />
+										</p>
+
 									</div>
-								</a>
+
+									<!-- AFFICHAGE DE L'ETAT DE LA VENTE -->
+									<c:if test="${ articles.etatVente =='EN_COURS' }">
+										<div class="card-footer border-success">
+											<small class="text-body-secondary"><c:out
+													value="${ articles.categorie.libelle }" /></small>
+										</div>
+									</c:if>
+									<c:if test="${ articles.etatVente =='NON_DEBUTEE' }">
+										<div class="card-footer border-warning">
+											<small class="text-body-secondary"><c:out
+													value="${ articles.categorie.libelle }" /></small>
+										</div>
+									</c:if>
+									<c:if test="${ articles.etatVente =='TERMINEE' }">
+										<div class="card-footer border-danger">
+											<small class="text-body-secondary"><c:out
+													value="${ articles.categorie.libelle }" /></small>
+										</div>
+									</c:if>
+								</div>
+								<c:if test="${not empty sessionScope.profilConnecte}">
+									</a>
+								</c:if>
 							</div>
 						</c:if>
 					</c:forEach>
 				</div>
-				
+
 			</div>
 
-			<!-- 				TEST -->
-
-
-
+			<c:if test="${not empty sessionScope.profilConnecte}">
 			<div class="col-md-3 bg-light">
 				<h2>Mes enchères</h2>
 				<div class="row">
-					<!-- Première carte -->
-					<div class="col-lg-12 mb-3">
-						<a href="#" class="text-decoration-none">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 1</h3>
-								</div>
-							</div>
-						</a>
-					</div>
+					<c:forEach var="article" items="${articles}">
+						<c:set var="breakLoop" value="true" />
+						<c:forEach var="enchere" items="${article.encheres}">
+							<c:if
+								test="${fn:contains(enchere.noUtilisateur, user.identifiant) && breakLoop == true}">
 
-					<!-- Deuxième carte -->
-					<div class="col-lg-12 mb-3">
-						<a href="#" class="text-decoration-none">
-							<div class="card">
-								<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
-								<div class="card-body">
-									<h3 class="card-title">Objet 2</h3>
+								<c:set var="breakLoop" value="true" />
+
+								<div class="col-lg-12 mb-3">
+									<a href="article?noArticle=<c:out value="${ article.noArticle }" />"
+										class="text-decoration-none" class="text-decoration-none">
+										<div class="card">
+											<img src="images/cyber.jpeg" class="card-img-top" alt="Image">
+											<div class="card-body">
+												<h3 class="text-end">
+													<c:out value="${ article.prixVente }" />
+													€
+												</h3>
+												<h5 class="card-title">
+													<c:out value="${ article.nomArticle }" />
+												</h5>
+											</div>
+											<c:if test="${ enchere.etatEnchere =='MEILLEUR' }">
+												<div class="card-footer border-success">
+													<small class="text-body-secondary">Vous êtes le meilleur</small>
+													<div id="iconWin">
+														<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+  <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+</svg>
+													</div>
+												</div>
+											</c:if>
+											<c:if test="${ enchere.etatEnchere =='PERDU' }">
+												<div class="card-footer border-danger">
+													<small class="text-body-secondary">Enchérissez</small>
+													<div id="iconFail">
+														<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-exclamation-octagon-fill" viewBox="0 0 16 16">
+  <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
+													</div>
+												</div>
+											</c:if>
+										</div>
+									</a>
 								</div>
-							</div>
-						</a>
-					</div>
+								<c:set var="breakLoop" value="false" />
+							</c:if>
+
+						</c:forEach>
+					</c:forEach>
 				</div>
 			</div>
+			</c:if>
+			
+			
 		</div>
 	</div>
-
-
-	<!-- MODAL DE CARTE -->
-
-	<div class="modal fade" id="myModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Détails de la carte</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					<!-- Contenu dynamique sera inséré ici -->
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
 
 	<!-- FOOTER -->
 
 	<%@ include file="../outils/footer.jspf"%>
-	<script>
-		$(document).ready(
-				function() {
-					$('#myModal').on(
-							'show.bs.modal',
-							function(event) {
-								var button = $(event.relatedTarget);
-								var cardId = button.data('card-id');
 
-								console.log('Card ID:', cardId); // Ajoutez cette ligne pour déboguer
-								var modal = $(this);
-								modal.find('.modal-body').html(
-										'Contenu de la carte ' + cardId);
-							});
-				});
-	</script>
 </body>
 </html>

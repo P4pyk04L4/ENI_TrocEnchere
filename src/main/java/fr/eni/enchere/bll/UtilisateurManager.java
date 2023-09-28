@@ -81,6 +81,10 @@ public class UtilisateurManager {
 	public void updateCredit(Utilisateur utilisateur, int montant) {
 		dao.updateCredit(utilisateur, montant);
 	}
+	
+	public Utilisateur selectByPseudo(String pseudo) {
+		return dao.selectByPseudo(pseudo);
+	}
 
 	/**
 	 * ***************** Vérifications ***************************
