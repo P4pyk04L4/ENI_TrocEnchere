@@ -28,7 +28,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String INSERT_ENCHERE = "INSERT INTO Enchere (noUtilisateur, noArticle, dateEnchere, montantEnchere, activate, etatEnchere) VALUES (?,?,?,?,?,?)";
 	private static final String UPDATE_ETATENCHERE = "UPDATE Enchere SET etatEnchere=? WHERE noEnchere=?";
 	private static final String DELETE_ONE_ENCHERE = "DELETE FROM Enchere WHERE noEnchere=?";
-	private static final String UPDATE_ACTIVATE_ONE_ENCHERE = "UPDATE Enchere SET activate=? WHERE noEnchere =?";
+	private static final String DELETE_ALL_ENCHERES_BY_ARTICLE = "DELETE FROM Enchere WHERE noArticle=?";
+	private static final String UPDATE_ACTIVATE_ALL_ENCHERES_BY_ARTICLE = "UPDATE Enchere SET activate=? WHERE noArticle=?";
 	
 	@Override
 	public List<Enchere> selectAllEnchere() {
@@ -167,6 +168,24 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			PreparedStatement stmt = cnx.prepareStatement(DELETE_ONE_ENCHERE);
 
 			stmt.setInt(1, enchere.getNoEnchere());
+			
+			// Update
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Override
+	public void deleteAllEnchersByArticle(ArticleVendu article) {
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement stmt = cnx.prepareStatement(DELETE_ALL_ENCHERES_BY_ARTICLE);
+
+			stmt.setInt(1, article.getNoArticle());
 
 			// Update
 			stmt.executeUpdate();
@@ -178,14 +197,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 	
 	@Override
-	public void updateActivateOneEnchere(Enchere enchere) {
+	public void updateActivateAllEnchersByArticle(Enchere enchere, ArticleVendu article) {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
-			PreparedStatement stmt = cnx.prepareStatement(UPDATE_ACTIVATE_ONE_ENCHERE);
+			PreparedStatement stmt = cnx.prepareStatement(UPDATE_ACTIVATE_ALL_ENCHERES_BY_ARTICLE);
 
 			stmt.setBoolean(1, enchere.getActivate());
-			stmt.setInt(2, enchere.getNoEnchere());
+			stmt.setInt(2, article.getNoArticle());
 
 			// Update
 			stmt.executeUpdate();

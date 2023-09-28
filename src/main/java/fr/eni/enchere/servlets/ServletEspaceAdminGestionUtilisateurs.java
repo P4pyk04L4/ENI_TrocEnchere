@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.enchere.bll.ArticleManager;
 import fr.eni.enchere.bll.EmailManager;
+import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -52,7 +54,9 @@ public class ServletEspaceAdminGestionUtilisateurs extends HttpServlet {
         // Définir l'encodage des caractères UTF-8
         request.setCharacterEncoding("UTF-8");
 		
+        // Appel des Services
     	UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+    	ArticleManager articleManager = ArticleManager.getInstance();
     	EmailManager emailmanager = EmailManager.getInstance();
     	
     	
@@ -87,9 +91,11 @@ public class ServletEspaceAdminGestionUtilisateurs extends HttpServlet {
     	        if (activateSwitchValue != null) {
     	        	if ("true".equals(activateSwitchValue)) {
     	       		 	// La case "activateSwitch" est cochée (ON)
+    	        		articleManager.activateAllArticlesByUser(utilisateur);
     	        		utilisateurManager.activateUser(utilisateur);
     	        	} else {
     	       		 	// La case "activateSwitch" est décochée (OFF)
+    	        		articleManager.desactivateAllArticlesByUser(utilisateur);
     	        		utilisateurManager.desactivateUser(utilisateur);
     	       	 	}
     	       	 
@@ -123,6 +129,7 @@ public class ServletEspaceAdminGestionUtilisateurs extends HttpServlet {
     	        }
     	        	
     	        if (deleteOneUserAction != null) {
+    	        	articleManager.deleteAllArticlesByUser(utilisateur);
     	        	utilisateurManager.deleteUser(utilisateur);
     	        }
     	        
