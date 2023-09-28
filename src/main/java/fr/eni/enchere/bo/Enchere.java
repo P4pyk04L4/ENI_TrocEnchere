@@ -1,11 +1,15 @@
 package fr.eni.enchere.bo;
 
+ 
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+ 
+
 //Classe représentant l'offre faite par un utilisateur pour un article donné
 public class Enchere {
-	
+
 	private Integer noEnchere;
 	private Utilisateur utilisateurAcheteur;
 	private ArticleVendu articleVendu;
@@ -17,11 +21,11 @@ public class Enchere {
 	private int noUtilisateur;
 	private String pseudoUtilisateur;
 	private int noArticle;
-	
-	
+
+
 	public Enchere( Integer noEnchere, Utilisateur utilisateurAcheteur, ArticleVendu articleVendu, LocalDate dateEnchere,
 		int montantEnchere, Boolean activate, EtatEnchere etatEnchere ) {
-		
+
 		this.setNoEnchere(noEnchere);
 		this.setUtilisateurAcheteur(utilisateurAcheteur);
 		this.setArticleVendu(articleVendu);
@@ -29,29 +33,35 @@ public class Enchere {
 		this.setMontantEnchere(montantEnchere);
 		this.setActivate(activate);
 		this.setEtatEnchere(etatEnchere);
-		
+
 	}
-	
+
 	public Enchere( Utilisateur utilisateurAcheteur, ArticleVendu articleVendu, LocalDate dateEnchere,
 		int montantEnchere, Boolean activate, EtatEnchere etatEnchere ) {
-		
+
 		this( null, utilisateurAcheteur, articleVendu, dateEnchere, montantEnchere, activate, etatEnchere );
-		
+
 	}
-	
+
 	/**
 	 * 
 	 */
 	public Enchere() {
 	}
 
+ 
+
 	public Integer getNoEnchere() {
 		return noEnchere;
 	}
 
+ 
+
 	public void setNoEnchere(Integer noEnchere) {
 		this.noEnchere = noEnchere;
 	}
+
+ 
 
 	public Utilisateur getUtilisateurAcheteur() {
 		return utilisateurAcheteur;
@@ -59,7 +69,10 @@ public class Enchere {
 	public void setUtilisateurAcheteur(Utilisateur utilisateurAcheteur) {
 		this.utilisateurAcheteur = utilisateurAcheteur;
 	}
-    public String getDateEnchere() {
+    public LocalDate getDateEnchere() {
+        return dateEnchere;
+    }
+    public String getAffichageDateEnchere() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return dateEnchere.format(formatter);
     }
@@ -91,12 +104,16 @@ public class Enchere {
 		this.etatEnchere = etatEnchere;
 	}
 
+ 
+
 	/**
 	 * @return the noUtilisateur
 	 */
 	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}
+
+ 
 
 	/**
 	 * @param noUtilisateur the noUtilisateur to set
@@ -105,12 +122,16 @@ public class Enchere {
 		this.noUtilisateur = noUtilisateur;
 	}
 
+ 
+
 	/**
 	 * @return the noArticle
 	 */
 	public int getNoArticle() {
 		return noArticle;
 	}
+
+ 
 
 	/**
 	 * @param noArticle the noArticle to set
@@ -119,12 +140,16 @@ public class Enchere {
 		this.noArticle = noArticle;
 	}
 
+ 
+
 	@Override
 	public String toString() {
 		return "Enchere [noEnchere=" + noEnchere + ", utilisateurAcheteur=" + utilisateurAcheteur + ", articleVendu="
 				+ articleVendu + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", activate="
 				+ activate + ", etatEnchere=" + etatEnchere + ", noUtilisateur=" + noUtilisateur + ", noArticle=" + noArticle + "]";
 	}
+
+ 
 
 	/**
 	 * @return the pseudoUtilisateur
@@ -133,11 +158,13 @@ public class Enchere {
 		return pseudoUtilisateur;
 	}
 
+ 
+
 	/**
 	 * @param pseudoUtilisateur the pseudoUtilisateur to set
 	 */
 	public void setPseudoUtilisateur(String pseudoUtilisateur) {
 		this.pseudoUtilisateur = pseudoUtilisateur;
 	}	
-	
+
 }

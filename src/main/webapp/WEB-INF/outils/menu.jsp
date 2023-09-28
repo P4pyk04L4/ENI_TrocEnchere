@@ -4,7 +4,7 @@
 	<div class="container">
 		<!-- LOGO -->
 		<a class="navbar-brand" href="<%=request.getContextPath()%>"> <img
-			src="images/cocarde_francaise.png" height="50px">
+			src="images/marteau-aux-encheres.png" height="50px">
 		</a>
 
 		<!--         Bouton du menu déroulant (s'affiche sur les petits écrans) -->
@@ -18,9 +18,14 @@
 		<!-- Contenu du menu -->
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<!-- Menu des pages principales à gauche -->
+			
 			<ul class="navbar-nav col-10">
 				<li class="nav-item active"><a class="nav-link"
-					href="<%=request.getContextPath()%>">Accueil</a></li>
+					href="<%=request.getContextPath()%>">
+						<div class="typewriter">
+							<h1>Trocenchere.com</h1>
+						</div>
+				</a></li>
 				<c:if test="${not empty sessionScope.profilConnecte}">
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/ServletNouvelleVente
