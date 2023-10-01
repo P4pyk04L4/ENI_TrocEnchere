@@ -11,8 +11,8 @@ public class EmailManager {
 	
 	private static String HOST = "smtp-mail.outlook.com"; // Serveur SMTP de votre fournisseur de messagerie
 	private static String PORT = "587"; // Port SMTP (587 est généralement utilisé pour le chiffrement TLS/SSL)
-	private static String USERNAME = "ecolotroc@hotmail.com"; // Votre adresse e-mail
-	private static String PASSWORD = "Troc_29@"; // Votre mot de passe e-mail
+	private static String USERNAME = ""; // Votre adresse e-mail
+	private static String PASSWORD = ""; // Votre mot de passe e-mail
 	
 	/**
 	 * ***************** Début singleton ***************************
