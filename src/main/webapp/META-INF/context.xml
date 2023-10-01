@@ -12,11 +12,11 @@
 
  
 
-        url="jdbc:mysql://ufsdruo9bixz6bci:YYEFQRDJDdpE5OQnSsOK@bprpidhs8s6evs0vvjkb-mysql.services.clever-cloud.com:21027/bprpidhs8s6evs0vvjkb"
+        url="jdbc:mysql://Adresse:Port/BaseDeDonnées"
 
-        username="ufsdruo9bixz6bci"
+        username=""
 
-        password="YYEFQRDJDdpE5OQnSsOK"
+        password=""
 
         
 
@@ -43,40 +43,10 @@
  
 
 		url="jdbc:mysql://localhost:3306/eni_trocenchere"
+		
+		username=""
 
-		username="utilisateurENI"
-
-		password="trocenchere"
-
-        
-
-        maxTotal="100"
-
-        maxIdle="30"
-
-        maxWaitMillis="10000"
-
-    />
-
-    
-
-    <!-- MAMP OVH -->
-
-    <Resource
-
-        name="jdbc/pool_cnx_encheres_OVH"
-
-        driverClassName="com.mysql.cj.jdbc.Driver"
-
-        type="javax.sql.DataSource"
-
- 
-
-		url="jdbc:mysql://winbresbigmat29.mysql.db/winbresbigmat29"
-
-		username="winbresbigmat29"
-
-		password="Spiramyl29"
+		password=""
 
         
 
